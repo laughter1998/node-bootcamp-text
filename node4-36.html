@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Streams are yet another fundamental concept in Node.JS.
+    <br /><br />
+    So let's now learn all about them.
+    <br /><br />
+    So first of all, what are streams?
+    <br /><br />
+    Well, with streams we can process meaning read and write data piece by piece without completing the whole read or write operation.
+    <br /><br />
+    Therefore we don't have to keep all the data in memory to do these operations.
+    <br /><br />
+    For example, when we read a file using streams, we read part of the data, do something with it, then free our memory, and repeat this until the entire file has been processed.
+    <br /><br />
+    Or think of YouTube or Netflix, which are both called streaming companies because they stream video using the same principle.
+    <br /><br />
+    So instead of waiting until the entire video file loads, the processing is done piece by piece or in chunks so that you can start watching even before the entire file has been downloaded.
+    <br /><br />
+    So the principal here is not just about Node.JS.
+    <br /><br />
+    But universal to computer science in general.
+    <br /><br />
+    So as you can see, this makes streams the perfect candidate for handing large volumes of data like for example,
+    video or also data that we're receiving piece by piece from an external source.
+    <br /><br />
+    Also, streaming make the data processing more efficient in terms of memory because there is no need to keep all the data in memory and also in terms of time because we can start processing the data as it arrives, rather than waiting until everything arrives.
+    <br /><br />
+    Okay, so now that we know what streams are, let's talk a little bit about how they are implemented in Node.JS.
+    <br /><br />
+    So in Node, there are four fundamental types of streams: readable streams, writable streams, duplex streams, and transform streams.
+    <br /><br />
+    But the readable and writeable ones are the most important ones.
+    <br /><br />
+    And so we're gonna focus more on these two.
+    <br /><br />
+    So readable streams are the ones from which we can read.
+    <br /><br />
+    We can consume data, makes sense right?
+    <br /><br />
+    Now streams are everywhere in the core Node modules.
+    <br /><br />
+    So a bit like events, like we talked about before.
+    <br /><br />
+    For example, the data that comes in when an http server gets a request is actually a readable stream.
+    <br /><br />
+    So all the data that is sent with the request comes in piece by piece and not in one large piece.
+    <br /><br />
+    Also another example from the file system is that we can read a file piece by piece by using a read screen from the FS module, which can actually be quite useful for large text files.
+    <br /><br />
+    All right, now another important thing to note is that streams are actually instances of the EventEmitter class.
+    <br /><br />
+    Meaning that all streams can emit and listen to named events.
+    <br /><br />
+    Just like we learned in the last lecture.
+    <br /><br />
+    In the case of readable streams, they can emit, and we can listen to many different events.
+    <br /><br />
+    But the most important two are the data and the end events.
+    <br /><br />
+    The data event is emitted when there is a new piece of data to consume, and the end event is emitted as soon as there is no more data to consume.
+    <br /><br />
+    And of course, we can then react to these events accordingly.
+    <br /><br />
+    And actually we're gonna do exactly that in the next video.
+    <br /><br />
+    So to practice how to work with streams.
+    <br /><br />
+    Finally, besides events, we also have important functions that we can use on streams.
+    <br /><br />
+    And in the case of readable streams, the most important ones are the pipe and the read functions.
+    <br /><br />
+    And again, you will see these in action in the next video, especially the super important pipe function, which basically allows us to plug streams together, passing data from one stream to another without having to worry much about events at all.
+    <br /><br />
+    Okay, next up, writeable streams are the ones to which we can write data.
+    <br /><br />
+    So basically, the opposite of readable streams.
+    <br /><br />
+    A great example is the http response that we can send back to the client and which is actually a writeable stream.
+    <br /><br />
+    So a stream that we can write data into.
+    <br /><br />
+    So when we want to send data, we have to write it somewhere, right?
+    <br /><br />
+    And that somewhere is a writeable stream, and that makes perfect sense, right?
+    <br /><br />
+    For example, if we wanted to send a big video file to a client, we would stream that result just like Netflix or YouTube do.
+    <br /><br />
+    Now about events, the most important ones are the drain and the finish events.
+    <br /><br />
+    And the most important functions are the write and end functions, some of which you will see in action in the next lecture.
+    <br /><br />
+    Now quickly about duplex streams.
+    <br /><br />
+    They're simply streams that are both readable and writeable at the same time.
+    <br /><br />
+    These are a bit less common.
+    <br /><br />
+    But anyway, a good example would be a web socket from the net module.
+    <br /><br />
+    And a web socket is basically just a communication channel between client and server that works in both directions and stays open once the connection has been established.
+    <br /><br />
+    Finally, transform streams are duplex streams, so streams that are both readable and writeable, which at the same time can modify or transform the data as it is read or written.
+    <br /><br />
+    A good example of this one is the zlib core module to compress data which actually uses a transform stream.
+    <br /><br />
+    All right, and that's the four types of streams and a broad overview of how we can use them.
+    <br /><br />
+    Now there is something important to mention here before we move on,
+    <br /><br />
+    which is a fact that these events and functions that I showed you are for consuming streams that are already implemented like the ones that I showed you here as our examples.
+    <br /><br />
+    So for example, Node implemented these http requests and responses as streams, and we can then consume, we can use them using the events and functions that are available for each type of stream.
+    <br /><br />
+    We could of course also implement our own streams and then consume them using these same events and functions.
+    <br /><br />
+    That however would be a video for another time because in order to build most apps, it's most important to know how to actually consume streams, not really how to implement them.
+    <br /><br />
+    All right, so let's now move on and actually use streams in practice.
+    <br /><br />
+</body>
+</html>

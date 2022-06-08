@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    All right, now lets actually work with streams.<br /><br />
+
+And again, starting by creating a new file.<br /><br />
+
+All right.<br /><br /> Now lets say that for some reason in
+
+our application, we need to read a large text file from
+
+the file system, and then send it to the client.<br /><br />
+
+So how would we do that?
+
+Well there are multiple ways and we're going to explore
+
+a few of them starting with the most basic one
+
+and moving all the way to the best way of doing this.<br /><br />
+
+Okay, so the first thing is to require the file system
+
+package just like before, and also the HTTP module.<br /><br />
+
+Let me now show you a nice trick,
+
+so lets actually create a server like this.<br /><br />
+
+So, require the HTTP package, and then from here we can
+
+right away call createServer.<br /><br /> So just like this.<br /><br />
+
+Okay, so the result of requiring HTTP, is the
+
+HTTP object and on there we can then use createServer.<br /><br />
+
+Just like this, and then save it into a variable.<br /><br />
+
+So that is yet another way of creating a new server
+
+with writing even a bit less code.<br /><br />
+
+Okay and so just like before lets now list to the request
+
+event, and specify our callback here.<br /><br />
+
+So, the first solution that we're going to use is the
+
+easiest and most straight-forward one.<br /><br />
+
+Which is to simply read the file into a variable,
+
+and then once that's done, send it to the client
+
+in the way that we already know how to do it.<br /><br />
+
+So that one's very simple, and let me write a comment
+
+here for that.<br /><br /> So solution one, and so
+
+fs.<br /><br />readFile then our test file again.<br /><br />
+
+And then once that's ready, we call our callback function
+
+in which we have access to the data.<br /><br />
+
+But first lets handle the error.<br /><br />
+
+So for example in case that the file does not exist,
+
+and in that case we simply log the error to the console.<br /><br />
+
+But otherwise, we simply send this data back to the client.<br /><br />
+
+So we use the response object just like we did before
+
+many times, and then .<br /><br />end and the data.<br /><br />
+
+So, give it a save, and so that is the first
+
+and the simplest solution, right?
+
+But before we can test this, we need to actually also
+
+start a sever, right? So we use listen to do that.<br /><br />
+
+And the port, the same one as before, then localhost
+
+and our callback function.<br /><br />
+
+Okay, so lets see if this actually works.<br /><br />
+
+And of course not, because I actually didn't even start
+
+the application.<br /><br />
+
+So now it says listening, and now lets see
+
+what happens here.<br /><br />
+
+And here we go.<br /><br /> So this file is huge, it has
+
+Node.<br /><br />js is the best written in it like 10000 times
+
+or something, and so it takes a lot of time
+
+until it loads entirely.<br /><br /> And we're not really interested in
+
+loading everything, so lets stop this here,
+
+and go back to our code.<br /><br /> So this works just fine, the
+
+solution one that we have here in this case,
+
+but the problem is that with this solution,
+
+node will actually have to load the entire file
+
+into memory, because only after that's ready,
+
+it can then send that data.<br /><br /> Now this is a problem
+
+when the file is big, and also when there are a ton
+
+of requests hitting your server.<br /><br /> Because the node process
+
+will very quickly run out of resources and your app will
+
+quit working, everything will crash, and your users
+
+will not be happy believe me.<br /><br /> So this solution here
+
+does work when we're just creating something small
+
+locally for just ourselves, for example.<br /><br />
+
+But in a production-ready application, you cannot use
+
+a piece of code like this.<br /><br /> Okay? So lets move on to
+
+our second solution.<br /><br /> And in that solution,
+
+we will actually use streams.<br /><br />
+
+Okay, so lets comment out this part,
+
+and move on to solution number two.<br /><br />
+
+And the idea here is that we actually don't really
+
+need to read this data from the file into a variable, right?
+
+We don't need this variable.<br /><br /> So instead of reading
+
+the data into a variable, and having to store that variable
+
+into memory, we will just create a readable stream.<br /><br />
+
+Then as we receive each chunk of data,
+
+we send it to the client as a response
+
+which is a writable stream remember.<br /><br />
+
+So let me now show you how we can use streams.<br /><br />
+
+So we create a variable, lets call it readable here,
+
+and then from the file system again, we use createReadStream
+
+Then this of course small.<br /><br /> And now the name of the file
+
+that we're trying to read.<br /><br /> So that is again, test-file.<br /><br />txt.<br /><br />
+
+Okay, perfect.<br /><br /> So this now creates a stream from
+
+the data that is in this text file, which we can then
+
+consume piece by piece.<br /><br /> So chunk by chunk.<br /><br />
+
+And how do we do that? Well, remember from the last
+
+lecture, that each time there is a new piece of data
+
+that we can consume, a readable stream emits the
+
+data event.<br /><br /> Okay, and so we can listen to that,
+
+just like we learned in the events lecture.<br /><br />
+
+So readable.<br /><br />on, data, and then our callback function.<br /><br />
+
+And in our callback function, we have access to
+
+that piece of data, so to that chunk.<br /><br />
+
+Let me call it chunk here in our callback function
+
+and so now we can handle this piece of data.<br /><br />
+
+And what we're going to do with this piece of data,
+
+with this chunk, is to actually write it to a
+
+writable stream, which is the response.<br /><br />
+
+So, res.<br /><br />write, this chunk.<br /><br /> Okay?
+
+So again remember that this response is a
+
+writable stream.<br /><br /> So just as I mentioned in the previous
+
+video, right? And so we can now use the write method
+
+to send every single piece of data into that stream.<br /><br />
+
+Okay, and with this effectively we're streaming
+
+the content from the file right to the client.<br /><br />
+
+Okay, you understand the difference?
+
+So before, we write everything at once into a variable,
+
+and once that was ready, we then sent that entire piece
+
+of data back to the client.<br /><br /> But in this situation,
+
+with the stream, it is different.<br /><br />
+
+We're effectively streaming the file, so we read one piece
+
+of the file, and as soon as that's available,
+
+we send it right to the client, using the write method
+
+of the respond stream.<br /><br /> Then when the next piece is available
+
+then that piece will be sent, and all the way until
+
+the entire file is read and streamed to the client.<br /><br />
+
+Okay, so now just to finish, we also have to handle
+
+the event when all the data is read.<br /><br />
+
+So when the stream is basically finished reading the data
+
+from the file.<br /><br />
+
+So on that case, the end event will be emitted,
+
+and so as soon as that happens what we're going to do
+
+is to do res.<br /><br />end, okay? And we used this one before,
+
+so calling end on the response, we did that before, right?
+
+And now, it makes actually more sense, because again,
+
+the response is also a stream, and the end method
+
+signals that no more data will be written to this
+
+writable stream, okay?
+
+So up here all we did was actually use res.<br /><br />end with the
+
+data in it.<br /><br /> So we did no streaming, all we did was
+
+in the end to send some data.<br /><br />
+
+Now in this case, we're not passing anything
+
+into this end method, because we already sent all the data
+
+using res.<br /><br />write, chunk by chunk,
+
+and so when the readable stream is finished reading
+
+its file, well all we have to do is to then signal
+
+that we're ready using res.<br /><br />end like this, okay?
+
+So we always need to use this data and this end event here
+
+one after another like this.<br /><br /> Because otherwise,
+
+the response will actually never really be sent
+
+to the client.<br /><br /> Okay, so without this piece here,
+
+this entire solution would not really work, okay?
+
+So lets now close this one, start again,
+
+and read again, and so you see that its actually working
+
+again, okay? Now this time without the problems we had
+
+with the first solution.<br /><br /> Lets stop this here, and go back
+
+to our code, because I want to show you now,
+
+that there is another event that we can listen to
+
+on a readable stream, which is the error event.<br /><br />
+
+So readable.<br /><br />on('error') and in this callback function
+
+we have access to the error object.<br /><br />
+
+Okay so in this case we will log this error to the console,
+
+and then send the result of file not found.<br /><br />
+
+And we can also set the status code to an error,
+
+so 500 for example.<br /><br /> So usually it's automatically set to 200
+
+which means okay, but in this case we have a server error,
+
+which means that we want to send back the code 500.<br /><br />
+
+All right, so lets now.<br /><br />.<br /><br />.<br /><br />
+
+Actually I need to quit this again.<br /><br />
+
+So lets see what happens now.<br /><br />
+
+Oh we already have an error right here,
+
+res.<br /><br />status is not a function.<br /><br /> And yeah,
+
+actually its statusCode.<br /><br /> So this is the way that
+
+you write it in express, so I'm already used to writing
+
+express so much, so express is a node.<br /><br />js framework
+
+which we're going to use in the rest of the course
+
+and in express you do it like this, and so that was
+
+the problem.<br /><br /> So I'm already a bit too used
+
+to writing express.<br /><br />
+
+So lets go back, and yeah so now we see file not found,
+
+and if we open up the dev tools, you see our 500 error code
+
+that we just sent before, and if we go to our network tab,
+
+lets try that again, you have the status code here as well.<br /><br />
+
+So just like we saw in one of the previous videos in another
+
+section actually.<br /><br /> So this is how we can inspect this
+
+kind of stuff in the network tab.<br /><br />
+
+All right, so lets fix it here, give it a save,
+
+and okay so this again works just perfectly
+
+but there still is a problem with this approach
+
+that I just showed you.<br /><br /> And the problem is that our
+
+readable stream, so the one that we're using to read
+
+the file from the disk, is much much faster than actually
+
+sending the result with the response writable stream
+
+over the network.<br /><br /> And this will overwhelm the response
+
+stream, which cannot handle all this incoming data so fast.<br /><br />
+
+And this problem is called backpressure.<br /><br />
+
+And it's a real problem that can happen in real situations.<br /><br />
+
+So in this case, backpressure happens when the response
+
+cannot send the data nearly as fast as it is receiving it
+
+from the file, does that make sense?
+
+So we have to fix that solution,
+
+and come up with an even better one.<br /><br />
+
+And so, we will create solution three,
+
+and that is actually the final one,
+
+Okay? So no more solutions than three.<br /><br />
+
+So the secret here is to actually use that pipe operator
+
+that I mentioned in the last video, okay?
+
+So the pipe operator is available on all readable streams,
+
+and it allows us to pipe the output of a readable stream
+
+right into the input of a writable stream, okay?
+
+And that will then fix the problem of backpressure
+
+because it will automatically handle the speed basically
+
+of the data coming in, and the speed of the data going out.<br /><br />
+
+Okay, so lets actually get our readable stream here.<br /><br />
+
+Okay, so that is our readable stream, and now
+
+all we have to do is to take our readable stream,
+
+use the pipe method on it, and then put in a writable stream
+
+and that is the response.<br /><br /> And that's actually it.<br /><br />
+
+That's all we have to do for this solution, okay?
+
+So it always works like this, let me write it out here
+
+as a comment.<br /><br /> So we need a readable source basically, okay
+
+so again this is just to explain it to you,
+
+then we can use the pipe on it, and here we will have to put
+
+a writable destination.<br /><br /> So this is where our data
+
+comes from, and it has to be a readable stream,
+
+and that data we can then pipe into a writable destination.<br /><br />
+
+So in this case our destination is the response, okay?
+
+Now this stream here can actually be a duplex or a
+
+transform stream as well, but what matters is that
+
+we can write to the stream.<br /><br /> And response of course,
+
+is such a stream.<br /><br /> So we can of course write to the response
+
+that will be sent to the client, okay?
+
+So the pipe operator automatically solves the problem
+
+of backpressure that we had previously.<br /><br />
+
+And it's also actually a much more elegant and
+
+straight-forward solution.<br /><br /> So what we did here before
+
+was just to show you all the ways in which we can
+
+use the stream methods and events in order to create this
+
+kind of solution and of course they have many use cases,
+
+but in a problem like this, the pipe operator is actually
+
+the best solution.<br /><br /> Behind the scenes it does something like
+
+this here actually, but again in a
+
+much more straight-forward way for us to write,
+
+because it handles all the stuff internally
+
+behind the scenes.<br /><br /> So I believe that pipe here is actually
+
+the easiest way of consuming and writing streams, unless
+
+of course, as I mentioned, we need a more customized
+
+solutions.<br /><br /> And then, we have to use these more complicated
+
+tools like these events and methods that
+
+I showed you before.<br /><br /> All right, so just to finish,
+
+lets quit the process here, start it again,
+
+and of course, see if it still works, which it does.<br /><br />
+
+And so, our work is done here.<br /><br /> So we're finished with this
+
+lecture, and ready to go straight to the next one.<br /><br />
+</body>
+</html>
