@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So you already learned
+
+how to use a Async/Await
+
+but there's actually a bit more to learn
+
+about how Async functions actually work.<br /><br />
+So let's do that now.<br /><br />
+In order to understand a bit better what happens here,
+
+let's just try to add some console.logs
+
+after and before calling Async functions here.<br /><br />
+Okay, so console.log
+
+So step one
+
+will get dog pics,
+
+okay.<br /><br />
+And then number two.<br /><br />
+Here let's just say,
+
+done getting dog pics.<br /><br />
+Okay. So let's give it a save.<br /><br />
+And whoa, what happened here.<br /><br />
+We have these two console.logs
+
+before all the logs coming from the Async function.<br /><br />
+So we have the one, two
+
+for this one and this one
+
+and only after that we have the logs coming
+
+from the get dog pic.<br /><br />
+Is that what you were expecting?
+
+So if not, let's analyze what happened here.<br /><br />
+Well, as I told you before, this Async function
+
+actually runs in the background.<br /><br />
+Because well that's how Async functions
+
+are simply supposed to behave.<br /><br />
+Right, that makes total sense?
+
+So we cannot just stop the code here.<br /><br />
+So as soon as we hit this function
+
+we cannot simply stop execution of our main thread here.<br /><br />
+Right?
+
+And that's the whole philosophy of don't block
+
+the event log.<br /><br />
+So we need to get some dog pictures from the API,
+
+but that's not an excuse to stop execution over code.<br /><br />
+So to block the event log.<br /><br />
+So as a result when the java script engine ceased,
+
+this line of code here, it will just offload
+
+the get dog pic function to the background
+
+and go straight to the next line.<br /><br />
+So this second console.log here.<br /><br />
+So it makes sense that first this string here gets logged,
+
+then it will start running this function,
+
+then right away it will log this line of code
+
+and in the mean time, we read this file in the background,
+
+and as soon as that is ready,
+
+it will start printing this log, this log,
+
+and also this log.<br /><br />
+So that's exactly what's happening here.<br /><br />
+One two, and then then remaining three ones.<br /><br />
+Make sense? Okay.<br /><br />
+Then let's take it a step further, and actually
+
+return something from our Async function.<br /><br />
+So I'm changing this here to three, so that from
+
+this function, we can return a string
+
+which says two, well let's say ready
+
+and then let's add here again an emoji here
+
+to make it pop a little bit more in our console.<br /><br />
+So ready here.<br /><br />
+And then let's save that.<br /><br />
+Simply some variable, doesn't matter what it is.<br /><br />
+And then log x to the console.<br /><br />
+So let's see what happens.<br /><br />
+And then now here we get this weird promise pending
+
+instead of the string here that we were maybe expecting.<br /><br />
+So why is x here and not this string,
+
+but this promise here?
+
+Well, remember how I said in the beginning
+
+of the last video that an Async function
+
+actually returns a promise automatically?
+
+Well, so this here is the proof for that.<br /><br />
+So instead of logging ready to the console at this point,
+
+it just tells us that x is a promise
+
+which at this point is still running,
+
+and so it's still pending.<br /><br />
+So that's why it says pending here.<br /><br />
+So java script can of course not know that x
+
+will be this ready string here at some point.<br /><br />
+And so it simply moves on to the next console.log
+
+just as we had discussed before.<br /><br />
+And at the time that JavaScript actually knows
+
+that this x here should be the strain that we returned
+
+well at that point, this code here has
+
+long finished executing.<br /><br />
+But what should we do if we actually wanted
+
+to get that return value here?
+
+So what if we really wanted to return this string
+
+and log it through the console?
+
+Well, we would have to treat this Async function
+
+as a promise.<br /><br />
+And so we would use the DEN method on it
+
+or again, use Async/Await.<br /><br />
+Let me show you how to do that.<br /><br />
+So instead of trying to save the returned value
+
+to a variable, we can use the DEN method on it.<br /><br />
+And so here is where we can then call it x.<br /><br />
+So console.log x so just like what we had here
+
+and then we would also do this one inside
+
+of the DEN handle, okay?
+
+So let's review what we did here.<br /><br />
+So get dog pic returns a promise, remember that?
+
+And so each that we have a promise, we use the DEN method
+
+in order to get access to its future value.<br /><br />
+So the value that will eventually return.<br /><br />
+In that case, this will be the two ready string.<br /><br />
+Okay?
+
+And so if you want to get x to that,
+
+we need to use the DEN method like we just did here.<br /><br />
+And only after that we then can log the third
+
+string right here.<br /><br />
+So if we give it a save now like this
+
+it should then work as expected.<br /><br />
+And yeah it does.<br /><br />
+So we have our first log, then all the logs coming
+
+from our Async function, then the ready
+
+coming from line 42 here.<br /><br />
+And finally, the number 3. Perfect.<br /><br />
+And I hope it makes complete sense to you.<br /><br />
+Now what happens if there actually was an error?
+
+Well that's a bit more difficult to handle.<br /><br />
+So let's again, cause an error like we did before.<br /><br />
+But you see that actually we still enter
+
+the DEN method here.<br /><br />
+So this block here, okay.<br /><br />
+So even if there was an error here in this promise
+
+it basically still resolves as a successful promise.<br /><br />
+So it still returns this value here.<br /><br />
+And even if we add our catch handler down here
+
+that will not change that fact.<br /><br />
+Okay, so let's use catch here
+
+and then use console.log and log the error here
+
+so you can see that it still didn't log any error.<br /><br />
+And that's again because this promise here
+
+coming from this Async function will still be
+
+marked as successful.<br /><br />
+But if you really wanted to mark it as rejected
+
+we will have to do something called throwing an error.<br /><br />
+So let's do that here in this catch block.<br /><br />
+So if there was an error, we not only want to log it
+
+to the console, we also want to throw it.<br /><br />
+So we use a built in JavaScript function called throw.<br /><br />
+And with that we can throw an error.<br /><br />
+So this will now mark this entire function of this promise
+
+as rejected.<br /><br />
+Okay.<br /><br />
+Actually let's not just log this error,
+
+let's simply do error to make it a bit more visible,
+
+and something like an explosion maybe.<br /><br />
+Yeah, something like this.<br /><br />
+Okay, and so let's give it a save an see what happens.<br /><br />
+And bam, so now we have our error here actually.<br /><br />
+So it says I could not find that file,
+
+so this log is coming from this catch log here
+
+but then also at the same time it will throw an error.<br /><br />
+And if it throws an error, that will then mark
+
+this entire promise as rejected.<br /><br />
+And so that's why we then enter the catch log down here.<br /><br />
+Which will then, of course in turn
+
+trigger this console.log of this error.<br /><br />
+Okay?
+
+And this of course is a whole new layer of complexity.<br /><br />
+Okay.<br /><br />
+But it's still very important to understand how this works
+
+because it happens in real life all the time.<br /><br />
+So we need to return values from Async functions
+
+all the time and so it's important how you know
+
+how to actually handle these returned values.<br /><br />
+In this case, using DEN and catch.<br /><br />
+Now, the problem with this is that it mixes
+
+promises with Async/Await.<br /><br />
+So we have Async/Await up here,
+
+then all of a sudden we're being back to using
+
+DEN and catch down here.<br /><br />
+So let me actually show you another pattern of doing it.<br /><br />
+Okay, so let's come in our this part here
+
+not this way around, more like this.<br /><br />
+And so let's use Async/Await for implementing this logic.<br /><br />
+Now we don't want to create a whole new name function
+
+for this, and so we're going to use a well known pattern
+
+which I hope you know, which is an IIFE,
+
+so an immediately invoked function expression.<br /><br />
+Okay, so in parentheses, we define our function.<br /><br />
+Like this, and then we call it right away.<br /><br />
+Remember that?
+
+Then, in this case, since we want to use Async/Await,
+
+we also say that it's an Async function.<br /><br />
+Okay, and so this looks a bit weird here,
+
+but if you took for example my JavaScript course
+
+this will look familiar to you actually.<br /><br />
+Okay, so again, you declare a function
+
+inside of parentheses and then call it function right away.<br /><br />
+And so this way, you don't have to declare a
+
+whole name function again that you will to then call
+
+at some point later.<br /><br />
+Okay.<br /><br />
+Now since we're using Async/Await, we're using the
+
+try it catch pattern again, like before.<br /><br />
+So catch, have access to the error here,
+
+and we actually cannot omit this here.<br /><br />
+So even if we don't want to use this error,
+
+we still have to write it out here.<br /><br />
+Okay.<br /><br />
+In future versions of JavaScript this will be gone,
+
+but for now we need to do it like this.<br /><br />
+So this is where this error will be.<br /><br />
+And up here, we will have all these console.logs.<br /><br />
+This one,
+
+and this one.<br /><br />
+And now I hope you know how to actually get
+
+the value from the Async function.<br /><br />
+So you know how to do that.<br /><br />
+Actually I will pause the video and allow you to
+
+figure out how to do it on your own, okay?
+
+So take that small challenge and I'll be back
+
+in a second.<br /><br />
+So did you manage to get this string here,
+
+so this two ready into the x variable
+
+just like we had before?
+
+So just like this here?
+
+So it's just like we did before.<br /><br />
+You declare a variable and then you await the promise.<br /><br />
+And the promise, in this case, is get dog pic.<br /><br />
+Okay?
+
+So this function here is an Async function
+
+and so it returns a promise.<br /><br />
+And the result value of that promise
+
+is this value here, which is returned,
+
+and so by waiting for that value,
+
+the result will be this string.<br /><br />
+So we store that into x and then we can of course
+
+log it to console.<br /><br />
+So console.log x.<br /><br />
+Then in case there's an error, it will catch it
+
+and log it to the console here as well.<br /><br />
+If we give it a save now,
+
+then bam we get the error still because
+
+we had it here, so that part still works.<br /><br />
+Fixing it, saving it, and here we go.<br /><br />
+So it's working now as intended.<br /><br />
+But, again, with Async/Await it's a lot cleaner,
+
+looks a lot better and it's also easier to understand.<br /><br />
+And so we're not mixing Async/Await in one place here
+
+and then using DEN and catch down here
+
+like we had before with this piece of code.<br /><br />
+Okay?
+
+So in real life, this sort of stuff happens all the time.<br /><br />
+So we have an Async function and we called it
+
+from another Async function, and maybe we even
+
+called another Async function from that first
+
+Async function, and so we have a bunch of these
+
+Async functions interacting with each other.<br /><br />
+And so it's very important that you know
+
+how all of this works.<br /><br />
+And again to recap, the most important thing
+
+to remember is that an Async function automatically
+
+returns a promise, and that the value that we return
+
+from an Async function will be the result value
+
+of that promise.<br /><br />
+And so from there, we can simply handle it as yet
+
+another promise.<br /><br />
+And that's exactly what we did here by awaiting
+
+that first promise that we created.<br /><br />
+Okay?
+
+So please try to wrap your head around this
+
+and make sure that you really understand it.<br /><br />
+Because throughout the rest of the course I'm going
+
+to assume that you know how to work with this stuff.<br /><br />
+And that is exactly why I created this section,
+
+to kind of get it out of the way before we really start
+
+to work with no JS and express, and all this good stuff.<br /><br />
+Okay?
+
+So we're almost done with this section,
+
+there's just one small thing that I want to show you
+
+in the next video.
+</body>
+</html>

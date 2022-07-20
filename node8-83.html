@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hello and welcome back.<br /><br />
+So, now it's finally time to connect the MongoDB database
+
+that we created with our Express application.<br /><br />
+And, the first step in doing that is
+
+to actually get our connection string from Atlas.<br /><br />
+So, just like we did before when we connected the database
+
+to Compass and to the Mongo Shell,
+
+we need to get our connection string
+
+in order to connect the application to this hosted database.<br /><br />
+Now, in case you're not using the hosted database
+
+on Atlas, then I will also show you
+
+how to connect your local database
+
+with the application a bit later in this video.<br /><br />
+Anyway, just click here on Connect Your Application
+
+and then this here is our connection string.<br /><br />
+Just make sure that you select Node.js here actually
+
+because the string might change based on that.<br /><br />
+Now, we also need the version.<br /><br />
+And, of course, it's later than three.<br /><br />
+And so, let's now go ahead and copy our connection string
+
+and then back in our application,
+
+we create it as an environment variable
+
+here in our config file.<br /><br />
+So, I already have DATABASE_PASSWORD.<br /><br />
+Let's create DATABASE now.<br /><br />
+And then, put our string in here.<br /><br />
+Now, two things about this connection string.<br /><br />
+First, here in this place, we need to put in our password.<br /><br />
+Now, we could go ahead and copy the password from here
+
+and then paste it here, but I prefer
+
+to leave it in a separate variable
+
+and then replace it in code.<br /><br />
+I will just actually change this password here
+
+to an uppercase password.<br /><br />
+So, PASSWORD to make it a bit more visible.<br /><br />
+Then, second, this here is actually our host,
+
+so basically the place where the database is hosted
+
+and then /test.<br /><br />
+Now, this test here is the name of the database
+
+that we want to connect to.<br /><br />
+And, in our case, we already created the natours database.<br /><br />
+Let's check that out actually here back in Compass.<br /><br />
+And, if we go here to COLLECTIONS,
+
+then we see that here, we already have our natours database.<br /><br />
+So, we did that by the end of the last section.<br /><br />
+You remember?
+
+And so, it's very important that here,
+
+in this connection string, we replace this test
+
+with the name of our database.<br /><br />
+So, natours, okay?
+
+So, very important here, again,
+
+do not forget to put this here, otherwise,
+
+it's not gonna work.<br /><br />
+Now, in case you're using the local database
+
+like I just mentioned before,
+
+this connection string is a lot easier.<br /><br />
+So, let's just create a variable
+
+for that one as well, DATABASE_LOCAL.<br /><br />
+But, again, if you're using this database string here,
+
+you don't need to worry about this part.<br /><br />
+I'm just doing this in case
+
+that you are using the local one.<br /><br />
+And so, in this case, it's quite simple.<br /><br />
+It's just mongodb and this is kind of a protocol here.<br /><br />
+So, instead of http, Mongo uses these like mongodb
+
+and protocol or something.<br /><br />
+Then, localhost and then the port,
+
+which we already talked about a couple of times
+
+and it's 27017, remember that?
+
+And then, just like before, we also need
+
+to specify the name of the database,
+
+which should be natours.<br /><br />
+Now, in order for this to work, of course,
+
+you need to keep your MongoDB server
+
+so that Mongo D process running at all times.<br /><br />
+So, switching it to the terminal.<br /><br />
+So, this local process here is the one that I mean.<br /><br />
+So, never close this process, so this terminal window,
+
+when you're working with your local database.<br /><br />
+So, otherwise, it's not gonna work.<br /><br />
+And, that's it for configuration.<br /><br />
+Next up, we need to install a MongoDB driver,
+
+so basically a software that allows our Node code
+
+to access and interact with a MongoDB database.<br /><br />
+And, there are a couple of different MongoDB drivers,
+
+but we're gonna use the one
+
+that I would say is the most popular one,
+
+which is called Mongoose, which adds a couple of features
+
+to the more native MongoDB driver.<br /><br />
+But, don't worry, in the next lecture,
+
+you're actually gonna learn all about Mongoose
+
+and why we're using it.<br /><br />
+For now, let's just go ahead and install it.<br /><br />
+So, mongoose, and the version
+
+that I'm gonna use is version five
+
+and so please go ahead and install version five as well
+
+so that we're on the same page with our code here.<br /><br />
+So, by the time you're watching this video,
+
+Mongoose six, or even seven maybe,
+
+might already be out there
+
+and then something might have changed
+
+and then your code might not work the exact same way.<br /><br />
+So, please just install version five
+
+because that's actually a pretty stable version
+
+at this point and I don't think
+
+that they are gonna add much important features
+
+in the future.<br /><br />
+So, in our package.json, it should now be here.<br /><br />
+So, 5.5.2, yours is probably a bit later,
+
+but that should not be a problem.<br /><br />
+Let's go now to server.js here, which, remember,
+
+is kind of the file where we do all
+
+of the setup of our application.<br /><br />
+For example, the environment variables
+
+or the imports or Express application.<br /><br />
+And, we also start the server down here.<br /><br />
+And so, this is also the file
+
+where we're gonna configure MongoDB.<br /><br />
+So, let's start by requiring our mongoose package here.<br /><br />
+And so, now we have access to the mongoose variable
+
+and on there, we simply call the connect method.<br /><br />
+Now, into this connect method, we need to, of course,
+
+pass in our database connection string.<br /><br />
+But, remember that, in there, we still have the password.<br /><br />
+So, basically this password placeholder here.<br /><br />
+And so, before we pass in the string,
+
+we need to actually replace it.<br /><br />
+So, replace it with the real password that we have here.<br /><br />
+So, let's quickly do that.<br /><br />
+And, I'm simply gonna call this variable DB for database.<br /><br />
+And so, let's get our process.env.DATABASE.<br /><br />
+So, that is, of course, our variable
+
+where the string here is stored.<br /><br />
+So, we're getting that and then replace.<br /><br />
+And, we want to replace PASSWORD.<br /><br />
+This here comes from the HTML close tag package
+
+that I have on my VS Code.<br /><br />
+So, process.env.DATABASE_PASSWORD.<br /><br />
+Give it a save.<br /><br />
+And, okay, so that makes sense.<br /><br />
+So, we're simply replacing this placeholder string
+
+with our real password in this connection string.<br /><br />
+And so, now we can use this variable
+
+in our mongoos.connect().<br /><br />
+So, in here, the first argument is actually
+
+that connection string, so DB.<br /><br />
+And then, second, we pass in an object with some options
+
+and these are just some options that we need to specify
+
+in order to deal with some deprecation warnings.<br /><br />
+So, don't worry too much about these ones.<br /><br />
+So, useNewUrlParser, set it to true.<br /><br />
+Then, we need to use useCreateIndex,
+
+also set to true.<br /><br />
+And then, useFindAndModify
+
+and set it to false.<br /><br />
+So, again, these here are just some options
+
+to deal with some deprecation warnings.<br /><br />
+And so, when you're creating your own applications,
+
+just go ahead and use just exactly the same.<br /><br />
+Now, this connect method here is gonna return a promise
+
+and so let's actually handle that promise by using then().<br /><br />
+And, this promise here actually gets access
+
+to a connection object.<br /><br />
+So, let's simply call it con here for connection.<br /><br />
+So, basically this connection will
+
+be the resolved value of the promise.<br /><br />
+And so, just to show you that we're actually connected,
+
+I want to just log this object to the console.<br /><br />
+So, console.log connection and actually I want
+
+to see the connections property on there.<br /><br />
+And, we can also log to the console
+
+something like DB connection successful.<br /><br />
+Give it a save here.<br /><br />
+And then, of course, it displays these warnings here
+
+because of our ESLint, but don't worry about that.<br /><br />
+That's just the way that we configured it.<br /><br />
+And so, let's now go ahead
+
+and actually run this application.<br /><br />
+Now, let me remember what kind of scripts we have.<br /><br />
+So, we have start:dev and start:prod.<br /><br />
+Now, since our script here is not just called start,
+
+which is kind of a standard,
+
+we always have to type npm run start:dev
+
+instead of writing just npm start, without the run.<br /><br />
+And so, let me go ahead
+
+and change the name here back to start.<br /><br />
+And then, we have start for production.<br /><br />
+So, npm start.<br /><br />
+The app is running now.<br /><br />
+And, indeed, our database connection was successful.<br /><br />
+So, great.<br /><br />
+And now, here we have our connections object
+
+and, as you see, there's a lot of stuff in here
+
+and we can see our username here, host,
+
+the password, of course.<br /><br />
+And, this stuff here doesn't really matter, of course.<br /><br />
+I just wanted to log it here
+
+just so we see that our connection was actually successful.<br /><br />
+And so, let's get rid of that.<br /><br />
+And, we can actually get rid of all this here as well.<br /><br />
+So, this is just a one-liner here.<br /><br />
+Oh yeah, just missing this parenthesis.<br /><br />
+Now, here, it's saying me that we declared this variable,
+
+but never used it, so let's, indeed, get rid of it.<br /><br />
+Now, just as a final step,
+
+let me show you how we could also connect
+
+to the local database, again,
+
+in case you are using that one.<br /><br />
+So, let's just duplicate this line, comment it out.<br /><br />
+So, this is the hosted database version
+
+and then here we would just have to put in the local one.<br /><br />
+So, that's DATABASE_LOCAL.<br /><br />
+Let's give it a save.<br /><br />
+And, we're also connected successfully to that one.<br /><br />
+So, that's just how you would do it in that case.<br /><br />
+But, as I said, in this course,
+
+we will actually use the hosted one,
+
+so that's the one that I'm keeping here.<br /><br />
+Actually, I'm deleting this one.<br /><br />
+We don't need it anymore.<br /><br />
+Now, of course, there could also
+
+be problems connecting to the database.<br /><br />
+For example, the host might be down
+
+or we might have some error in our connection string
+
+and, in that case, we should catch that error.<br /><br />
+But, we will leave error handling
+
+for a bit later in the course
+
+and so for now, I'm not having any catch method here.<br /><br />
+Just the then method here,
+
+assuming that everything works fine.<br /><br />
+And, now finally, I want to actually go ahead
+
+and delete the collection
+
+that we already created in our database
+
+just so that our Mongoose driver does not interfere
+
+with that in any way so that there's no problem there.<br /><br />
+And so, let's move back to Atlas here.<br /><br />
+Hit on our COLLECTIONS.<br /><br />
+And then, simply delete the collection from here.<br /><br />
+And now, we need to put in here the name of the collection
+
+just so we don't do any mistake here.<br /><br />
+So, drop and, all right.<br /><br />
+So, now we have an empty database here,
+
+ready to start filling with our data starting right
+
+in the next couple of videos.
+</body>
+</html>

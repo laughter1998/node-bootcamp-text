@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Welcome back.<br /><br />
+I hope you're having fun so far in this section.<br /><br />
+I know that I am and so let's now keep it moving
+
+and learning how to update documents with Mongodb.<br /><br />
+So back in our mongoshell let's now
+
+use db.tours.updateOne.<br /><br />
+Okay?
+
+So that's similar to .insertone that we used
+
+to create a new document.<br /><br />
+And remember how we also had .insertmany
+
+and so we also have .updatemany.<br /><br />
+Now how does .updatemany work?
+
+Well, first we need to select which documents
+
+we actually want to update and, second, we need
+
+to pass in the data that should be updated.<br /><br />
+So the first argument is basically a filter object
+
+just like we learned in the last lecture.<br /><br />
+So we basically need to query for the documents
+
+that we want to update and let's start with that
+
+starting in a very simple way.<br /><br />
+So I'm just going to select based
+
+on the name
+
+The Snow Adventure.<br /><br />
+Okay?
+
+So that is my very simple filter object
+
+so specifying the tour that I want to update
+
+And now the second object that I need
+
+to specify is what I actually want to update.<br /><br />
+So another object here and then we close the function.<br /><br />
+And so in here we need to use the set operator.<br /><br />
+So, again, this works using operators just like
+
+in these complex queries that we saw in the last video.<br /><br />
+So set and then we need to create yet another object
+
+and finally in this one we can specify the property
+
+that we want to update and the value we want to set it to.<br /><br />
+So, in this case, what we want to do
+
+is to set the price to 597.<br /><br />
+All right?
+
+So this one was 497 and so we're now, basically,
+
+increasing it to 597.<br /><br />
+All right?
+
+So let's hit return and it's then updated, our tour.<br /><br />
+Now if this query here would have matched
+
+multiple documents.<br /><br />
+I can't select it for some reason,
+
+but you can see it.<br /><br />
+So if this query that we did here
+
+would have selected multiple documents then only
+
+the first one would have been updated because
+
+we were using .updatemain.<br /><br />
+And so if we already know beforehand that our query
+
+is going to match multiple documents,
+
+then we should use .updatemany
+
+and not .updateone.<br /><br />
+Okay?
+
+Now just to show you that it actually worked,
+
+let's take a look at all the documents.<br /><br />
+So db.tours.find and, indeed,
+
+we have The Snow Adventure here
+
+with the new price.<br /><br />
+Great.<br /><br />
+So we updated a property that already existed.<br /><br />
+So the price was already there and we simply set it
+
+to a new value but we can also create new properties
+
+and set these to new values, of course.<br /><br />
+And it actually works in the same way but
+
+let me show it to you anyway.<br /><br />
+And what I want to do here is to find premium tours
+
+and give them a premium field set to true.<br /><br />
+So what are our premium tours?
+
+Well, let's first do a find.<br /><br />
+So just to specify that query.<br /><br />
+And actually we already did that before.<br /><br />
+So the tours that I want should have a price greater
+
+than 500 and a rating greater or equal to 4.8.<br /><br />
+So these are the really our premium tours, basically,
+
+so really the ones that are most expensive
+
+and most well rated.<br /><br />
+So to create this query its actually quite simple.<br /><br />
+And again because we actually already did it before.<br /><br />
+Now what I want you to do here is to pause the video
+
+and even if you remember it,
+
+type out this query on your own.<br /><br />
+And if you don't remember it, well that's even better
+
+then you can practice what you just learned
+
+in the last video.<br /><br />
+All right?
+
+So please pause the video here and try to come up
+
+with this query on your own.<br /><br />
+So again we want the price to be greater than
+
+500 and the rating greater or equal to 4.8.<br /><br />
+Okay, hope you did it.<br /><br />
+And this is the solution.<br /><br />
+So price should be greater or equal than 500
+
+and the rating should be greater or equal to 4.8.<br /><br />
+Okay?
+
+And here we set just greater than which
+
+is actually the same.<br /><br />
+It's gonna give us the same result.<br /><br />
+But never mind, let's do it exactly as I said.<br /><br />
+And so just to make sure let's see if we get the
+
+perfect result and indeed this is the tour
+
+that has this premium price and at the same time
+
+this premium rating.<br /><br />
+Okay?
+
+And in this case, we have only one result but,
+
+of course, we might have multiple results.<br /><br />
+And so let's now use .updatemany.<br /><br />
+So db.tours.updatemany.<br /><br />
+And so our filter object that we want is this one.<br /><br />
+So I'm just copying it from here.<br /><br />
+So that is the first argument and then second
+
+is actually what we want to update.<br /><br />
+Remember that?
+
+So again we use the set operator and then
+
+we say that we want premium to be true.<br /><br />
+Okay?
+
+And so this time we actually create a new field here
+
+and we set it to true.<br /><br />
+Okay?
+
+Give that one a save and actually we were missing
+
+some closing brace and so we cannot really go back
+
+so let me try to add it here.<br /><br />
+But, that doesn't really work, but anyway it doesn't
+
+matter we can just go back to the last command
+
+and then correct it.<br /><br />
+So this is the brace that we were missing then
+
+close it and here we go.<br /><br />
+So db.tours.find just to check it now.<br /><br />
+And here we have the last one which now
+
+has premium set to true.<br /><br />
+And again this was the only document that matched
+
+our query and so it's the only one that got this new
+
+premium property here,
+
+but if there were multiple documents matching
+
+that query, then all of them would have gotten
+
+this premium true.<br /><br />
+Okay?
+
+So that's why we used .updatemany and remember
+
+if we used .updateone then only the first document
+
+matching the query gets updated.<br /><br />
+Okay?
+
+So that's how we update documents at least partially
+
+so with this .updatemany or .updateone we usually only
+
+update parts of the document, but we can also
+
+completely replace the content of the document.<br /><br />
+And for that we use .replaceone.<br /><br />
+I'm not going to do that, but for the sake
+
+of completeness I wanted to show it to you as well.<br /><br />
+So db.tours.replaceone or .replacemany, okay?
+
+And so in here, just like before, you would
+
+pass the search query and then new data that you
+
+want to put in this document.<br /><br />
+All right, not going to do that here.<br /><br />
+But now you know that it also exists.<br /><br />
+And like this we have three of our correct operations
+
+already completed.<br /><br />
+So creating, reading, and updating and so
+
+as you can guess in the next video we will talk
+
+about deleting documents.
+</body>
+</html>

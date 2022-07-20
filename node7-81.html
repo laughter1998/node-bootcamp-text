@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    All right, as a final step in this section,
+
+let's now connect our remote hosted database
+
+with our Compass app and also with the Mongo shell.<br /><br />
+So back here in the Atlas app,
+
+let's open up the Connect assistant
+
+by clicking this button here,
+
+and so now before we can actually connect,
+
+we need to do a couple of things.<br /><br />
+First up, we need to add our current IP address,
+
+just like this, so that our computer is actually able
+
+to connect to this cluster, okay?
+
+Next up, let's create a username.<br /><br />
+And I'm calling mine simply Jonas,
+
+and then a password, which I'm gonna autogenerate here.<br /><br />
+And I'm actually showing it to you now
+
+because I need to copy it, but don't try to connect
+
+to my database using this password,
+
+because of course I'm gonna change it
+
+by the end of the course.<br /><br />
+Now where am I gonna save it?
+
+Well, let's go to our application
+
+and open up our config file.<br /><br />
+And so this is what we created
+
+this file for in the first place.<br /><br />
+Right, so remember how we said that each configuration,
+
+we were gonna save into this file,
+
+and so the database password
+
+is actually a perfect example for that.<br /><br />
+So database,
+
+password and I'm setting it
+
+to the password that we just created.<br /><br />
+And later, when we will then connect our application
+
+to the database, we will then of course use
+
+this environment variable to create that connection, okay.<br /><br />
+So, let's now create the user actually.<br /><br />
+And now next up, all we have to do is to choose
+
+a connection method and we're gonna start
+
+with the MongoDB Compass application.<br /><br />
+Okay, so we already have Compass,
+
+and I'm sure we have a 1.12 or later
+
+and so let's now go ahead and copy this connection string.<br /><br />
+Okay, and now open up Compass.<br /><br />
+Then up here, in the menu, hit connect here.<br /><br />
+Then it will take some time to open up this new window.<br /><br />
+But by the time it does, it will then have automatically
+
+detected that we have a MongoDB connection string
+
+in our clipboard, and so all we have to do
+
+is to hit yes here and it will then automatically
+
+fill all of these settings for us.<br /><br />
+So our hostname our username and all this other stuff.<br /><br />
+And so all we need is our password here.<br /><br />
+So I'm going back to that file, grab it from there,
+
+paste it here, and connect.<br /><br />
+And indeed, it did successfully connect,
+
+now it's loading our databases.<br /><br />
+And here we actually see the three database that
+
+already come pre-configured in this cluster.<br /><br />
+So let's create a new one called natours.<br /><br />
+And we also have to create a collection name right away,
+
+and I'm calling it, of course, tours.<br /><br />
+So create database and here we go.<br /><br />
+So open that up, and now open the tours collection.<br /><br />
+And now let's then finally insert our first document.<br /><br />
+Okay, so again, name,
+
+The Forest Hiker.<br /><br />
+The price, should be 297
+
+and I'm giving it a double number here,
+
+and I also want to create
+
+the rating,
+
+4.7, and also as a double.<br /><br />
+So insert, and so just like this we have our first tour
+
+created on our remote database.<br /><br />
+Great, that's awesome.<br /><br />
+Let's now go back actually to Chrome
+
+and take a look at our cluster here,
+
+so when I open up this cluster by clicking here,
+
+then it's gonna load our collections up here
+
+and so give it a second.<br /><br />
+And so now, we actually have our database name,
+
+our collection name, and the tour that we just created
+
+in Compass, and that's awesome.<br /><br />
+So it means that our connection is really working.<br /><br />
+Now another thing that we can and should do,
+
+is to allow access from everywhere to this cluster.<br /><br />
+So remember how right in the beginning of this video
+
+we whitelisted our IP in order to grant access
+
+to our current computer to this cluster.<br /><br />
+But if you happen to switch computers during development,
+
+you might need to whitelist the IP of that computer as well,
+
+because otherwise you might not be able to connect.<br /><br />
+But since we're not really dealing with sensitive data here
+
+anyway, we can simply whitelist every single IP
+
+in the world and allow access from everywhere.<br /><br />
+Now of course, we will always still need our username
+
+and our password, but this way we don't need
+
+to keep adding our computers to whitelist.<br /><br />
+We will simply whitelist all IPs that exist.<br /><br />
+Okay, so click over here on access,
+
+or actually it's not here, so let's open up
+
+this cluster again, and here I think it's on security
+
+and IP whitelist, and now here
+
+on the right side click on add IP address,
+
+and now I wanna allow access from anywhere.<br /><br />
+Confirm, and that's it.<br /><br />
+Okay, and now just as a last step,
+
+let's also connect our Mongo shell to this cluster.<br /><br />
+So let's go back to clusters here,
+
+open up again the connect assistant
+
+and then connect with Mongo shell.<br /><br />
+Now we already have it installed here, and so now
+
+all we need to do is to copy this connection string.<br /><br />
+So copied it, open up the terminal,
+
+and here we actually still have the Mongo shell running.<br /><br />
+So let's quit that very quick,
+
+because remember this is still connected
+
+to our locally running Mongo server.<br /><br />
+But now, we no longer want that,
+
+we want to connect to our hosted database.<br /><br />
+And so let's copy our string here,
+
+hit return, and it will now probably ask us for our password
+
+and indeed it does and that is in vs code
+
+which I have just here, so copy it,
+
+back to the terminal, paste it, hit return,
+
+and I think it's doing something here.<br /><br />
+And it looks like it worked.<br /><br />
+So, dbs remember, just to show all the database,
+
+and indeed here we have, natours.<br /><br />
+So great, we are connected.<br /><br />
+So let's say, use natours,
+
+and so we switched to db natours
+
+and now db.tours.find
+
+and here we have the documents
+
+that we just created before using Compass.<br /><br />
+Perfect, so now everything is really interconnected.<br /><br />
+We have the Mongo shell, and we have also Compass both
+
+connected to our remote database hosted on Atlas.<br /><br />
+And so like this, we are actually ready to move on
+
+to the next section, connect our database
+
+with our express application and then finally
+
+start working with the database in our application.<br /><br />
+So great job making it until this point,
+
+and I hope to see you soon.
+</body>
+</html>

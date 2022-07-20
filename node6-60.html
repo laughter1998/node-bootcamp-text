@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now use
+
+a third-party middleware function
+
+from npm called Morgan
+
+in order to make our development life a bit easier.<br /><br />
+So, as I mentioned, we're gonna use a middleware
+
+called Morgan which is a very popular logging middleware.<br /><br />
+So, a middleware that's gonna allow us to see request data
+
+right in the console.<br /><br />
+Okay, so let me go ahead and install it
+
+and you will then see how that works, okay?
+
+So, I don't want to now finish this process here,
+
+so I'm gonna create a new terminal here in VS Code
+
+and so, for that I hit this plus button here
+
+and so, now we get a new terminal
+
+and I don't want to update,
+
+so no, and now npm install morgan.<br /><br />
+Okay, now as I mentioned,
+
+this logging middleware
+
+is gonna make our development life a bit easier.<br /><br />
+But it still is code
+
+that we will actually include in our application
+
+and so, that's why it's not a development dependency
+
+but just a simple regular dependency,
+
+okay and so, that's why I didn't specify save dev here
+
+because again, it's not a dev dependency really.<br /><br />
+Okay, so we have it in our package.json here now, morgan
+
+and so, let's go ahead and require it in our code.<br /><br />
+So, again right at the top here const morgan
+
+equals require morgan
+
+and you see again this kind of convention
+
+that the require is gonna expose
+
+if you use the same name as the package name itself.<br /><br />
+So, we have our middlewares here,
+
+so let's add it right after this
+
+or actually write as the first one.<br /><br />
+Okay, and source code is growing a little bit,
+
+so let's actually go ahead
+
+and add some comments here,
+
+so first middlewares,
+
+then down here we start having our route handlers.<br /><br />
+Right, then here let's just say we have our routes.<br /><br />
+And then finally down here
+
+we start the server.<br /><br />
+Okay, just to make our code a bit more readable
+
+and easier to scan.<br /><br />
+So, we have this first middleware
+
+but again let's use ours before that.<br /><br />
+So, of course <span class="notranslate">app.use</span> 
+
+and now in here we call morgan.<br /><br />
+Okay and into this function,
+
+we can pass an argument
+
+which will kind of specify
+
+how we want the logging to look like.<br /><br />
+So, we can use some predefined strings for that
+
+and the one that I'm gonna use is called dev.<br /><br />
+And actually you can see here the different options
+
+so VS Code is really smart
+
+and can give me the options
+
+that we can pass into this function.<br /><br />
+Okay, so as I mentioned,
+
+I'm gonna use the one called dev.<br /><br />
+Okay and so that's actually it.<br /><br />
+So, we required it
+
+and then here we used it.<br /><br />
+So, very simple stuff
+
+but I think it's important
+
+to actually try to understand how this works.<br /><br />
+So, calling this morgan function
+
+will return a function similar to this one here
+
+and so, that makes sense
+
+because while this is how a middleware function
+
+has to look like and so, let me actually prove that to you
+
+by looking at the source code
+
+for this package
+
+and that's another very nice exercise
+
+from which we can actually learn quite a bit.<br /><br />
+So, let's search for morgan on GitHub,
+
+so usually all these packages are always on GitHub
+
+and so, that's where we can then look
+
+at their open source code.<br /><br />
+Okay and morgan is actually a very simple package
+
+and so, all we have to do is to go to this index.js file,
+
+so usually that is the entry point
+
+and in this case, it's kind of the only file that there is.<br /><br />
+Okay, now, I'm not gonna over all of this code
+
+but I want to highlight that the main export
+
+from this file here is morgan,
+
+so a function called morgan,
+
+so let's look for that
+
+and actually here it is.<br /><br />
+Okay, and so when we required the package in our code,
+
+what will get returned is this morgan function, right?
+
+Again because they use module.export
+
+and that is the default export just like we learned
+
+in the requiring modules lecture one section
+
+or two sections ago, right?
+
+So, again this morgan function here
+
+will be this morgan function here in this code, okay?
+
+So, let's see what this function does
+
+and I don't care about any of this implementation here,
+
+what I really wanted to show you
+
+is that this function actually returns another function
+
+which is the logger
+
+and you see that this function just has
+
+our own middleware functions
+
+has this very typical signature of request,
+
+response and next.<br /><br />
+Okay?
+
+So, this function is just like our own middleware functions.<br /><br />
+And so, you see that actually in the end
+
+when it's ready, it also calls next,
+
+so just like we do.<br /><br />
+So, it's just a very regular middleware function
+
+just like the ones that we write.<br /><br />
+Okay?
+
+So, let's go back here
+
+and let's now actually see the result here in our terminal,
+
+so let's go back to that first one,
+
+so this is how we switch between
+
+the different terminals that we have open in VS Code.<br /><br />
+Give us some more space here,
+
+actually clear this out
+
+because you might not be able to see the bottom
+
+of the screen so well.<br /><br />
+And so yeah, let's now go ahead
+
+and simply create some request,
+
+all right, go back and here we go.<br /><br />
+So, we have the information about the request
+
+that we just did.<br /><br />
+So, we get the HTTP method,
+
+we get the URL, we get the status code,
+
+the time it took to send back the response
+
+and also the size of the response in bytes.<br /><br />
+So, remember we could have used another option here,
+
+for example, tiny was another one,
+
+so that would then probably look a bit different
+
+and it actually looks kind of similar here.<br /><br />
+It simply doesn't do this coloring
+
+of this status code
+
+and also it has a slightly different order here.<br /><br />
+Okay and if we did something,
+
+if we caused an error, for example, a 404,
+
+let's test that out by using an invalid ID here,
+
+so that will then get another color here,
+
+right, you can see that?
+
+Let's do that again just in case you didn't see it.<br /><br />
+And so, yeah, it gives us a different color.<br /><br />
+And so, yeah, that can be quite useful for development.<br /><br />
+You could actually even save this log
+
+to a file but that's a bit too much
+
+for this small example,
+
+so this is more than enough
+
+and you will see throughout the course
+
+that it's kind of useful to actually have it here.<br /><br />
+Okay, this is how we use third-party middleware
+
+from npm and there is a lot of middleware on there
+
+and let me actually show that to you.<br /><br />
+So, on the Express site itself,
+
+so expressjs.com and we actually never visited this website,
+
+so it's actually quite nice,
+
+so you have this Getting started
+
+with a couple of articles explaining the basics
+
+of Express and then you have a nice API reference
+
+in our case, 4.x and so, here you have all of the methods
+
+that are on the request,
+
+so methods on properties of course,
+
+so all of this stuff that we have,
+
+for example, requests.body that we already used
+
+or here on the response,
+
+you have, for example, response.json
+
+or response.send
+
+and there's a bunch of other methods
+
+and we will use many of them later on
+
+but then here you have these resources
+
+and the one that I wanna show you
+
+is middleware and so, this is a bunch of middleware
+
+that you can use
+
+and that Express recommends, okay?
+
+And again, we will use some of them a bit later
+
+and actually Express recommends these
+
+because many of these used to be built in in Express 3,
+
+so in a previous version
+
+but were then taken out of Express.<br /><br />
+For example, <span class="notranslate">body.parser</span> is one of them
+
+but actually in version four point,
+
+I believe 14 or 16, it was added back
+
+and so that's why we were able to do let's see,
+
+where is it?
+
+Yeah, that's why we were able to use expression.json
+
+in order to parse the data from the body.<br /><br />
+Before that, we actually would have to use the <span class="notranslate">body.parser</span>
+
+from npm and use that one to parse the data from the body
+
+but again, they just recently added it back
+
+to reduce the confusion a bit for beginners like yourself.<br /><br />
+Okay, so play around a little bit
+
+with this reference.<br /><br />
+Take a look at some of the stuff
+
+maybe that we already did if you feel like it
+
+or if not, you can always just move on
+
+right to the next video.
+</body>
+</html>

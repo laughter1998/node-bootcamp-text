@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Up until this point,
+
+we have just written our code without thinking much
+
+about our application architecture.<br /><br />
+It wasn't really important until now,
+
+but now that our app is really starting to grow,
+
+we need to start worrying
+
+about the way that we design, or code architecture.<br /><br />
+And this lecture will just be a brief introduction
+
+to back-end architecture.<br /><br />
+Starting with the MVC architecture.<br /><br />
+So, in this project, we're going to use
+
+a widely used and well known architecture
+
+called the model, view, controller
+
+or MVC for short.<br /><br />
+And there are different ways
+
+of implementing the MVC architecture,
+
+some more complex than others,
+
+but we're going to implement it
+
+in a very straightforward way here.<br /><br />
+I just wanted to let you know that
+
+if you Google around for MVC,
+
+you'll find it implemented in some different ways.<br /><br />
+Okay, anyway, in this architecture,
+
+the model layer is concerned
+
+with everything about applications data,
+
+and the business logic.<br /><br />
+And we're going to learn what business logic means
+
+in the next slide.<br /><br />
+Next up, we have the controller layer
+
+and the function of the controllers
+
+is to handle the application's request,
+
+interact with models,
+
+and send back responses to the client.<br /><br />
+And all that is called the application logic.<br /><br />
+Finally, the view layer is necessary
+
+if we have a graphical interface in our app.<br /><br />
+Or in other words, if we're building
+
+a server-side rendered website,
+
+as we talked about before.<br /><br />
+In this case, the view layer consists basically
+
+of the templates used to generate the view,
+
+so the website that we're going to send back to the client.<br /><br />
+And that is the presentation logic.<br /><br />
+For now, we're just building an API though,
+
+so we're not really concerned about views just yet.<br /><br />
+That's for a bit later in the course.<br /><br />
+So using a pattern, or an architecture like this
+
+allows us to write a more modular application,
+
+which is going to be way easier to maintain in scale,
+
+as necessary.<br /><br />
+And we could take it even further,
+
+and add more layers of abstraction here.<br /><br />
+But in this kind of smaller application,
+
+the MVC architecture is more than enough for our needs.<br /><br />
+Now, all this may sound a bit abstract,
+
+so let's take a look at MVC in the context of our app,
+
+and the request-response cycle.<br /><br />
+So as always, it all starts with a request.<br /><br />
+That request will hit one of our routers,
+
+because remember, we have multiple routers.<br /><br />
+Basically, one for each resource,
+
+like tours, users, et cetera.<br /><br />
+Now the goal of the router is to delegate the request
+
+to the correct handler function,
+
+which will be in one of the controllers.<br /><br />
+And again, there will be one controller
+
+for each of our resources,
+
+to keep these different parts of the app nicely separated.<br /><br />
+Then, depending on the incoming request,
+
+the controller might need to interact
+
+with one of the models,
+
+for example to retrieve
+
+a certain document from the database,
+
+or to create a new one.<br /><br />
+Once more, there is one model file for each resource.<br /><br />
+After getting the data from the model,
+
+the controller might then be ready to send back a response
+
+to the client, for example, containing that data.<br /><br />
+Now, in case we want to actually render a website,
+
+there is one more step involved.<br /><br />
+In this case, after getting the data from the model,
+
+the controller will then select
+
+one of the view templates and inject the data into it.<br /><br />
+That rendered website will then be sent back
+
+as the response.<br /><br />
+In the view layer in an Express app
+
+there is usually one view template for each page.<br /><br />
+Like a tour overview page,
+
+a tour detail page, or a login page.<br /><br />
+In the example of our latest app of course.<br /><br />
+So, that is a broad overview of the architecture
+
+that we're going to implement in this project.<br /><br />
+Now to finish, let me just go into
+
+a bit more detail on model and controller.<br /><br />
+So, one of the big goals of MVC
+
+is to separate business logic
+
+from application logic.<br /><br />
+You'll hear about these types of logic all the time
+
+when you browse Stack Overflow,
+
+or some site like that.<br /><br />
+But what are these types of logic actually?
+
+Well, the difference is a bit opinionated,
+
+but this is my take on it:
+
+So, application logic is all the code
+
+that is only concerned about
+
+the application's implementation
+
+and not the underlying business problem
+
+that we're actually trying to solve with the application.<br /><br />
+Like showing and selling tours,
+
+managing stock in a supermarket,
+
+or organizing a library, for example.<br /><br />
+So again, application logic
+
+is the logic that makes the app actually work.<br /><br />
+For example, a big part of application logic in Express,
+
+is all about managing requests and responses.<br /><br />
+So, in a sense, we can also say
+
+that application logic is more about technical stuff.<br /><br />
+Also, if we have views in our app,
+
+the application logic serves
+
+as a bridge between model and view layers
+
+So that we never mix business logic
+
+with presentation logic.<br /><br />
+All right?
+
+Now, about business logic,
+
+it's all the code that actually solves the business problem
+
+that we set out to solve.<br /><br />
+Let's say again, that our goal is to show tours to customers
+
+and then sell them.<br /><br />
+And the code that is directly related to the business rules,
+
+to how the business works,
+
+and the business needs, is business logic.<br /><br />
+Now if that still sounds a bit too philosophical,
+
+some examples in the context of our latest app
+
+are creating new tours in the app's database,
+
+checking if a user's password is correct when he logs in,
+
+validating user input data,
+
+or ensuring that only users who bought a certain tour
+
+can review it.<br /><br />
+So all this stuff is concerned with the business itself,
+
+and so it's part of the business logic.<br /><br />
+Now, we need to keep in mind that
+
+application logic and business logic
+
+are almost impossible to completely separate,
+
+and so sometimes they will overlap.<br /><br />
+But we should do our best efforts
+
+to keep the application logic in our controllers
+
+and business logic in our models.<br /><br />
+And there is even this philosophy of
+
+fat models, thin controllers,
+
+which says we should offload
+
+as much logic as possible into the models,
+
+to keep the controllers as simple and lean as possible.<br /><br />
+So a fat model will have as much business logic
+
+as we can offload to it,
+
+and a thin controller will have as little logic as possible,
+
+so that the controller is
+
+really mostly for managing the application's requests
+
+and responses.<br /><br />
+Okay?
+
+So, now keep all this in mind as we move on
+
+and progress into building our applications.
+</body>
+</html>

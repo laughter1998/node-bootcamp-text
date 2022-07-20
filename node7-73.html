@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In this video you are gonna learn how
+
+to install MongoDB on a Windows computer,
+
+so if you're using a Mac
+
+please just mark this video as completed.<br /><br />
+Now since I personally don't own any Windows computer and
+
+this installation involves a couple of
+
+Windows specific steps,
+
+I asked my teaching assistant Aleksander,
+
+to take you through the process.<br /><br />
+So everyone say hi to Aleksander.<br /><br />
+Hello guys my name is Aleksander and
+
+in this lecture I will show you how
+
+to install MongoDB on your Windows machine.<br /><br />
+First you need to open your browser and
+
+go to the MongoDB.com website,
+
+you can see the address right here.<br /><br />
+Then you need to click on products and
+
+choose MongoDB server, okay?
+
+Now click on this green download button.<br /><br />
+And once again choose server from here.<br /><br />
+Okay, now we want to install this
+
+MongoDB Community Server and
+
+we have a couple of options here,
+
+so please choose the current release,
+
+which at this point of time is the 4.0.9, okay?
+
+As the operating system please choose Windows,
+
+and I would just stick with this default MSI package, okay?
+
+So after setting this up you can just hit
+
+this download button, or
+
+in case it doesn't work for you,
+
+just copy the link below and
+
+paste it in the address bar, okay?
+
+So now we should see this pop-up that will ask you if
+
+you want to save this file,
+
+just click save file and
+
+it should start downloading okay?
+
+So I will just stop this because
+
+I already have this file.<br /><br />
+Okay? But after downloading it you can just
+
+close the browser,
+
+open your File Manager,
+
+go to Downloads.<br /><br />
+And you can see the installer is already there, all right?
+
+So double click on that,
+
+and now you should see the Setup Wizard okay?
+
+Click next,
+
+accept the license,
+
+and click to install this complete version, okay?
+
+And now it will ask you if
+
+you want to install MongoDB as a service,
+
+which basically means that
+
+Mongo's server will run in the background,
+
+so you can check this, click next.<br /><br />
+It will also ask you to install MongoDB Compass,
+
+which is the graphical user interface,
+
+so we can also check this and click next.<br /><br />
+And now just click install,
+
+and you may see some windows pop-up that
+
+will ask you if you want to allow this App to
+
+be installed on your device, okay?
+
+So in that case just click yes.<br /><br />
+And now it should start the installation process,
+
+it will take about five to ten minutes,
+
+So I'll be right back to you after the installation.<br /><br />
+All right, now just let this compass install,
+
+okay you can see the shortcut right here,
+
+and this is basically the compass community window,
+
+so you can close this,
+
+click this finish button,
+
+and now we have two more things to do.<br /><br />
+First we need to create a directory in
+
+which MongoDB will store our data.<br /><br />
+For this please open your file manager once again,
+
+and go to the disk where MongoDB was installed,
+
+so in my case it's Local Disk C.<br /><br />
+Here create a directory called data,
+
+so right click here,
+
+new
+
+folder
+
+and call this folder Data, okay?
+
+Now inside this data folder,
+
+create another one called DB.<br /><br />
+All right, so this is the place where
+
+MongoDB will store our databases.<br /><br />
+Now let me quickly show you that
+
+MongoDB actually works,
+
+so I'm going to Local Disk C,
+
+Program Files,
+
+find MongoDB here,
+
+go to server,
+
+4.0, and we are interested in this bin directory, okay?
+
+So we can see there is a lot of files here,
+
+but basically we are interested in this MongoD file,
+
+which is Mongo's server and
+
+in this Mongo.exe file which is Mongo Shell, okay?
+
+So let me just copy the path from here and
+
+open my console,
+
+and by the way I'm using PowerShell but
+
+you can also use the Command Prompt, okay?
+
+It doesn't matter in this case.<br /><br />
+So I'm using the CD commands to
+
+go to this directory,
+
+you can also write this DIR command to
+
+list all the files,
+
+and if you compare them you can see that
+
+all these files are the same, okay?
+
+So we are in the same bin directory.<br /><br />
+And now let me just run this MongoD server,
+
+so Mongod.exe, you can hit tab to auto complete this,
+
+and I'm just hitting Enter and you can see that
+
+the server is starting, okay?
+
+So if you take a look at this line you can see that
+
+it's waiting for connections on port 27017,
+
+so we've basically started a server and
+
+now we need a shell to connect to the server to
+
+be able to manipulate our databases, okay?
+
+So we'll be able to create databases,
+
+delete databases,
+
+to records, etc.<br /><br />
+All right,
+
+I will just open another PowerShell window to
+
+demonstrate it to you.<br /><br />
+And just CD to the same bin directory,
+
+but now run this Mongo.exe, okay?
+
+So this is the Mongo Shell,
+
+and you can see that we've automatically connected to
+
+the same port okay?
+
+And now I would just run the DB command
+
+and I should get the test database in return, okay?
+
+And that's right.<br /><br />
+So now you see that everything works, okay?
+
+In this PowerShell we are running the server,
+
+in this PowerShell window we've connected to the server,
+
+okay?
+
+And now we can just close this process using Control + C.<br /><br />
+I will also close the server, okay.<br /><br />
+And there is actually one more thing to do,
+
+so what if I would like to run this Mongo server from
+
+another directory, okay?
+
+Let me just show it to you.<br /><br />
+I will open another PowerShell window,
+
+and now we can see that I'm currently in my user directory,
+
+so I'm in C:\Users\Aleksander and
+
+I want to open MongoDB server from here,
+
+let me just write this command,
+
+so Mongod.exe
+
+and there is an error, okay?
+
+So it says "The term mongod.exe is not recognized as
+
+the name of cmdLet, function,
+
+script file, or operable program."
+
+So basically Windows don't know where to look for
+
+this MongoD.exe file, okay?
+
+So it thinks this file should be in
+
+my user directory,
+
+but of course this file doesn't exist here,
+
+because it comes from MongoDB bin directory.<br /><br />
+So we need to find a way to tell Windows to
+
+look for this file in that
+
+bin directory, okay?
+
+And we can actually do this using system variables.<br /><br />
+So let's close these windows for now,
+
+and I will open settings,
+
+And here in the search bar just write Env, okay?
+
+And click on this "Edit the system environment variables"
+
+so now you should see this small window,
+
+it's called System Properties,
+
+we are in the Advanced tab,
+
+and here just click on this
+
+Environment Variables button, okay?
+
+And we are interested in the system variables,
+
+Path variable, okay?
+
+Click edit, and you can see that
+
+there is a couple of Paths added here,
+
+for example, I have added NodeJS and Git,
+
+so I'm able to run Node from anywhere,
+
+and we will add MongoDB here as well.<br /><br />
+So let me just copy the Path from here,
+
+so this is this bin directory okay.<br /><br />
+And I will just create another variable here and
+
+paste this Path here.<br /><br />
+Now we can just click Okay,
+
+once again click Okay,
+
+you can close this window,
+
+and let's test it in PowerShell, okay?
+
+So you can see that I'm currently in my user directory,
+
+and I will run MongoD.exe once again.<br /><br />
+And you can see that everything works just fine, okay?
+
+So the server is running on the same port as before
+
+and it's ready to use, all right?
+
+So you can close this,
+
+and this is all.<br /><br />
+So we've installed MongoDB and MongoDB Compass on
+
+our Windows computer,
+
+we've created a directory called Data to
+
+store our databases,
+
+and we've also added MongoDB to the Path,
+
+so we are able to run MongoDB commands from
+
+anywhere in our system.
+</body>
+</html>

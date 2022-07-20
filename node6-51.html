@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So now that we know what Express is,
+
+we're almost ready to start building our API.<br /><br />
+But before we do that,
+
+I need to quickly talk about APIs on a higher level,
+
+and more importantly,
+
+introduce you to the REST Architecture
+
+which is the most used API architecture today.<br /><br />
+This way, we will actually know what we're building.<br /><br />
+So it's extremely important to understand the stuff
+
+in this video before moving on,
+
+so that we actually know what we're building
+
+throughout the rest of the course.<br /><br />
+First of all,
+
+API stands for Application Programming Interface
+
+and on a very high level,
+
+it's basically a piece of software that can be used
+
+by another piece of software
+
+in order to allow applications to talk to each other.<br /><br />
+We have actually talked about APIs before,
+
+more specifically, web APIs,
+
+where we simply built an app that sends data
+
+to a client whenever a request comes in.<br /><br />
+Imagine we have our app running on a server
+
+and we have a client.<br /><br />
+So in fact, we effectively have two pieces of software
+
+talking to each other, right?
+
+And this is the kind of API we will build in this course.<br /><br />
+And I guess it's the most widely used type of API out there.<br /><br />
+But in fact, APIs aren't only used to send data,
+
+and aren't always related to web development or JavaScript.<br /><br />
+The application in API can actually mean
+
+many different things as long as the piece of software
+
+is relatively stand alone.<br /><br />
+Take for example,
+
+the Node File System, or the HTTP Modules.<br /><br />
+We can say that they are small pieces of software
+
+and we can use them,
+
+we can interact with them by using their API.<br /><br />
+For example,
+
+when we use the readfile function from the FS Module,
+
+we are actually using the FS API.<br /><br />
+And that's why you will sometimes hear the term node APIs.<br /><br />
+And that usually simply refers to the core node modules
+
+that we can interact with.<br /><br />
+Or when we do DOM manipulation in the browser,
+
+we are not really using the JavaScript language itself,
+
+but rather, the DOM API that the browser exposes to us,
+
+so it gives us access to it.<br /><br />
+Or even another example,
+
+let's say we create a class in any programming language
+
+like Java and then add some public methods
+
+or properties to it.<br /><br />
+These methods will then be the API of each object
+
+created from that class because we're giving
+
+other pieces of software the possibility
+
+of interacting with our initial piece of software,
+
+the objects, in this case.<br /><br />
+You see, API has actually a broader meaning
+
+than just building web APIs.<br /><br />
+Alright? Anyway, a web API is what's most important
+
+for us in the context of note.<br /><br />
+Let's now take a look at the REST Architecture
+
+to build APIs.<br /><br />
+REST, which stands for Representational States Transfer,
+
+is basically a way of building web APIs in a logical way,
+
+making them easy to consume
+
+because remember, we build an API for ourselves
+
+or for others to consume, okay?
+
+We want to make the process of actually using the API
+
+as smooth as possible for the user.<br /><br />
+Now, to build RESTful APIs,
+
+which means APIs following the REST Architecture,
+
+we just need to follow a couple of principles.<br /><br />
+First, we need to separate our API into logical resources.<br /><br />
+These resources should then be exposed,
+
+which means to be made available
+
+using structured, resource-based URLs.<br /><br />
+To perform different actions on data
+
+like reading or creating or deleting data,
+
+the API should use the right HTP methods and not the URL.<br /><br />
+Now, the data that we actually send back to the client
+
+or that we received from the client
+
+should usually use the JSON data format,
+
+where some formatting standard applied to it.<br /><br />
+Finally, another important principle of REST APIs
+
+is that they must be stateless.<br /><br />
+So this is a very broad overview.<br /><br />
+Let's now start talking about these principles
+
+one-by-one starting with resources
+
+and using the Nators API that we're gonna build
+
+in this course as an example here.<br /><br />
+The key abstraction of information in REST is a resource,
+
+and therefore all the data that we wanna share
+
+in the API should be divided into logical resources.<br /><br />
+Now, what actually is a resource?
+
+Well, in the context of REST,
+
+it is an object or a representation of something
+
+which has some data associated to it.<br /><br />
+For example,
+
+tours, or users, or reviews in the case
+
+of the example that we are following.<br /><br />
+So basically, any information that can be named
+
+can be a resource, alright?
+
+It just has to be a name, though, not a verb.<br /><br />
+Now, we need to expose,
+
+which means to make available,
+
+the data using some structured URLs
+
+that the client can send a request to.<br /><br />
+For example, something like this.<br /><br />
+This entire address is called the URL
+
+and this /addNewTour is called an API Endpoint.<br /><br />
+Our API will have many different endpoints
+
+just like this fictional endpoints that I have here,
+
+each of which will send different data back to the client
+
+or also perform different actions.<br /><br />
+Now, there's actually something very wrong
+
+with these endpoints here because they really don't follow
+
+the third rule which says that we should only use
+
+the HTTP methods in order to perform actions on data.<br /><br />
+So, endpoints should only contain our resources
+
+and not the actions that can be performed on them
+
+because they will quickly become a nightmare to maintain.<br /><br />
+How should we use these HTTP methods in practice?
+
+Well, let's see how these endpoints
+
+should actually look like starting with /getTour.<br /><br />
+So this /getTour endpoint is to get data about a tour.<br /><br />
+And so we should simply name the endpoint /tours
+
+and send the data whenever a get request
+
+is made to this endpoint.<br /><br />
+So in other words,
+
+when a client uses a GET HTTP method
+
+to access the endpoint.<br /><br />
+And just like this,
+
+we only have resources in the endpoint
+
+or in the URL and no verbs because the verb
+
+is now in the HTTP method, right?
+
+And by the way,
+
+it's a common practice to always use the resource name
+
+in plural which is why I have /tours here and not /tour.<br /><br />
+Now, the convention is that when calling that endpoint,
+
+we get back all the tours that are in a database, okay?
+
+But if we only want the tour with one I.D.,
+
+let's say seven, we add that seven after another slash
+
+or in a search query.<br /><br />
+Or it could also be the name of a tour instead of the I.D.,
+
+or some other unique identifier.<br /><br />
+The detail doesn't really matter at this point, alright?
+
+Later, I will show you how easy it is to actually implement
+
+this kind of logic with Express
+
+because this is actually where Express really shines.<br /><br />
+The first HTTP method or verb
+
+that we can respond to is GET
+
+and it's used to perform the Read operation on data.<br /><br />
+Next stop, if the client wants
+
+to create a new resource in our database,
+
+in this example, a new tour,
+
+the POST method should be used.<br /><br />
+So we learned earlier that a POST request can be used
+
+to send data to the server,
+
+and so it makes sense to use POST
+
+in order to create new resources, right?
+
+Now in this case, usually no I.D. will be sent
+
+because the server should automatically figure out
+
+the I.D. for the new resource.<br /><br />
+Anyway, what's really important to note here
+
+is how the endpoint name is the exact same name as before.<br /><br />
+The only difference is really the HTP method
+
+that is used for the request.<br /><br />
+If the /tours endpoint is accessed with GET,
+
+we send data to the client.<br /><br />
+But if the same endpoint is accessed with POST,
+
+we expect data to come in with a request,
+
+so that we can then create a new resource
+
+on the server side.<br /><br />
+So that is really the beauty of only using HTTP methods
+
+rather than messing with verbs in endpoint names.<br /><br />
+Again, it would really become unmanageable very quick.<br /><br />
+Alright, next, there should also be
+
+the ability to update resources.<br /><br />
+And for that,
+
+either a PUT or a PATCH request
+
+should be made to the endpoint.<br /><br />
+The difference between them is that with PUT,
+
+the client is supposed to send the entire updated object,
+
+while with PATCH,
+
+it is supposed to send only the part of the object
+
+that has been changed.<br /><br />
+But both of them have the ability
+
+to send data to the server.<br /><br />
+A bit like POST, actually, but with a different intent.<br /><br />
+So POST is to create a new resource,
+
+while PUT or PATCH are used
+
+to update an existing resource
+
+and so it then makes all the difference.<br /><br />
+And finally, to the litter resource,
+
+there is the DELETE HTTP method.<br /><br />
+Again, the I.D. or some other unique identifier
+
+of the resource to be deleted
+
+should be part of the URL.<br /><br />
+Now, usually, in order to actually be able
+
+to perform this kind of request,
+
+the client must be authenticated.<br /><br />
+So basically, log into your app, okay?
+
+But that is, of course, a topic for much later.<br /><br />
+So these are the five HTTP methods
+
+that we can and should respond to
+
+when building our RESTful APIs
+
+so that the client can perform
+
+the four basic CRUD operations.<br /><br />
+So CRUD stands for Create, Read, Update and Delete.<br /><br />
+And you will see this term all the time
+
+related to APIs and database stuff.<br /><br />
+And you see that these HTTP methods
+
+map quite nicely to the basic CRUD operations.<br /><br />
+Now, there might be actions that are not CRUD,
+
+and in that case,
+
+we just need to get creative with our inputs.<br /><br />
+For example,
+
+a log in or a search operation,
+
+these are not really related to a particular resource
+
+and they're not CRUD operations either,
+
+but we still can create endpoints for them.<br /><br />
+For example, like /login or /search.<br /><br />
+But we'll talk more about these cases later in practice.<br /><br />
+And just to finish this part now,
+
+remember that we had two other crazy endpoint names
+
+in the last slide which kind of involved
+
+two resources at the same time, right?
+
+And that's also no problem at all with REST.<br /><br />
+So, /getToursByUser can simply be translated
+
+to /users/tours,
+
+in this case, user number three.<br /><br />
+So this particular endpoint here
+
+could send data about all the tours
+
+that user number three has booked.<br /><br />
+Makes sense?
+
+Or in the case of deleting,
+
+there could be a delete request to the same
+
+or a very similar endpoint,
+
+requesting tour number nine to be deleted
+
+from user number three, okay?
+
+So there really are a tons of possibilities
+
+of combining resources like this.<br /><br />
+But of course, we don't have to implement
+
+all these combinations in our API.<br /><br />
+We only implement what makes sense
+
+in the case of our application
+
+and the client that wants to consume our API.<br /><br />
+So, this is how we make use of HTTP methods
+
+to build user-friendly and nicely structured URLs
+
+that are easy and logical to consume for the client.<br /><br />
+Now, about the data that the client actually receives,
+
+or that the server receives from the client,
+
+usually, we use the JSON Data Format.<br /><br />
+And so let's briefly learn what JSON actually is
+
+and how to format our API responses.<br /><br />
+JSON is a very lightweight data interchange format
+
+which is heavily used by web APIs
+
+coded in any programming language.<br /><br />
+So it's just not related to a JavaScript.<br /><br />
+And it's so widely used today
+
+because it's really easy for both humans and computers
+
+to understand and write JSON.<br /><br />
+So you're probably already noticing that JSON
+
+looks a bit like a regular JavaScript object, right?
+
+With all these key-value pairs.<br /><br />
+There are, however, some differences,
+
+and the most important one is that all the keys
+
+have to be strings.<br /><br />
+It's also very typical for the values
+
+to be strings as well but they can be other things
+
+like numbers, true or false values, other object,
+
+or even arrays of other values.<br /><br />
+It's quite straighforward, actually.<br /><br />
+And from this example,
+
+you can kind of see how some typical JSON might look like.<br /><br />
+Let's say that this is a data that we have in our database
+
+for a GET request to this URL
+
+so the tour with I.D. of five.<br /><br />
+Now, we could send it back like this to the client,
+
+but we usually do some simple response formatting
+
+before sending.<br /><br />
+There are a couple of standards for this
+
+and we're gonna use a very simple one called Jsend.<br /><br />
+We simply create a new object,
+
+then add a status message to it
+
+in order to inform the client whether the request
+
+was a success, fail or error,
+
+and then we put our original data
+
+into a new object called Data, okay?
+
+And we can develop this even a bit further
+
+but this is really the simplest way
+
+of formatting with Jsend.<br /><br />
+And just, by the way,
+
+wrapping the data into an additional object
+
+like we did here is called Enveloping,
+
+and it's a common practice
+
+to mitigate some security issues and other problems.<br /><br />
+Also, there are other standards
+
+for response-formatting that you can look into,
+
+like Jsend:API or the Odata JSON Protocol.<br /><br />
+Alright, and finally,
+
+a RESTful API should always be stateless.<br /><br />
+So, what does stateless actually mean?
+
+Well, in a stateless RESTful API,
+
+all state is handled on the client
+
+and not on the server.<br /><br />
+And state simply refers to a piece of data
+
+in the application that might change over time.<br /><br />
+For example,
+
+whether a certain user is logged in
+
+or on a page with a list with several pages,
+
+what the current page is.<br /><br />
+Now the fact that the state should be handled
+
+on the client means that each request must contain
+
+all the information that is necessary to process
+
+a certain request on the server, alright?
+
+Does that make sense?
+
+So, the server should never ever have to remember
+
+the previous request in order to process
+
+the current request.<br /><br />
+Let's take the list with several pages as an example.<br /><br />
+And let's say that recurrently on page five
+
+and want to move forward to page six.<br /><br />
+So we could have a simple endpoint called /tours/nextPage
+
+and submit a request to it, right?
+
+But the server would then have to figure out
+
+what the current page is and based on that
+
+send the next page to the client.<br /><br />
+In other words,
+
+the server would have to remember the previous request.<br /><br />
+It would have to handle the state server side
+
+and that is exactly what we want to avoid
+
+in RESTful APIs, okay?
+
+Instead, in this case,
+
+we should create a /tours/page endpoint
+
+and paste the number six to it
+
+in order to request page number six.<br /><br />
+This way, we would then state on the client
+
+because on a client,
+
+we would already know that we're on page five
+
+and so all we had to do is to just add one
+
+and then request page number six.<br /><br />
+So the server doesn't have
+
+to remember anything in this case.<br /><br />
+All it has to do is to send back data
+
+for page number six as we requested.<br /><br />
+And by the way, statelessness and statefulness,
+
+which is the opposite,
+
+are very important concepts in computer science
+
+and application design in general.<br /><br />
+So, it's a good idea to actually have some understanding
+
+what a stateless API is and how it works.<br /><br />
+Anyway, this was a huge lecture,
+
+but also one of the most important ones.<br /><br />
+I cannot stress that enough and I actually think
+
+that you can see that, right?
+
+Anyway, let's now finally get back to our code.
+</body>
+</html>

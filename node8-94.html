@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now take a small break
+
+from building our API
+
+and build a fun little script
+
+that will import the tour data from our JSON file
+
+into the MongoDB database.<br /><br />
+And I wasn't really sure
+
+if I should include this video in the course
+
+or if I should just come with the script
+
+already in the course starter files.<br /><br />
+But I thought I thought it was a nice little exercise
+
+and so I included it anyways.<br /><br />
+So, anyway, let's now get started.<br /><br />
+So, basically we're gonna create a script
+
+that will simply load the data from the JSON file
+
+as I just said into the database.<br /><br />
+And this script is completely independent
+
+of the rest of our express application.<br /><br />
+And so we'll run this completely separately
+
+from the comment line just to import everything once.<br /><br />
+Okay, so let me actually create the script
+
+right here in the data folder.<br /><br />
+So new file,
+
+import,
+
+dev data.js.<br /><br />
+All right.<br /><br />
+So, what are we gonna need for this?
+
+We will need mongoose of course
+
+so let's start with that.<br /><br />
+Or actually, let's just go ahead into the server.js file
+
+and copy this stuff
+
+because why writing it all over again.<br /><br />
+So let's copy everything
+
+and then delete what we don't need.<br /><br />
+So we don't need our express application
+
+we also need the .env package
+
+because we need our environment variables
+
+in order to be able to connect to the database again, okay.<br /><br />
+And we need to connect to the database in this script
+
+again because it runs completely independent
+
+from the express application.<br /><br />
+It's only gonna run once in the beginning.<br /><br />
+Next up, we need access to the file system module
+
+because of course we want to read the JSON file.<br /><br />
+So require fs
+
+and finally we also need access to the tour model
+
+because the tour model is
+
+where we want to write the tours to, right?
+
+So, tour equals
+
+and now let's find the path there
+
+so from the place where we are right now
+
+we need to go up one level.<br /><br />
+And what's going on here with these quotes?
+
+All right, so one level up
+
+and we're in dev data.<br /><br />
+So we need another level up
+
+so that we're in the main folder.<br /><br />
+And from there we go in to models
+
+and into the tour model.<br /><br />
+Okay and that should be it for setup.<br /><br />
+Now let's start by reading the file.<br /><br />
+So, read JSON file
+
+and that should be fairly simple.<br /><br />
+So the tours are at fs.readfile
+
+and we can use the synchronous version of course.<br /><br />
+And let's simply say tours simple.json, okay.<br /><br />
+And then,
+
+also the encoding.<br /><br />
+So, file encoding, utf eight.<br /><br />
+Give it a save.<br /><br />
+And so now we can write the actual function
+
+that is gonna import the data into the database.<br /><br />
+So import data into database.<br /><br />
+Okay, just like this.<br /><br />
+And so let's create this function.<br /><br />
+Import data, import data,
+
+yep.<br /><br />
+And that's gonna be and async function
+
+which does not need any arguments
+
+and so let's again use a try catch block here.<br /><br />
+And here I'm simply gonna log it to the console
+
+if there is some error,
+
+just to know what's going on in that case.<br /><br />
+And now here,
+
+what we will do is very simple.<br /><br />
+We are simply gonna await,
+
+tour.create.<br /><br />
+So we already used tour.create
+
+and we pass then an object back then right?
+
+But the create method can also accept an array of objects.<br /><br />
+And in that case
+
+it will then simply create a new document
+
+for each of the objects in the array.<br /><br />
+So, very simple,
+
+all we have to do is to specify our tours data here, right?
+
+And actually it's not 100% correct
+
+because remember that this is JSON.<br /><br />
+And so we need to first convert it actually
+
+into a JavaScript object using json.parse.<br /><br />
+Okay and so now we actually have
+
+an array of JavaScript objects
+
+that we can now pass into the create method, okay.<br /><br />
+And if that was successful,
+
+then the next line is gonna be executed
+
+and so here we can say data successfully
+
+loaded, all right.<br /><br />
+And this should already do the job.<br /><br />
+Now what about the data that is already in the database?
+
+We can also create an easy way
+
+to basically delete all of that data at the same time.<br /><br />
+And so let's simply go ahead and do that as well.<br /><br />
+So, delete all data
+
+from collection, let's say.<br /><br />
+And this weird yellow color that you see here
+
+actually comes from an extension that I have installed here.<br /><br />
+And so to get rid of that,
+
+I'm simply gonna write database again, okay.<br /><br />
+So delete data
+
+and again this is gonna be an async function
+
+without any arguments.<br /><br />
+And let me actually copy this code here.<br /><br />
+So, delete it
+
+and now about the deleting itself
+
+we can use the delete many function.<br /><br />
+Okay and actually I showed you this one
+
+back in the intro to MongoDB, right?
+
+Where we could use delete many
+
+and then simply pass in nothing in there
+
+and that would then delete
+
+all of the documents in a certain collection, right?
+
+And so mongoose basically implemented
+
+the same function here on the model, okay.<br /><br />
+So in this case,
+
+the tour model has access to this delete many method
+
+which will then do exactly the same
+
+as delete many does in native MongoDB, right?
+
+So, remember that mongoose is just a,
+
+like a layer of abstraction on top of MongoDB.<br /><br />
+Which is why it doesn't use the exact same functions
+
+but it still gives us access to some similar ones
+
+or to ones that actually have the same name.<br /><br />
+So delete many actually has the same name
+
+as the native MongoDB function, all right?
+
+So again, what this is gonna do is to simply go ahead
+
+and delete all the documents in the tours collection.<br /><br />
+So, we have our two functions here
+
+but if we now actually run this file
+
+then nothing will happen.<br /><br />
+And that's because
+
+we're not calling any of these functions anywhere, right?
+
+Now we could go ahead
+
+and simply write something like import data here
+
+and then simply call the function here
+
+but I wanted to make this a little bit more fun.<br /><br />
+So let's now actually learn a tiny little bit
+
+about interacting with the command line, okay.<br /><br />
+And so I'm actually gonna go ahead
+
+and run this file without calling any of these functions.<br /><br />
+But instead I'm gonna log to the console
+
+process.argv,
+
+okay.<br /><br />
+Just so we can see what process.argv actually is
+
+so that we can then use it.<br /><br />
+All right.<br /><br />
+Let me open up here another terminal
+
+and then I will use node,
+
+go into dev data
+
+then into data
+
+and then in there import dev data.<br /><br />
+And we get some errors here.<br /><br />
+Let's see where.<br /><br />
+Ah, yeah so it's because of this,
+
+of this file name.<br /><br />
+So I guess we should specify the path to there basically.<br /><br />
+So let's run this one again
+
+and again we have this error.<br /><br />
+And yeah, of course I get this error.<br /><br />
+That's a stupid one.<br /><br />
+Remember how I told you
+
+that this dot here is always relative from the folder
+
+where the node application was actually started.<br /><br />
+And so that's the home folder.<br /><br />
+And so we're basically looking for this file here
+
+in the home folder, okay.<br /><br />
+So what I should use instead is the dir name,
+
+variable that is available to us everywhere.<br /><br />
+So that goes like this.<br /><br />
+All right.<br /><br />
+Give it another save
+
+and clear up the console and run it again.<br /><br />
+And so now it works.<br /><br />
+And so here
+
+is the result of this console.log that we have down here,
+
+So process.argv
+
+and basically that is an array
+
+of these two arguments of running this node process.<br /><br />
+So, this here is basically
+
+where the node command is located.<br /><br />
+So this equivalent to this node
+
+and then the second one,
+
+so this path to this file is actually this here, okay.<br /><br />
+So let's quit this here
+
+and let's add kind of an option here.<br /><br />
+So I'm gonna write,
+
+dash, dash import
+
+and so I'm sure you have seen something like this
+
+many times before.<br /><br />
+For example, when we save a package as a dev dependency
+
+we do it like this.<br /><br />
+Save dev, and so we use the same
+
+kind of format for specifying options.<br /><br />
+Okay so, dash dash
+
+and then whatever string we put here.<br /><br />
+And so I choose to basically specify
+
+the import option like this.<br /><br />
+And so you see that now the third argument
+
+is dash dash import, all right?
+
+And so that means that we can now go ahead
+
+and basically use this data here
+
+in order to write
+
+a very simple command line application basically
+
+which will import the data when we specify this option
+
+and will delete the data
+
+when we specify the delete option, all right?
+
+So, let's actually do that.<br /><br />
+So, if
+
+process.argv
+
+and it's an array
+
+and we want the third.<br /><br />
+So zero, one, two.<br /><br />
+So if that element is equal to import
+
+well, then we want to run import data.<br /><br />
+Right?
+
+If...<br /><br />
+Process.argv two
+
+is equal,
+
+to delete then we want to run
+
+delete data.<br /><br />
+And that's it.<br /><br />
+So, that should actually give us
+
+the result that we're looking for.<br /><br />
+Let's finish this here.<br /><br />
+And so now let's run the command here
+
+with delete in order to delete all the data
+
+that we have in the database.<br /><br />
+So let's try that out.<br /><br />
+It's doing something
+
+and data successfully deleted.<br /><br />
+So let's take a look at that now.<br /><br />
+And if we run now this get all tours route
+
+then indeed we have zero results.<br /><br />
+So, all our tours are now gone.<br /><br />
+So it worked.<br /><br />
+Now this process here is basically still running.<br /><br />
+And so let's quickly fix that,
+
+which is kind of easy.<br /><br />
+So, that's a new one we haven't used yet.<br /><br />
+Which is process.exit,
+
+All right?
+
+Now this process.exit is kind of an aggressive way
+
+of stopping an application
+
+but in this case it's no problem
+
+because it's really just a very small script
+
+that we're running here and not a real application, right?
+
+Let's just copy the same thing here
+
+into our import data function.<br /><br />
+And so now I'm gonna quit it.<br /><br />
+And just to show that it works
+
+I'm gonna run it again
+
+so data successfully deleted
+
+and then it exited the process.<br /><br />
+All right.<br /><br />
+And so now it's time to actually run the function
+
+that we were interested in in the first place.<br /><br />
+So with the import flag, basically.<br /><br />
+So the import option.<br /><br />
+So let's run that
+
+and let's see if it actually works.<br /><br />
+And it didn't.<br /><br />
+So why is that?
+
+So it tells us here a tour must have a group size.<br /><br />
+So where's that coming from?
+
+And we see a lot of validation errors here.<br /><br />
+So something must have gone wrong here.<br /><br />
+So yeah, we have the cover image,
+
+we have the tour description.<br /><br />
+We have the price.<br /><br />
+Well, that's weird.<br /><br />
+Max group size,
+
+let me actually check if anything happened here.<br /><br />
+Actually we have nine tours here
+
+and I think nine is actually all we have.<br /><br />
+And so to me it kind of looks like it actually did work.<br /><br />
+But let's actually take a quick look at our data here.<br /><br />
+So, just to figure out why this actually happens.<br /><br />
+So tour simple here
+
+and so we can already see,
+
+actually the problem that is happening.<br /><br />
+So we have all these tours
+
+so the original ones.<br /><br />
+But then from the last section,
+
+we have these three here
+
+that we kind of added using our file based API.<br /><br />
+So, remember that?
+
+So back then we only specified the name, duration
+
+and difficulty and nothing else.<br /><br />
+And so right now
+
+our script is trying to import these three tours.<br /><br />
+But of course, we're not interested in them at all
+
+and so let's go ahead and save this here, okay.<br /><br />
+Then quit this process
+
+and so actually this process.exit
+
+can be outside of the try catch block
+
+and be simply here by the end of the function.<br /><br />
+So that no matter if there's an error or not
+
+it will always just exit the process.<br /><br />
+All right.<br /><br />
+So let's delete everything.<br /><br />
+All right, clear the console again.<br /><br />
+Now import,
+
+and yeah.<br /><br />
+So data successfully loaded.<br /><br />
+As indeed here we are again.<br /><br />
+So now it's working 100%,
+
+we have our data that we can start working with now
+
+and so, yeah.<br /><br />
+Our work with this one here is done.<br /><br />
+So, a nice little function,
+
+or a nice little script actually.<br /><br />
+I hope that everything made sense to you
+
+and yeah that it was kind of a fun exercise for you as well.<br /><br />
+Anyway, see you in the next video
+
+where we are finally starting to then use all this data
+
+and to improve our API
+
+by implementing a couple of nice features.
+</body>
+</html>

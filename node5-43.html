@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In this video, we will promisify
+
+the read file and write file functions.<br /><br />
+Which means that we will make them so
+
+that they return promises
+
+instead of us passing a callback functions into them.<br /><br />
+So if you want, it's basically a read file function
+
+that returns a promise
+
+and that only receives a file name, no callback.<br /><br />
+So let's do exactly that.<br /><br />
+So, we're gonna create a read file pro function.<br /><br />
+So pro for promise because again
+
+it returns a promise.<br /><br />
+And then all we do is to pass in the file name
+
+and as we were saying, return a promise.<br /><br />
+So, return new promise.<br /><br />
+So we use the promise constructor here
+
+which was introduced into the language with ES6.<br /><br />
+So before ES6 like ES5, ES4
+
+and all the previous versions,
+
+there was no support for promises in JavaScript.<br /><br />
+But they changed that in ES6
+
+and made the language a lot better in that regard.<br /><br />
+So regarding asynchronous JavaScript.<br /><br />
+Now this promise constructor here
+
+takes in a so called executor function,
+
+which will get called immediately when promise is created.<br /><br />
+And this function will take in two arguments
+
+so resolve and reject.<br /><br />
+So resolve and reject,
+
+but for now don't worry for them,
+
+we're gonna be talking about them in a minute.<br /><br />
+For now let's just focus on this executor function itself
+
+because this is where we actually do
+
+all this asynchronous work.<br /><br />
+In this case the read file work.<br /><br />
+So this is where we're gonna call fs.readfile
+
+with the file name that was passed in
+
+and then the usual callback function, okay.<br /><br />
+So the error and data,
+
+so just like before.<br /><br />
+So keep in mind that we're not actually
+
+changing the read file function
+
+we're simply creating a new function
+
+which behind the scenes of course still runs
+
+the built in read file function
+
+but then returns a promise
+
+so that we can use the promise
+
+instead of the callback function.<br /><br />
+Okay.<br /><br />
+So we have that read file function here
+
+which will do its work
+
+and when it's ready will come back with the data.<br /><br />
+And now this is where the resolve
+
+and the reject functions come into play.<br /><br />
+Because both these arguments that are available
+
+in the executor function they are both functions.<br /><br />
+Now calling the resolve function
+
+will basically mark the promise as successful
+
+so as fulfilled,
+
+and return the successful value from the promise.<br /><br />
+So let's actually do that.<br /><br />
+So we call resolve with data.<br /><br />
+So whatever variable that we pass into the resolve function
+
+is what will be later available
+
+as the argument in the then method, all right?
+
+So this data here will be the value
+
+that this promise returns to us, okay.<br /><br />
+That probably sounds a bit confusing, right?
+
+So again, whatever we pass into this function here,
+
+into the resolve function,
+
+is the result of the promise
+
+that will be available in the then handler.<br /><br />
+Now on the other hand,
+
+we can also mark the promise as rejected
+
+in case there was an error, okay.<br /><br />
+And we do that by calling,
+
+as you can probably guess,
+
+the reject function.<br /><br />
+So, if there was an error
+
+and this is similar to what we did before.<br /><br />
+So if there was an error here,
+
+then call the reject function.<br /><br />
+And whatever we pass into this one
+
+will be the error that is later available
+
+in the catch method.<br /><br />
+So, in this one here.<br /><br />
+Okay?
+
+So let's just pass a string in here,
+
+I could not find that file,
+
+some emoji here maybe to make it pop a bit more
+
+in our console.logs, all right?
+
+And, okay.<br /><br />
+That is actually already it.<br /><br />
+So, let's review this here again.<br /><br />
+So we created a new file,
+
+in there we will pass a file name.<br /><br />
+So this argument.<br /><br />
+And all we do here is to return this promise.<br /><br />
+This promise takes in one executor function,
+
+so this one here,
+
+which is where we do our asynchronous work.<br /><br />
+In that case here of course that is our
+
+fs.readfile.<br /><br />
+Then if we get our data in a successful way
+
+we call the resolve function
+
+with the resolve value.<br /><br />
+And if there is an error
+
+we call the reject function, okay?
+
+And so let's now actually use this in practice.<br /><br />
+Read file pro,
+
+we pass in our file name.<br /><br />
+So that's this one of course
+
+and that's it.<br /><br />
+So this will now return a promise.<br /><br />
+And so just like before
+
+we can then use our then method on that.<br /><br />
+Okay and so this data argument here
+
+will be exactly what we returned from the promise
+
+in case it was successful.<br /><br />
+So, with this resolve.<br /><br />
+So right now our dog file here
+
+contains labrador
+
+and so this data here will be labrador.<br /><br />
+And so that is then later available
+
+in our then handler here.<br /><br />
+But of course it doesn't need to have the same name,
+
+I could also call it like result or something
+
+it doesn't matter, all right?
+
+Okay, so let's now take all of this
+
+and actually put it here.<br /><br />
+Okay.<br /><br />
+Get rid of all of this, save it
+
+and that will run it.<br /><br />
+Now we get that error down here
+
+so data's not defined.<br /><br />
+That's because I changed it here to a result.<br /><br />
+So let's actually go back and change it to data
+
+because here we have data
+
+and here we have data
+
+and so this way I don't have to go ahead
+
+and change all of these variable names.<br /><br />
+Give it another save
+
+and here we go.<br /><br />
+So it worked, you see?
+
+We actually got the breed,
+
+which is still labrador
+
+and this time from our promise, okay.<br /><br />
+So, this really worked.<br /><br />
+So our read file pro function
+
+now returns a promise
+
+and that data here is then available on our then handler.<br /><br />
+Great, so it's already working
+
+and we can make it a lot better
+
+and we're gonna do that
+
+but for now I also want to promisify
+
+this write file function here.<br /><br />
+So basically, do the same as we did
+
+with the read file function.<br /><br />
+Now, if you're already know a bit about no js,
+
+maybe you're thinking that there is actually a function node
+
+that will automatically promisify functions for us.<br /><br />
+But of course I wanted to show you here
+
+how promises actually work
+
+and how we build them
+
+and so that's why I'm doing all of this here, okay.<br /><br />
+So I really want you to learn about promises,
+
+not just how we consume them
+
+but also how to build them.<br /><br />
+And so that's why I'm doing it this way.<br /><br />
+So, write file and as a promise.<br /><br />
+And this one actually doesn't only need the file name
+
+but also the data that should be written to that file.<br /><br />
+But then the logic in here is quite similar.<br /><br />
+So again, we return a new promise,
+
+in there we have our executor function
+
+which takes resolve and reject as the argument.<br /><br />
+And these are kind of standard names
+
+So resolve and reject,
+
+you could call them whatever you really wanted
+
+but this is kind of the standard, okay.<br /><br />
+So fs,
+
+write file,
+
+we pass in the file,
+
+the data and then the callback function.<br /><br />
+And now something very similar to before,
+
+so if there was an error,
+
+then call the reject function
+
+and pass in some message there.<br /><br />
+Could not write the file,
+
+again with this emoji here to make it stand out a bit more
+
+and in case everything worked fine,
+
+well then just resolve.<br /><br />
+Now we don't have any data actually to pass in here right?
+
+So we're just gonna pass in some random string
+
+something just like saying success, okay.<br /><br />
+So a promise doesn't always
+
+have to return a meaningful value.<br /><br />
+In this case all we're really trying to do here
+
+is to write a file
+
+which doesn't really return a meaningful value.<br /><br />
+So we're now ready to use this promisified function
+
+but before we do that,
+
+let's actually implement the chaining
+
+that I was talking to you about before.<br /><br />
+So right now,
+
+we still in fact have callbacks inside of callbacks
+
+inside of callbacks, right?
+
+So we have this then,
+
+which has this callback.<br /><br />
+And then in there there is another then handler
+
+which has yet another callback in it.<br /><br />
+So that doesn't really change anything, does it?
+
+Instead we want to chain these then handlers here.<br /><br />
+And the secret to doing that
+
+is to make each handler return a new promise.<br /><br />
+So how are we gonna do that?
+
+Well, remember that this function here returns a promise.<br /><br />
+And so all we have to do is to return
+
+that promise from this first then handler.<br /><br />
+Let me show that to you.<br /><br />
+So we say return superagent.get
+
+and then the string and that is now a promise, okay.<br /><br />
+And then we actually close this callback function here
+
+and chain this then method right onto it.<br /><br />
+Give it a save, now we have some error here
+
+and that is on line 40.<br /><br />
+Let's get rid of this here
+
+and okay.<br /><br />
+It changed the formatting here for us again
+
+that was prettier
+
+and then we actually already have it working down here.<br /><br />
+So why does this work again?
+
+Well, of course this function
+
+that we created in the beginning returns a promise.<br /><br />
+So on that we can use the then method.<br /><br />
+We then make this callback function that's in it
+
+again return a promise.<br /><br />
+And like that we can then chain
+
+the next then handler on that.<br /><br />
+So this result variable here
+
+will then be the resolved value of this promise
+
+that returned from the previous handler, okay?
+
+Makes sense?
+
+Now to take it one step further
+
+we will go ahead
+
+and use our write file pro function here now as well.<br /><br />
+And since we want to keep chaining the then methods
+
+we will again return that actually.<br /><br />
+So return, write file pro
+
+pass in the file name, which is this one,
+
+the data...<br /><br />
+And that's actually it.<br /><br />
+Okay, so we don't need any of this here anymore,
+
+let's just comment it up for now.<br /><br />
+Get rid of this space here
+
+and then on there we can chain the next then handler.<br /><br />
+So then, and remember that in here
+
+we didn't really have any meaningful resolved value.<br /><br />
+So, we don't want any argument
+
+to this callback function here
+
+all we want to do is to log this string, right?
+
+So now we can actually really get rid of this
+
+and okay.<br /><br />
+So, down here we see now
+
+that it's actually already working.<br /><br />
+And again the trick for being able
+
+to chain all of these then methods here
+
+is to return a promise before calling each of them.<br /><br />
+So this one here obviously returns a promise here
+
+so then we can chain the then method on it.<br /><br />
+Then this piece of code here
+
+will return a promise
+
+and so we can use then on it.<br /><br />
+Then this piece of code will return a promise
+
+and so we can use then on it again, okay?
+
+So that is the secret to it.<br /><br />
+Give it a save again
+
+and so down here we see that the breed is still labrador.<br /><br />
+We see that this here is the link,
+
+let's go here and confirm
+
+that this is here indeed the same as this.<br /><br />
+And so it did successfully write the string to the text file
+
+using our promisified write file function, okay.<br /><br />
+And then in the end we have this error handler.<br /><br />
+And the beauty here is that for all of these chains
+
+then handlers in the end,
+
+we simply need one single catch handler.<br /><br />
+So one function handling the errors
+
+coming from either one of the three promises, okay.<br /><br />
+Let's actually only log the error to the console
+
+and let's try to, for example,
+
+change this file here.<br /><br />
+Actually not the file,
+
+but I'm gonna change the file name here,
+
+save it and now we see I could not find that file.<br /><br />
+So where does that come from?
+
+It comes right up here
+
+from calling the reject function, okay?
+
+So we have an error here because we couldn't find the file
+
+and so we called the reject function.<br /><br />
+And that reject function will then mark this promise here
+
+so remember this is a promise.<br /><br />
+It will mark it as rejected.<br /><br />
+And therefore, the catch function is called.<br /><br />
+And so then we log that error to the console.<br /><br />
+And the result of that is what you can see down here.<br /><br />
+Okay, let's put it back
+
+now it works.<br /><br />
+Now let's go into the file,
+
+create a dog that doesn't exist
+
+and now, oh, here we have this big weird error
+
+and that's because we're simply logging the entire error
+
+and not the error message as we were doing before
+
+but doesn't matter.<br /><br />
+Now give it a save here now,
+
+put it back
+
+and all right.<br /><br />
+So now it's all working
+
+and we got rid of that triangular shape
+
+that we had in our code
+
+and now have a so called flat structure of chain promises.<br /><br />
+So again this is way easier to manage
+
+and I hope you can start to appreciate that
+
+and it's also more logical to think
+
+and to reason about the code like this.<br /><br />
+Now, in the next lecture
+
+we will actually take it one step further even
+
+and make this even more readable
+
+and easier to use.<br /><br />
+So stay tuned for that.
+</body>
+</html>

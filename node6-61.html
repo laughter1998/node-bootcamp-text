@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Welcome back.<br /><br />
+In this video, let's start to implement some routes
+
+for the users' resource.<br /><br />
+So, our A-P-I will have a couple of different resources.<br /><br />
+The first one that we already talked about
+
+and started to implement is the tours resource.<br /><br />
+But another one will be the users' resource.<br /><br />
+So that, for example, we can create user accounts
+
+and have different user roles
+
+and all that good stuff that comes with users, right?
+
+Now, of course, for now, this users' resource
+
+will be very similar to the tours resource.<br /><br />
+But I still want to start implementing this resource
+
+at this point because we need to move forward
+
+in the project and also because I need it
+
+in order to prepare for what I'm gonna teach you next, okay?
+
+So let's go ahead and move down here to our route,
+
+and so what we'll do again, something very similar,
+
+to what we already have here.<br /><br />
+(keyboard clicking)
+
+So <span class="notranslate">app.route</span>,
+
+and route is gonna be slash A-P-I,
+
+slash version one,
+
+and then users'.<br /><br />
+Okay, and then we will respond to the get request
+
+using a function, then we're going to create next called get
+
+all users.<br /><br />
+So you see that the structure that I'm gonna follow
+
+is very similar to the one with tours.<br /><br />
+So, when we do get or post on the route without the ID,
+
+so, just like this or just like this,
+
+it means that we either want to get all the users,
+
+so basically, all the objects that are part of
+
+a resource, and if we use post, then we want to create
+
+a new resource on a server, okay?
+
+So, that pattern is always gonna be the same.<br /><br />
+So, create user for now.<br /><br />
+And, so, now it's giving me an error because
+
+all these functions are not defined,
+
+but don't worry about that.<br /><br />
+(keyboard clicking)
+
+So, <span class="notranslate">A-P-I</span>, actually, slash,
+
+so we always need to start with a slash.<br /><br />
+Users, and then just like before,
+
+we have to use this ID as a parameter interrupt.<br /><br />
+Okay, then, if we do get request specifying that ID,
+
+it means that we want to get one user.<br /><br />
+So, I'm just calling it get user.<br /><br />
+Okay?
+
+And there are different kind of standards here,
+
+so you could call this one, here, get one user,
+
+and this one here get all users,
+
+but I prefer to just do it like this, all right?
+
+So, we also want to respond to the patch request.<br /><br />
+So, update user,
+
+and then also delete.<br /><br />
+And this one is gonna be called delete user.<br /><br />
+Give it a save, and, so it nicely formats our code, here.<br /><br />
+And, so, let's go ahead
+
+and quickly create these five functions.<br /><br />
+And we're gonna do that all right away,
+
+because we will actually not
+
+do anything for the users at this point.<br /><br />
+Okay, again I just wanted to have this implemented
+
+in order to show you something next.<br /><br />
+Okay, so, I'm going to go ahead, copy this one here.<br /><br />
+And, yeah, so, add a tier right after
+
+the last route handler from the tours.<br /><br />
+So, const get all users.<br /><br />
+(keyboard clicking)
+
+And what I will do here is to simply send back a message
+
+that this route is not yet implemented.<br /><br />
+So, response to status that I'm going to specify as 500,
+
+which means internal server error, and
+
+so, yeah, for now that's just kind of a place holder,
+
+so we still send back a adjacent object with a status,
+
+which in this case, when there is a 500 error code
+
+we say that it's an error, okay?
+
+So, what was that weird error completion,
+
+we simply only want error, and then message:
+
+(keyboard clicking)
+
+this route is not yet defined.<br /><br />
+All right, give this a save,
+
+and I'm going to go ahead and copy this a couple of times,
+
+and simply do the same for all the other ones.<br /><br />
+Okay, so, get all users, then get user,
+
+then I want create user,
+
+I want to update user
+
+and delete, oh where is that?
+
+It's nowhere here.<br /><br />
+Delete user.<br /><br />
+Okay.<br /><br />
+So now, there's no more error and
+
+let's get rid of this piece of code.<br /><br />
+And, so, if we now create a request for this
+
+let's see what happens.<br /><br />
+And close this one, copy this one.<br /><br />
+And, oh yeah, of course.<br /><br />
+So, I needed to change this to users, obviously.<br /><br />
+And so now we have our 500 internal server error here,
+
+and then this route is not yet defined.<br /><br />
+Let's still go ahead and save this request
+
+into a new collection.<br /><br />
+Actually, we want it in the same collection,
+
+just another folder.<br /><br />
+So let's create a folder later.<br /><br />
+So we get all users.<br /><br />
+Save it here.<br /><br />
+And now we can go ahead and create a folder,
+
+and not like this, but this.<br /><br />
+So, add folder, and so let's add one folder
+
+for each of the resource.<br /><br />
+So we have tour,
+
+and we have users.<br /><br />
+So it's gonna called just like the--
+
+like the resource.<br /><br />
+All right, for some reason I cannot select all of them.<br /><br />
+That's no problem.<br /><br />
+All right, so now we have them nicely organized here
+
+in our collection, and that's a lot nicer.<br /><br />
+All right, so that is how we define code
+
+for our second resource.<br /><br />
+All right, so this file is kind of a mess,
+
+so, we have all of this mixed-up together in the same file,
+
+all these routes, all these handlers, here,
+
+which we can also call controllers, by the way.<br /><br />
+Okay, and so we have all these different pieces in the same
+
+file and eventually we will want to fix that.<br /><br />
+So, in the next video, we're gonna take the first step in
+
+order to be able to actually separate all these different
+
+pieces into different files.
+</body>
+</html>

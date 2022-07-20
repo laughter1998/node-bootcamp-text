@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So let's now talk about the problems
+
+that can arise when we use too many call back functions.<br /><br />
+And to do that,
+
+we're gonna do a small example
+
+to illustrate this effect.<br /><br />
+Now remember that if you're already familiar with
+
+Promises and Async/Await and in general,
+
+Asynchronous Java Script,
+
+please feel free to just skip this section
+
+and mark all the videos as completed
+
+so that you can still get to 100 percent completion
+
+of the course.<br /><br />
+But if you want to learn all about
+
+Asynchronous Java Script
+
+and how to use it in OJS then let's move on.<br /><br />
+So go ahead
+
+and get the starter files for this project
+
+from the course files.<br /><br />
+I already have it here on my desktop,
+
+so this folder here.<br /><br />
+And it's only this file in there,
+
+so that's all we're gonna need to get started.<br /><br />
+And I have it here in VS Code already opened
+
+and what we're gonna do to start
+
+is to just create an NX.JS file.<br /><br />
+Just like before.<br /><br />
+Now what we're gonna do is this,
+
+we're going to use this,
+
+this dog file here, this text file.<br /><br />
+And from here we will read the dog breed.<br /><br />
+And then we are gonna do an HTTP request
+
+to get a random image of a dog with this breed.<br /><br />
+And then save that random image
+
+to another text file.<br /><br />
+So it's a three step process
+
+and all of this will involve call back functions.<br /><br />
+And by the end we will see the problem that we have
+
+when we use all these call back functions
+
+inside of one another.<br /><br />
+Okay?
+
+So for that we're gonna use a
+
+quite a popular API.<br /><br />
+Which is more like a fun API.<br /><br />
+But for this kind of stuff
+
+it's a good idea to use it.<br /><br />
+So it's the DOG.CEO, API.<br /><br />
+So just hit Dog API here.<br /><br />
+Then over here,
+
+the documentation.<br /><br />
+And what we want is to get a random dog,
+
+or a certain breed.<br /><br />
+So click by breed here.<br /><br />
+And down here,
+
+down here is the API endpoint that we're gonna hit.<br /><br />
+So it's this URL here.<br /><br />
+So when you click on fetch here,
+
+each time you get a new image, okay?
+
+And so in this section
+
+we're actually gonna do HTTP request
+
+just like we learned about before
+
+in the previous section.<br /><br />
+Okay.<br /><br />
+So all we will have to do
+
+is to create an HTTP request to this URL
+
+and then it will get us back an image.<br /><br />
+Okay?
+
+But for now, let's actually start with a part
+
+where we read the file and get the content
+
+of that file.<br /><br />
+So in our index.js, again we need the file system package
+
+or module.<br /><br />
+So FS
+
+and require the FS module here.<br /><br />
+And just like before we do fs.readfile
+
+and we do the asynchronous version.<br /><br />
+Okay.<br /><br />
+Remember that in here we pass the location of the file
+
+and then a call back function
+
+which will be called as soon as we're done reading the file.<br /><br />
+So we have our template string here.<br /><br />
+And then we use a dirname just like we did before.<br /><br />
+So the name of the current directory.<br /><br />
+/dog.txt.<br /><br />
+Okay and then our call back function
+
+which the first argument as always is error.<br /><br />
+And then the data that actually is in the file.<br /><br />
+And just to make sure, let's log it
+
+to the console of course.<br /><br />
+So another template string
+
+so that we can nicely output our data here.<br /><br />
+Okay.<br /><br />
+Start up the terminal here
+
+and
+
+bring it up a little bit.<br /><br />
+And so I'm using nodemon just like I did before
+
+and then index.js.<br /><br />
+Okay so breed is retriever.<br /><br />
+And that is exactly what we have here in this file.<br /><br />
+Okay so retriever is the breed that we will be looking for.<br /><br />
+Now inside this call back function,
+
+we want to do that HTTP request
+
+that we just talked about before.<br /><br />
+And there's actually ways of doing it
+
+with native
+
+no JS modules.<br /><br />
+But it's easier to just use an NPM package for that.<br /><br />
+And there are many again,
+
+but the one we're gonna use is called Super Agent.<br /><br />
+Later on we're gonna use another one
+
+but for now Super Agent is just fine for that, okay.<br /><br />
+And in order to actually download this module using NPM,
+
+we're gonna start by creating our packet Jason file.<br /><br />
+Remember that?
+
+So let me just finish this
+
+and do NPM in it.<br /><br />
+And just hit enter on all of these.<br /><br />
+This doesn't really matter.<br /><br />
+Okay.<br /><br />
+We just want this package .jason file
+
+so that it actually holds the name of the package
+
+that we're using.<br /><br />
+So we always do that whenever we start a new project.<br /><br />
+And now NPM install,
+
+or we can just use the I, which is the same and then
+
+the name of the package.<br /><br />
+So nothing new there right?
+
+Now to use this package,
+
+we create a new variable
+
+which will then contain the Super Agent function
+
+that this module exposes to us.<br /><br />
+Let's now go ahead and actually use that Super Agent
+
+function.<br /><br />
+So for doing a get request,
+
+we simply used to get method on it.<br /><br />
+So get and then we need that URL.<br /><br />
+Okay so this one that I showed you before.<br /><br />
+So just copy it
+
+and paste it here
+
+into a template string.<br /><br />
+Because now we are actually going to replace
+
+this breed here.<br /><br />
+Okay, so we don't want that
+
+but instead we want to use it,
+
+the one that we get from our file.<br /><br />
+So in this case it's data.<br /><br />
+Right?
+
+And so like this,
+
+we can actually do an HTTP get request.<br /><br />
+Now to then get the data,
+
+we actually will also have to use the end method on this.<br /><br />
+And this is then where we're gonna pass in
+
+the call back function.<br /><br />
+So again it's an error first call back
+
+and then
+
+we pass in the result as well.<br /><br />
+And so in this function,
+
+let's first of all
+
+log the result to the console.<br /><br />
+So the data that we get is in the response variable.<br /><br />
+So this one here.<br /><br />
+And then on that is the body.<br /><br />
+So that's where the actual response is.<br /><br />
+Okay, now let's actually go ahead and test that.<br /><br />
+And now with this save here it actually moved down.<br /><br />
+So again that's because
+
+of the previous extension that we set up earlier.<br /><br />
+And maybe you also noticed
+
+how it replaced the normal quotes that I had here
+
+with these double quotes
+
+and also it inserted the semi colon up here.<br /><br />
+And actually in the last section,
+
+or in one of the last sections,
+
+we set it up so that we always have
+
+the single quotes okay.<br /><br />
+And so in order to keep our code consistent here,
+
+let's actually go ahead and
+
+very quickly create the prettier config file.<br /><br />
+So remember that's prettierrc.<br /><br />
+Then in there we have single quote.<br /><br />
+Set it to true.<br /><br />
+And also remember the print width.<br /><br />
+And set it to 80.<br /><br />
+Okay, give it a save.<br /><br />
+Save this one again.<br /><br />
+And so you see we have our single quotes now back.<br /><br />
+So that looks a lot nicer in my opinion.<br /><br />
+Again if you don't like it this way,
+
+you can of course use your own settings.<br /><br />
+All right.<br /><br />
+Anyway,
+
+this piece of code here should now already
+
+be doing the HTTP request.<br /><br />
+So let's actually just
+
+test it out.<br /><br />
+And indeed,
+
+we actually have this image here.<br /><br />
+So actually what we want
+
+is inside of this buddy
+
+in the message property.<br /><br />
+So dot
+
+message.<br /><br />
+So just like this.<br /><br />
+And so here we have our retriever image.<br /><br />
+Let's go ahead and actually change the breed here.<br /><br />
+And I'm not really good with dogs.<br /><br />
+Let's just use this breed here that I know,
+
+Labrador.<br /><br />
+I don't even know how to say it.<br /><br />
+But I think it is it,
+
+it exists.<br /><br />
+Let's give it a save here again.<br /><br />
+And so now we have another image.<br /><br />
+We can actually click this here
+
+and it will open that image for us.<br /><br />
+Okay.<br /><br />
+So for doing this HTTP request here,
+
+we needed the data that we got before.<br /><br />
+So this piece of data.<br /><br />
+And so we needed to do this request here
+
+inside of this call back function
+
+of the read file function, right?
+
+And so you already have a call back function here.<br /><br />
+So this one inside a call back.<br /><br />
+But now we will actually add another one.<br /><br />
+Because now we want to save this string here
+
+into a new text file.<br /><br />
+And so we will do that here.<br /><br />
+And then that again will have yet another
+
+call back function.<br /><br />
+Okay, make sense?
+
+So fs
+
+writefile
+
+and then the name of the file.<br /><br />
+Let's call that one dog image.text.<br /><br />
+Then the data we want to save to that file
+
+which is rest.body.message.<br /><br />
+And then the call back function.<br /><br />
+And this one won't have any data of course,
+
+but we have the error again.<br /><br />
+Let's log something to the console
+
+like random
+
+dog image saved to file.<br /><br />
+Give it a save, it will then rerun
+
+and here is our image file.<br /><br />
+And actually you can see that VS code
+
+displays that image here for us.<br /><br />
+Give it another save here,
+
+it will then rerun our code
+
+and now we have,
+
+indeed we have a different image.<br /><br />
+All right.<br /><br />
+So our code is actually working.<br /><br />
+Let's just add a small error handle here
+
+in case something goes wrong.<br /><br />
+For example, let's say we add some weird name in here.<br /><br />
+Run this again.<br /><br />
+And so right now it's not gonna be able to find an image
+
+for that.<br /><br />
+And that will actually result in an error here.<br /><br />
+So,
+
+we should always do this kind of error handling
+
+in the beginning and say
+
+so if there was an error,
+
+and we can just log error
+
+.message.<br /><br />
+And actually we should also say that we want to return
+
+right away from this function if there's an error.<br /><br />
+So it will return and
+
+log to the console, this error.<br /><br />
+And nothing else will happen then.<br /><br />
+Okay.<br /><br />
+So it says again, not found here.<br /><br />
+And it didn't save anything to the file
+
+because we already returned from the function up here.<br /><br />
+Okay?
+
+And the same actually down here
+
+in case there is an error saving the file to disk.<br /><br />
+Let's go back here,
+
+give it another save.<br /><br />
+And so now it's working just fine again.<br /><br />
+Okay.<br /><br />
+So this is just
+
+a small example to show you how easy it is
+
+to end up with call backs inside of call backs
+
+inside of call backs.<br /><br />
+And that's of course because,
+
+we already know that in Note JS,
+
+we should always use asynchronous code, right?
+
+We did end up using call backs inside of call backs
+
+inside of call backs.<br /><br />
+And sometimes it can go even deeper of course
+
+than what we have here.<br /><br />
+You could of course have like 10 levels
+
+inside of each other.<br /><br />
+Now all these call backs,
+
+they make our code look a bit messy.<br /><br />
+It makes it difficult to understand
+
+and also in general, hard to maintain.<br /><br />
+Again maybe not at this level
+
+with just three call backs inside of each other.<br /><br />
+But if we had it even deeper nested,
+
+it could quickly become a nightmare
+
+to maintain code like this.<br /><br />
+And that's why this pattern has been called
+
+call back hell.<br /><br />
+It's easy to identify this triangular shape
+
+in our code.<br /><br />
+It's what we have here.<br /><br />
+Like this sort of triangular shape.<br /><br />
+Whenever you see this,
+
+it's a sign that you're
+
+basically in call back hell.<br /><br />
+Okay?
+
+And you will maybe see or hear this term
+
+when you do some Note JS research
+
+or something like this.<br /><br />
+But right now, this is actually the only way
+
+that we know of,
+
+of how to write asynchronous code at this point.<br /><br />
+But we're gonna save that throughout
+
+the rest of this small section.<br /><br />
+So we're gonna learn how to use
+
+something called Promises.<br /><br />
+And that will then in the end
+
+solve our problem and make our code easier to read
+
+and to maintain.<br /><br />
+So let's go do that in the rest of the section.
+</body>
+</html>

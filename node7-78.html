@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Finally, let's learn
+
+how to delete documents in MongoDB.<br /><br />
+So just like before,
+
+we have delete one to delete one single document,
+
+and we have delete many, well,
+
+to delete multiple documents at the same time.<br /><br />
+Alright, and just like before,
+
+delete one will only work
+
+for the first document matching your query.<br /><br />
+And delete many will of course
+
+work for all the documents matching your query.<br /><br />
+Okay.<br /><br />
+Just to get an overview of what we have here
+
+at this moment in time,
+
+let's do a find of all the tours.<br /><br />
+And what I'm gonna do now
+
+is to delete all the tours
+
+which have a rating less than 4.8.<br /><br />
+So that's gonna be just the first one
+
+but if we had multiple tours with that condition,
+
+then all of them would be deleted.<br /><br />
+So db.tours.deleteMany.<br /><br />
+So the condition is rating...<br /><br />
+Open a new object
+
+so that we can use the less than operator and 4.8.<br /><br />
+Close it and then close this one.<br /><br />
+And run this and here we see that it's deleted one document.<br /><br />
+Right away it's telling us here
+
+how many documents were affected by this operation.<br /><br />
+So if we do this find now,
+
+well then the first one that we had is gone.<br /><br />
+Alright, so that's no problem.<br /><br />
+We are only really using this here to play around
+
+and so we can delete as much as we want here.<br /><br />
+No problem.<br /><br />
+Now if you wanna delete
+
+all of the documents in the collection,
+
+you would do it like this.<br /><br />
+So deleteMany.<br /><br />
+And I'm not gonna execute this.<br /><br />
+But you would do it like this.<br /><br />
+So all you have to do is pass in the empty object
+
+because the empty object is basically a condition
+
+that all of the documents always match.<br /><br />
+It would be like simply using an empty object here in find.<br /><br />
+I'm not gonna do that
+
+and you should be careful with it,
+
+especially when doing it in a real app
+
+because you cannot come back from this operation.<br /><br />
+So unless you have some backup in place,
+
+this will effectively delete all the documents
+
+in your collection,
+
+in this case the tours collection.<br /><br />
+So I'm not performing that.<br /><br />
+I just wanted to show you
+
+that this is how we delete everything.<br /><br />
+So this is the simplest operation
+
+and we don't use it all that often.<br /><br />
+But I just wanted to have a short video
+
+just to demonstrate that it also exists.
+</body>
+</html>

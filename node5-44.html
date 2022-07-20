@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now talk about an amazing
+
+asynchronous JavaScript feature called async/await.<br /><br />
+So promises has made our code a lot better already
+
+but we can still do better.<br /><br />
+So instead of consuming promises, with the then method,
+
+which still makes us use all these callback functions,
+
+we can use something called async/await.<br /><br />
+That is a new feature introduced to JavaScript in ES8,
+
+which will make our lives a lot easier.<br /><br />
+So usually when we write code,
+
+we're gonna be consuming promises all the time,
+
+but usually not producing them so much.<br /><br />
+And so, async/await makes that a lot easier to do.<br /><br />
+Now in order to use async/await,
+
+we need to create a so-called async function.<br /><br />
+So let's actually comment out this part here,
+
+so that we don't entirely lose it, in case
+
+you want to keep it here as a reference or something.<br /><br />
+So getDogPic is the function that we're gonna write.<br /><br />
+And now we need to mark this function
+
+as an asynchronous function.<br /><br />
+So we use async here,
+
+and then create the function like we normally do.<br /><br />
+So this async keyword here simply means
+
+that this is a special function that is asynchronous.<br /><br />
+So basically, one that keeps running in the background
+
+while performing the code that's in it,
+
+while the rest of the code keeps running in the Event Loop.<br /><br />
+So these asynchronous functions will do asynchronous work
+
+without ever blocking the Event Loop, okay?
+
+This async function will also
+
+automatically return a Promise.<br /><br />
+But more on that a bit later in this video.<br /><br />
+For now what's really important to know
+
+is inside an async function we can always have
+
+one or more await expressions
+
+and this is how they work.<br /><br />
+So we use await and then the Promise here.<br /><br />
+So let's start with this one, okay?
+
+And then we can save the result of that into a variable.<br /><br />
+In this case, data.<br /><br />
+Okay, and so this here will then be the same
+
+as having this piece of code.<br /><br />
+So let's see what happens here.<br /><br />
+So this await here will basically stop the code
+
+from running at this point until this Promise is resolved.<br /><br />
+Now if the Promise is fulfilled,
+
+which remember means that it was successful,
+
+then the value of the await expression
+
+is the resolved value of the Promise,
+
+which is then finally assigned to the data variable, okay?
+
+So instead of having the Promise
+
+and then the then method on it,
+
+which then gets the data as an argument.<br /><br />
+With async/await it's much simpler.<br /><br />
+All we do is to basically stop the code from running
+
+at this Promise here, wait until it comes back
+
+with its value and then store that value into a variable.<br /><br />
+And like this the code is even easier
+
+to understand than it was before.<br /><br />
+And that is the whole point of async/await:
+
+it's to make our code look more like synchronous code
+
+while being in fact still asynchronous
+
+behind the scenes, okay?
+
+So let's keep going with this and just copy the pieces
+
+from this example before into the new one, okay?
+
+So before, we had our Promise then we had our then handler
+
+and then we logged the data to the console.<br /><br />
+So that's exactly what we have,
+
+simply in a different way here.<br /><br />
+So we get our data stored into the variable
+
+and then log it here.<br /><br />
+Next up, we then get the dog image from the API.<br /><br />
+So we have the res variable, so that will be this one.<br /><br />
+So again, the result of the then handler
+
+and we await this Promise here to come back with the data.<br /><br />
+I hope this is starting to make sense now.<br /><br />
+So after that, we log this to the console,
+
+so the result of that API call.<br /><br />
+And then finally, we use our last Promise
+
+to write that string to a file.<br /><br />
+So that is this Promise here,
+
+and this one does not resolve any meaningful value.<br /><br />
+And so we don't even need to store anything into a variable.<br /><br />
+All we do is to stop the code here
+
+until that writing process is finished.<br /><br />
+And then log to the console
+
+this string.<br /><br />
+So if you compare this code with what we had before
+
+well that looks a lot cleaner
+
+and a lot easier to understand, doesn't it?
+
+Now, in order to make this work all we have to do
+
+is to actually call this function here.<br /><br />
+Give it a save and indeed it still works.<br /><br />
+So we still get our result.<br /><br />
+Everything still works the same.<br /><br />
+So that's amazing, right?
+
+Just one last thing that we need to do here
+
+is our error handling.<br /><br />
+Because right now, we're not handling errors anywhere right?
+
+So down here used the catch method,
+
+but right now, we cannot really
+
+attach that anywhere, could we?
+
+So instead, what we do here
+
+is to use something called try-catch.<br /><br />
+And actually that has nothing to do with async/await,
+
+it's a standard JavaScript feature.<br /><br />
+So let me show you how it works.<br /><br />
+So we basically wrap all our code into a try block.<br /><br />
+So basically the code will try
+
+to execute whatever is in here.<br /><br />
+And then we also need a catch block,
+
+which will have access to an error if there is one.<br /><br />
+So if there happens an error in this block here,
+
+it will immediately exit this block,
+
+this try block here, so this one.<br /><br />
+And immediately go into the catch block,
+
+and will give us access to the error
+
+that happened in the try block.<br /><br />
+So now, all we have to do is to take this piece of code
+
+for this console log, put it here,
+
+give it a save and now it works.<br /><br />
+Just to cause an error now,
+
+let's change this one here again.<br /><br />
+And indeed, I could not find that file.<br /><br />
+So this Promise here rejected, right?
+
+So this Promise, it was rejected and so there was an error
+
+and right away it got into the catch block
+
+and then logged this error into the console.<br /><br />
+Put it back.<br /><br />
+And now indeed, it works again.<br /><br />
+Okay, so that is how async/await works.<br /><br />
+So remember we can only use await
+
+if it's inside an async function.<br /><br />
+That's why it's always called together,
+
+so always async slash await.<br /><br />
+Because these two features, they belong closely together.<br /><br />
+So just to quickly recap,
+
+async/await allows us to instead of having
+
+all of these then handlers
+
+with these callback functions in them.<br /><br />
+It allows us to make our code look more synchronous.<br /><br />
+So all we do is to use the await keyword
+
+in front of our Promise.<br /><br />
+And then it will wait for that Promise
+
+to come back with its result.<br /><br />
+Just remember that this is what we call
+
+syntactic sugar for promises.<br /><br />
+So it simply makes promises look more beautiful,
+
+but behind the scenes everything still works the same
+
+with the Promise logic that I explained to you before.<br /><br />
+So again, this is just to make our lives
+
+a bit easier when coding and make our code
+
+look a bit more like synchronous code.<br /><br />
+So this is how we implement async/await.<br /><br />
+In the next video we will learn
+
+a bit more about how async functions actually work.
+</body>
+</html>

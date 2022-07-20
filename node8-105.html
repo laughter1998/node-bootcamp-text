@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Just like Express,
+
+Mongoose also has the concept of middleware.<br /><br />
+And so let's now learn about the first type
+
+of middleware, which is document middleware.<br /><br />
+Now, just like with Express, we can use
+
+Mongoose middleware to make something happen
+
+between two events.<br /><br />
+For example, each time a new document is saved
+
+to the database, we can run a function
+
+between the save command is issued and the actual saving
+
+of the document, or also after the actual saving.<br /><br />
+And that's the reason why Mongoose middleware
+
+is also called pre and post hooks.<br /><br />
+So again, because we can define functions
+
+to run before or after a certain event,
+
+like saving a document to the database.<br /><br />
+So middleware is an absolutely fundamental concept
+
+in Mongoose, so just like in Express.<br /><br />
+And there are tons of possibilities
+
+and use cases for middleware, and we're gonna be
+
+using middleware all the time in this project.<br /><br />
+So there are four types of middleware in Mongoose:
+
+document, query, aggregate, and model middleware.<br /><br />
+And in this lecture, we're gonna talk about
+
+document middleware, which is middleware
+
+that can act on the currently processed document.<br /><br />
+So just like the virtual properties,
+
+we define a middleware on the schema,
+
+so tourSchema.pre.<br /><br />
+And so this is for pre middleware, which again,
+
+is gonna run before an actual event.<br /><br />
+And that event in this case is the save event.<br /><br />
+And so this call back function that we're
+
+gonna define here next,
+
+so function
+
+so this function will be called before an actual document
+
+is saved to the database.<br /><br />
+So this is document middleware,
+
+and it runs, let me write all of that here.<br /><br />
+So it runs before the save command
+
+and the .create command.<br /><br />
+But not on insert many.<br /><br />
+So if we use this command here, so insertMany,
+
+then that will actually not trigger the save middleware.<br /><br />
+So always keep that in mind.<br /><br />
+It's very important to realize that only on save
+
+and on create actually this middleware here
+
+is gonna be executed.<br /><br />
+And so let's start by doing a simple console.log
+
+and what I'm gonna log through the console is this.<br /><br />
+And so in a save middleware, the disk keyword here
+
+is gonna point to the currently processed document.<br /><br />
+And that is the reason why it is called document middleware.<br /><br />
+Again, because in this function here,
+
+we have access to the document that is being processed.<br /><br />
+So in this case, the document that is being saved.<br /><br />
+And so let me just very quickly show that to you
+
+using this console.log.<br /><br />
+And so in order to now trigger this function,
+
+remember we need to run a save command or a create command.<br /><br />
+And so we now need to create a new tour using our API
+
+in order to, yeah, to then trigger this middleware.<br /><br />
+So let's go here to, to postman, and I'm gonna start by
+
+by saving these two new routes that we created
+
+in the previous lectures, so get monthly plan.<br /><br />
+And this one here is get tour stats.<br /><br />
+So now I can close them and create new tour.<br /><br />
+And we specify the data here in the body.<br /><br />
+Now not all of the stuff here is actually required,
+
+so let's take a look at what actually is required
+
+and get rid of the rest.<br /><br />
+So the imageCover is required, the summary,
+
+of course the price, and yeah.<br /><br />
+So let's get rid of the stuff that we don't
+
+really need here just to keep it at a minimum.<br /><br />
+So the ratings, quantity, average,
+
+so these are not necessary.<br /><br />
+So I'm just gonna call this one here
+
+the test tour, just to keep it really simple here.<br /><br />
+Now let's send this request and indeed,
+
+it created the new document and now let's take a look
+
+at our console and see that document here.<br /><br />
+And indeed, here it is.<br /><br />
+So let's increase this here a little bit
+
+and so this is what our document is looking like
+
+right before it saved into the database.<br /><br />
+And so here we have ratingsAverage and quantity,
+
+which are set by default.<br /><br />
+Remember, so 4.5 and zero, and then
+
+the createdAt time stamp, and you can even
+
+see the virtual property that we defined here.<br /><br />
+So again, this is right before we actually
+
+save this data to the database.<br /><br />
+And so at this point of time,
+
+we can still act on the data before it is then saved
+
+to the database and that is exactly
+
+what we're gonna do now.<br /><br />
+So down here in our middleware function.<br /><br />
+And what I wanna do here is to create a slug
+
+for each of these documents.<br /><br />
+So remember how in the first section,
+
+we created a slug for each of the products
+
+that we had in the store.<br /><br />
+And so a slug is basically just a string
+
+that we can put in the URL, usually based on
+
+some string like the name.<br /><br />
+So in this case, we're gonna create a slug
+
+based here on the tour name.<br /><br />
+So remember how for that we used the slugify package.<br /><br />
+And so let's now go ahead and install that.<br /><br />
+All right, and while that's doing,
+
+let's go ahead and then require it here.<br /><br />
+So require slugify.<br /><br />
+Let's go back to our first window here, actually.<br /><br />
+And now, down here, we no longer want
+
+to log this to the console.<br /><br />
+But instead we can now say this, and remember,
+
+this is the currently processed document.<br /><br />
+So we can now define a new property on it.<br /><br />
+And that's exactly what I'm doing.<br /><br />
+So this.slug should be slugify,
+
+and then just a string that we want to create
+
+a slug out of, and so that's gonna be this.name
+
+and then we also want to pass in the option
+
+that everything should be converted to lower case,
+
+and so that's lower: true, and now I'll give it a save.<br /><br />
+And one thing that we didn't talk about yet
+
+is the next function.<br /><br />
+So just like in Express, we also have the next function
+
+in mMngoose middleware, basically to call the next
+
+middleware in the stack as we already know.<br /><br />
+Now in this case, we only have one middleware function,
+
+which is why we didn't run into any problems,
+
+even not calling next, but let's actually now do that.<br /><br />
+And so each middleware function, in a pre save
+
+middleware has access to next.<br /><br />
+So that's exactly the same as in Express,
+
+and so by the end of the middleware we call next,
+
+and that will then call the next middleware
+
+in the stack.<br /><br />
+So let's try this out again.<br /><br />
+And this is gonna be called test tour number two.<br /><br />
+Very simple, send to sky,
+
+and let's wait for it.<br /><br />
+And now for some reason, it's not really here.<br /><br />
+Let's see if we got some error,
+
+and we actually did not.<br /><br />
+But the reason why it's not working
+
+is that right now we don't have any slug in our schema.<br /><br />
+And remember this actually happened to us before
+
+when we only had a couple of fields in the schema.<br /><br />
+And when we, then we'll define some fields
+
+that were not in the schema, then they were
+
+simply not persisted to the database.<br /><br />
+And the same thing is now happening here,
+
+so we defined the slug property, but it's not in our schema.<br /><br />
+And therefore it was then not saved to the database,
+
+and so let's quickly fix that and let's put it,
+
+oh, I don't know, it doesn't really matter,
+
+can put it here right after the name,
+
+so the slug should simply be a string.<br /><br />
+And so that should fix it.<br /><br />
+So let's go back and create the test tour number three.<br /><br />
+Because it cannot be the same, because remember
+
+we cannot have tours with the same name.<br /><br />
+So do it again, and now indeed we have the slug property
+
+right here and it is indeed based on the name,
+
+as you can see here.<br /><br />
+Great, so let's go back here,
+
+gonna reduce this a little bit.<br /><br />
+And so here we have the pre document middleware.<br /><br />
+Let's now just very quickly experiment, also,
+
+with a post middleware.<br /><br />
+So tourSchema.post and let's use save again.<br /><br />
+And then the callback function,
+
+which in the case of post middleware
+
+has access not only to next, but also to
+
+the document that was just saved to the database.<br /><br />
+So let's call that one doc and then next.<br /><br />
+And so post middleware functions
+
+are executed after all the pre middleware functions
+
+have completed, all right.<br /><br />
+So in here we actually no longer have the disk keyword,
+
+but instead we have the basically finished
+
+document here in doc.<br /><br />
+So let's just log that finished document
+
+to the console and then call next.<br /><br />
+Now in this case again, we only have one
+
+post middleware and so we wouldn't really need next,
+
+but it's a best practice to simply always include it.<br /><br />
+Now another thing that I wanted to show you
+
+is that we can have, of course, multiple
+
+pre middlewares or also post middlewares for the same hook.<br /><br />
+And hook is what we call this save here.<br /><br />
+So this middleware here is basically what we call
+
+a pre save hook.<br /><br />
+So you will see that terminology all the time.<br /><br />
+So some call it middleware, and some call it hooks.<br /><br />
+And so this is gonna be a pre save hook
+
+or pre save middleware.<br /><br />
+So function, and this one has access to next.<br /><br />
+And so let's just log something to the console here,
+
+like will save document.<br /><br />
+And then next, and that of course, should be next.<br /><br />
+Just to see if we get some error,
+
+I'm gonna omit the next here.<br /><br />
+Just to see what happens when we do not call it.<br /><br />
+So I'm gonna create a new tour,
+
+and by the end of this lecture I'm gonna delete
+
+all of them, but for now we need them here.<br /><br />
+And so now you see that it's not really finishing,
+
+so we're stuck in that one middleware function
+
+that doesn't have the next call.<br /><br />
+So basically we're stuck in here.<br /><br />
+So let's cancel the request
+
+and then get it back here,
+
+and try that again.<br /><br />
+And so now it worked indeed.<br /><br />
+So our slug is here, right,
+
+and so let's take a look at our console,
+
+and so indeed, our second pre middleware also run,
+
+so the one logging will save document and then
+
+our post middleware then logged to the console
+
+the final document, and so that should also
+
+already have the slug and yeah, here it is.<br /><br />
+And that's actually all I had to show you
+
+about document middleware.<br /><br />
+Now I'm just gonna comment out these two here
+
+because I don't want to pollute my log here
+
+all the time with these console.logs,
+
+but I'm still keeping them here, again,
+
+as a reference.<br /><br />
+So what I want you to remember from this lecture
+
+is that we can have middleware running before
+
+and after a certain event.<br /><br />
+And in the case of document middleware,
+
+that event is usually the save event.<br /><br />
+And then in the middleware function itself,
+
+we have access to the disk keyword,
+
+which is gonna point at the currently being saved document.<br /><br />
+And it's also very important to keep in mind
+
+that this save middleware only runs for the save
+
+and create Mongoose methods.<br /><br />
+It's not gonna run, for example, for insert many
+
+and also not for find one and update
+
+or find by ID and update, which we already used before.<br /><br />
+So for example, we somewhere here we have
+
+we have findByIdAndUpdate, but that is not gonna trigger
+
+this save middleware.<br /><br />
+So that's very important to keep in mind
+
+because actually a bit later in this project,
+
+we will have to work around that limitation.<br /><br />
+All right, so this is document middleware
+
+to manipulate documents that are currently being saved.<br /><br />
+Next up, we're gonna talk about query middleware.
+</body>
+</html>

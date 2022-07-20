@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So we learned about Document
+
+and query middleware, and now the last middleware
+
+that we're gonna talk about is aggregation middleware,
+
+and as you can probably guess,
+
+aggregation middleware allows us to add hooks
+
+before or after an aggregation happens,
+
+and so let's now actually continue with
+
+our previous example where we did hide the secret tours
+
+from the queries, now in an aggregation the secret tours
+
+are still being used, right?
+
+So let's quickly confirm that actually,
+
+for example here in our gets tour stats,
+
+so that's where we used the first aggregation
+
+and so you see we have four tours here,
+
+four in easy, and three in medium
+
+and so that makes 11 but we already know
+
+that we actually only want 10 tours.<br /><br />
+So there are 10 tours that are not secret,
+
+and one that is secret, and so now we get all these
+
+11 tours here and so basically we also want
+
+to exclude the secret tour in the aggregation.<br /><br />
+So how could we do that?
+
+Well let's take a look at where our aggregation
+
+is actually happening so it's down here in yeah,
+
+so in get tour steps, and so what we could do is to here
+
+in this match state simply exclude the secret tours
+
+that are true right?
+
+So that would be quite easy to add here,
+
+but then we would have to add the same thing
+
+down here in the other aggregation that we have,
+
+and if we had even more aggregations we would then
+
+have to add that in all of them and that's of course
+
+not a good idea, because for example we could forget
+
+to do it and it's also just repetitive code
+
+and so let's simply exclude it right at the model level,
+
+alright so let's add aggregation middleware here
+
+starting with a comment.<br /><br />
+So aggregation middleware and so just like before
+
+we have tourSchema.pre so we want this to happen before
+
+the aggregation is actually executed
+
+and so here we use the aggregate hook.<br /><br />
+Alright and then our function which again accepts
+
+the next function so calling the next middleware.<br /><br />
+Alright, so let's start by taking a look
+
+at this, so remember that up here in query middleware
+
+that this object points to the current query.<br /><br />
+Then here in document middleware the this object
+
+points to the current document,
+
+and so down here in aggregation middleware
+
+this is going to point to the current aggregation object.<br /><br />
+Okay and so let's take a look at that in the console
+
+but before that let me just remove this log here.<br /><br />
+Alright give it a save, run this aggregation here
+
+and that's taking a lot of time and so let's cancel it
+
+and go back and that's probably because
+
+we're not calling next here, and so like we already know
+
+we get stuck in the middleware function
+
+and so that's not good.<br /><br />
+So let's try that again now send,
+
+and yeah so now we're back and now let's take a look
+
+at the aggregation object.<br /><br />
+Okay so there's a lot of stuff in here
+
+so it's not really interesting here
+
+and I cannot really find what I'm trying to show you here
+
+and so let's simply add this.pipeline okay because what
+
+I really wanted to show you is just the pipeline object.<br /><br />
+Okay, and actually it's pipeline like this
+
+so it's actually a function, a method.<br /><br />
+So let's clear the console here.<br /><br />
+Try this again, and so here we get the aggregation pipeline,
+
+and so that's simply the array that we passed into
+
+the aggregate function before.<br /><br />
+Right, so let's take a look and so here we have
+
+that array, this one not this one.<br /><br />
+So we have the match to group
+
+and then the sort so if we take a look here
+
+at the console we have indeed our match with the ratings
+
+average we have group and then sort.<br /><br />
+So that is exactly the pipeline we specified before,
+
+and so now in order to filter out the secret tours
+
+all we have to do is to add another match stage
+
+right at the beginning of this pipeline array,
+
+right and so let's do just that.<br /><br />
+So let's do that here before this log,
+
+so this.pipeline and remember that this is an array
+
+and how do we add an element at the beginning
+
+of an array?
+
+We use unshift and so that is a standard JavaScript
+
+method for arrays okay, we have also shift to add
+
+at the end of the array and unshift at the beginning
+
+of the array, and so again what we want to add here now
+
+is to add just another stage, so very similar
+
+to what we have down here.<br /><br />
+So match and then secretTour, not equal to true.<br /><br />
+Give it a save, and so this piece of code here basically
+
+is exactly what we have up here right?
+
+Basically removing from the output all the documents
+
+that have secretTour set to true, right?
+
+So if you give it a save now, then let's check this out,
+
+and remember we have now 11 tours, four, four,
+
+and three so let's check the result afterwards
+
+and so now indeed one of the difficult yours is gone
+
+so we only now have three difficult tours meaning
+
+that we are back to just having 10.<br /><br />
+Okay and actually we can confirm that our super secret tour
+
+was a difficult tour, alright and so that is now gone
+
+and so our results are now only about the regular
+
+non-secret tours alright?
+
+And we can again take a look at our aggregation pipeline now
+
+and here you see that now we have these two matched stages.<br /><br />
+Great and as I mentioned before it's no problem
+
+to repeat these stages, we can have as many match stages
+
+as we want, okay and that's it for aggregation middleware.<br /><br />
+I'm not gonna include any post code here for middleware
+
+that's not really necessary alright,
+
+and I'm also not gonna talk about model middleware here
+
+because it's really not that important.<br /><br />
+Alright, so middleware is some really cool
+
+and important stuff that we can add to our models,
+
+and there is indeed other cool stuff
+
+that we can do with models, for example implementing
+
+instance methods which are methods that will be available
+
+on ever document after being queried,
+
+and that again can be quite handy,
+
+and we will do that later
+
+in the authentication section as well okay.<br /><br />
+So I'm gonna leave that for a bit later,
+
+now what we are gonna do in this section
+
+just to finish is to actually add some validation, alright
+
+and so in the next two videos we're gonna talk about that.
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So you already learnt
+
+how to create new documents in the database.<br /><br />
+But in this lecture I'm going to show you
+
+an easier and even better way of doing so,
+
+as we implement our create tour handler.<br /><br />
+So at this point our API
+
+basically doesn't do anything anymore.<br /><br />
+It doesn't work anymore
+
+because basically we deleted all the functionality
+
+that we had in the last video.<br /><br />
+And we did so, so that over the next couple of lectures
+
+we can rebuild it using a real database.<br /><br />
+Okay, so basically finally building our real API.<br /><br />
+And we're gonna start by implementing
+
+the createTour function.<br /><br />
+But just remember the handler function
+
+that is called as soon as there is a post request
+
+to the tours route.<br /><br />
+So that's what we have here in tourRoutes.<br /><br />
+So let's put that here.<br /><br />
+So what I just said is this.<br /><br />
+So we have this checkBody here.<br /><br />
+Which actually is something
+
+that we will be able to delete as well.<br /><br />
+So where is that, actually?
+
+checkBody
+
+alright, so this is yet another of these functions
+
+that we really don't need anymore.<br /><br />
+Because this was basically to validate the body.<br /><br />
+So to see if it had the name or the price property in them.<br /><br />
+Right?
+
+But now our mongoose model
+
+is actually gonna take care of that.<br /><br />
+And so again, this here was nice
+
+to actually show us how middle-ware works
+
+but now we can get rid of it.<br /><br />
+Okay, and so I'm gonna delete it from here as well.<br /><br />
+Give it a new save.<br /><br />
+And it's now back to working.<br /><br />
+Anyway the function that we're creating now
+
+is this createTour function.<br /><br />
+Where just the one data is going to get called
+
+as soon as someone hits the tour route with a post request.<br /><br />
+Okay, so just to recap that
+
+because I know that it can be a bit confusing
+
+with these different files and different folders
+
+and different functions.<br /><br />
+But it's also really important
+
+that we start organizing our code
+
+right from the beginning.<br /><br />
+Okay?
+
+Anyway, we are here in the createTour function.<br /><br />
+And so let's now actually create a new tour.<br /><br />
+And we're gonna do that based on the data
+
+that comes in from the body.<br /><br />
+Remember that?
+
+Now remember how we used to create documents
+
+a couple of lectures ago.<br /><br />
+So we did it like this.<br /><br />
+For example let's say newTour
+
+then equal to newTour
+
+and then the data in there.<br /><br />
+So we did it like this and then that's a new tour.<br /><br />
+And then we type newTour.save
+
+and that works kinda fine.<br /><br />
+But we can do it in an even easier way.<br /><br />
+So instead of doing this we can do
+
+Tour.create and then paste the data in there.<br /><br />
+Okay and that will do the exact same thing.<br /><br />
+The main difference is that in this version here
+
+we basically call the method directly on the tour
+
+while in this first version we called the method
+
+on the new document.<br /><br />
+Okay, and so that is completely different.<br /><br />
+So again we had the tour that we created
+
+from the model.<br /><br />
+And then on that tour we used the save method.<br /><br />
+Because the document has access to this method
+
+and a lot of other methods as well.<br /><br />
+But here in the second situation
+
+we call this create method right on the model itself, okay?
+
+Now remember how this save method here returned a promise.<br /><br />
+And so this create here does return a promise as well.<br /><br />
+And so in order to get access to the file document
+
+as it was created in the database,
+
+we would then to have used .then okay?
+
+But instead of using promises like this,
+
+I'm gonna start using async await.<br /><br />
+Alright.<br /><br />
+So this function here should be an async function.<br /><br />
+So all we need to do
+
+is to write async right here.<br /><br />
+So we have async and so we can now await the result
+
+of this promise here.<br /><br />
+So I hope you are familiar with this.<br /><br />
+And I actually have a section in this course
+
+that deals with exactly this kind of stuff.<br /><br />
+So if you didn't watch that section
+
+but are still not 100% familiar with async await
+
+then please go ahead and watch that section
+
+so that you really understand what's going on here.<br /><br />
+Okay, so instead of using this then here
+
+I'm gonna use async await
+
+and then save the result value of this promise
+
+in the new tour variable.<br /><br />
+Okay, now the final piece of the puzzle here
+
+is to of course pass some real data into this create method.<br /><br />
+And so instead of this empty object
+
+we're gonna pass in the request body
+
+so req.body and so that's the data
+
+that comes with the post request, right?
+
+Now just one more time,
+
+just to make sure that everything is clear to you.<br /><br />
+Okay so we can use the tour model directly
+
+and call the create method on it.<br /><br />
+Then into that function we pass the data
+
+that we want to store in the database as a new tour.<br /><br />
+And that data comes from the post body, right?
+
+And so that's stored inside of request dot body.<br /><br />
+So this variable here.<br /><br />
+Now this method here will then return a promise.<br /><br />
+And we await that promise using async await
+
+and then store that result into the newTour variable
+
+which will be the newly created document
+
+already with the ID and everything, okay?
+
+So I'm gonna keep this code here
+
+just as a reference.<br /><br />
+And for now let's get this piece of data here back.<br /><br />
+Piece of code actually.<br /><br />
+Give it a save.<br /><br />
+And now we get this ES lint error.<br /><br />
+So let's take a look at that
+
+just put our mouse on here.<br /><br />
+And it tells us that async functions are not supported
+
+until this node 7.6
+
+and so this ES lint error comes from that node plugin
+
+that we actually installed.<br /><br />
+So you can see that here.<br /><br />
+Alright, so what we're gonna to do fix this
+
+is to simple go to package.json
+
+and in here you find the node version
+
+that we are actually using.<br /><br />
+So that's very simple.<br /><br />
+We just need to specify the engines property
+
+here in our json document.<br /><br />
+And set node to greater or equal
+
+than 10.<br /><br />
+Okay, and that's because in this course
+
+we are using at least node ten.<br /><br />
+So 7.6 would be enough in order to make that error disappear
+
+but of course we specify the real version
+
+that we're actually using.<br /><br />
+So we give this one a save.<br /><br />
+Close that up.<br /><br />
+And so now our error here is actually gone.<br /><br />
+Now just one more step before we can actually try this out
+
+in our Postman app.<br /><br />
+And that is that we actually need to handle errors.<br /><br />
+Okay, and so keep in mind that with async await
+
+we need to test for errors using the try catch syntax.<br /><br />
+So we write a try block.<br /><br />
+Then wrap all our code in there.<br /><br />
+And then finally a catch block.<br /><br />
+Which as we already know has access to the error object.<br /><br />
+And now what do we actually put here?
+
+Well we need to think about
+
+when exactly an error can happen.<br /><br />
+So remember like two lectures ago
+
+when we were creating our first documents.<br /><br />
+We got an error back then
+
+when we tried to create a document
+
+without one of the required fields, right?
+
+And so that was a validation error.<br /><br />
+And it's one of the errors that would get catched here.<br /><br />
+Okay because if we tried to create a document
+
+let's say without one of the required fields
+
+then this promise that is created here
+
+would be rejected, okay?
+
+And so if we have a rejected promise here
+
+then it will enter the catch block.<br /><br />
+And so therefore, basically in this catch block here
+
+we want to send back a response
+
+saying that there was an error.<br /><br />
+Alright so res.status here again
+
+and 400 which stands for bad request.<br /><br />
+.json
+
+and now something very similar to this one
+
+but its status and that's fail
+
+and then instead of data here we send a message
+
+and for now lets just set the message to the error.<br /><br />
+Alright.<br /><br />
+And let's now finally get back to our Postman application
+
+and give this a try.<br /><br />
+Okay, so create this one
+
+and let's now create a new tour.<br /><br />
+So right now here we have
+
+the name duration difficulty and price
+
+and so let's actually also add the rating
+
+and that needs to be in double quotes
+
+4.7.<br /><br />
+Alright, and now comes the moment.<br /><br />
+Send and indeed here we go.<br /><br />
+So this is the tour
+
+that we just created.<br /><br />
+We have our rating.<br /><br />
+We have our name and we have our price.<br /><br />
+And of course the automatically created ID.<br /><br />
+Now you might notice
+
+that we have no difficulty and no price.<br /><br />
+Well why do you think that is?
+
+Well that's because these two fields
+
+are actually not in our schema
+
+and so therefore they are not put in the database.<br /><br />
+So everything else that is not in our schema
+
+is simply ignored.<br /><br />
+So that is the power of our schema, alright?
+
+Great, now let's actually try to send this again
+
+and so that should give us an error, right?
+
+And indeed there we go.<br /><br />
+We have our 400 bad request.<br /><br />
+And we have this message
+
+which is the complete error that we got.<br /><br />
+And so here we see that the error message is duplicate key.<br /><br />
+And so that's because we already have the Test Tour 2.<br /><br />
+And so it could not create another one.<br /><br />
+So let's just create another one here like Jonas Tour.<br /><br />
+It doesn't really matter, okay?
+
+I just wanna create it,
+
+first without any of this
+
+just to see if we get another error.<br /><br />
+And indeed we get some more errors here.<br /><br />
+This time saying that
+
+that the tour validation failed
+
+because a tour must have a price.<br /><br />
+Okay, so you see that right now we have
+
+this kind of weird error structure here.<br /><br />
+So Mongo DB gives back this huge complete error object.<br /><br />
+And later on we're actually gonna take care of that.<br /><br />
+So we will have an entire section on error handling alone.<br /><br />
+And by then we will create some more meaningful errors.<br /><br />
+Okay, for now let's just replace this error object
+
+with some normal string here.<br /><br />
+So let's say invalid data sent.<br /><br />
+Okay, so don't do something like this
+
+in a real production application
+
+but again we're gonna have some real error handling
+
+a bit later which is gonna take care of that.<br /><br />
+Okay, so displaying meaningful errors to the client.<br /><br />
+So let's just go back here
+
+send it again.<br /><br />
+And so now we get this normal string here.<br /><br />
+So let's just create the price here.<br /><br />
+Let's set it to 567
+
+then send it.<br /><br />
+And so now you will see
+
+that our default rating here is actually still working.<br /><br />
+Let's now figure all of this out in compass as well.<br /><br />
+And indeed we get our four tours in the database.<br /><br />
+So all these weird tests
+
+that we've been doing up until this point.<br /><br />
+So let's just go ahead and delete these last two.<br /><br />
+That were really just for testing.<br /><br />
+Alright.<br /><br />
+So something went wrong here I guess.<br /><br />
+Okay, now we're back to these two.<br /><br />
+Let's now just create the third one
+
+that we actually had before in the last section.<br /><br />
+Which is the Snow Adventurer.<br /><br />
+So the Snow
+
+Adventurer.<br /><br />
+The price was ...<br /><br />
+I'm not sure anymore
+
+like 697 maybe.<br /><br />
+And the rating is like six
+
+or actually 4.8.<br /><br />
+Sent that guy.<br /><br />
+And so indeed here we go.<br /><br />
+Great.<br /><br />
+Just to quickly recap our createTour function.<br /><br />
+So we have a try catch here
+
+because we're actually using an async await function here.<br /><br />
+Right, so we use async await
+
+because this tour.create returns a promise
+
+that we're awaiting so that we can then store
+
+the newly created tour document
+
+inside of this variable
+
+and then send it along with the response
+
+to the client down here.<br /><br />
+Okay but in case there is an error,
+
+like a validation error for example
+
+then that error is gonna be catched
+
+and we send something else back to the client
+
+with this error message.<br /><br />
+So this is how we create documents using mongoose.<br /><br />
+Next up we're gonna talk about reading documents.
+</body>
+</html>

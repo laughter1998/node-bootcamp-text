@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hey, there. So in this video we're gonna keep
+
+working with the aggregation pipeline.<br /><br />
+And I really love this video because
+
+in this one we're gonna solve a real business problem.<br /><br />
+So let's imagine that we are really developing
+
+this application for the Nature's Company.<br /><br />
+And so let's say that they ask us
+
+to implement a function to calculate
+
+the busiest month of a given year.<br /><br />
+So basically by calculating how many tours
+
+start in each of the month of the given year.<br /><br />
+And the company really needs this fine tune
+
+to prepare accordingly for these tours,
+
+like to hire tour guides or to buy the equipment
+
+and handle all the stuff like that.<br /><br />
+So this is a real business problem
+
+that we now can solve
+
+using aggregation pipelines. Okay?
+
+And so, this is gonna be a real challenge
+
+and I-- I hope it's gonna be really fun
+
+to solve this kind of real business need.<br /><br />
+At least if Nature's was a real business, I guess.<br /><br />
+So, let's start by
+
+again creating the function.<br /><br />
+So export dot and I'm gonna call it:
+
+get monthly plan.<br /><br />
+All right.<br /><br />
+And again it's gonna be a-- an async function
+
+method, request response or try cache block
+
+and I could actually just have gone and copied it
+
+from up here.<br /><br />
+But, nevermind. All right.<br /><br />
+And uh now let's actually also uh implement the
+
+route uh right here.<br /><br />
+And I'm just gonna duplicate this line
+
+so monthly plan...<br /><br />
+And then here this one is called:
+
+get monthly plan. And actually we wanna be able
+
+to pass a year in the URL. And so let's use
+
+a URL parameter for that. All right.<br /><br />
+So uh...<br /><br />
+coming back here let's start by
+
+uh defining the year.<br /><br />
+So the year is coming from req dot params dot year.<br /><br />
+Remember that
+
+and then again that trick to transform it
+
+into a number. Okay?
+
+Then I'm gonna create the plan variable
+
+which is gonna await tour dot aggregate.<br /><br />
+So just like before and for now
+
+I'm gonna leave it empty here.<br /><br />
+And I will copy this piece of code
+
+to then send the results.<br /><br />
+And this one is called plan and all right.<br /><br />
+So now we're ready to start our aggregation pipeline
+
+just like we did in the last video.<br /><br />
+Now to start, let's actually take a look
+
+at the complete results.<br /><br />
+Just so we can get a better idea
+
+of what we actually need to build here.<br /><br />
+So let's do get all tours and get completely rid
+
+of this query string.<br /><br />
+And so here we have all nine tours
+
+and each of the tours, remember, has an array
+
+of these start dates.<br /><br />
+So one tour will start on April 25th, 2021.<br /><br />
+Then the next one starts on July 20th
+
+and then October 5th. All right.<br /><br />
+Then uh the next one has this start date
+
+and all of them I believe have three starting dates.<br /><br />
+Okay? So, these dates is what we actually need
+
+as a starting point to create this function
+
+or to create this aggregation pipeline.<br /><br />
+Because remember, we want to count how many tours there are
+
+for each of the months in a given year.<br /><br />
+And so let's so that we're analyzing 2021, okay?
+
+We have one tour in April, one in July, one in October.<br /><br />
+Then let's take a look at the next tour.<br /><br />
+Here we have one in June, one in July, and one in August.<br /><br />
+So in July we already have two.<br /><br />
+So this one and this one.<br /><br />
+Next one we have uh, one in March, one in May,
+
+and one in June. So in June we also already have two.<br /><br />
+Okay? And so we can keep going and doing it manually
+
+but of course we want to do it with our aggregation.<br /><br />
+So if you want to add all of this together
+
+the easiest way would basically be to have one tour
+
+for each of these dates here, right?
+
+And we can actually do that using the aggregation pipeline.<br /><br />
+There is a stage for doing exactly that.<br /><br />
+And that is called unwind.<br /><br />
+So let's use it now and I will then show you
+
+uh-- the result of it and why we really need it.<br /><br />
+Okay? So, again we define an object
+
+and then the name of the stage.<br /><br />
+And in this case it is: unwind. Okay?
+
+And what unwind is gonna do is basically deconstruct
+
+an array field from the info documents
+
+and then output one document for each element of the array.<br /><br />
+And so that's what I was saying before.<br /><br />
+Which is, that basically we want to have one tour
+
+for each of these dates in the array. Okay?
+
+And this stage can be really useful for so many cases.<br /><br />
+So, the field with the array that we want to unwind
+
+is start dates.<br /><br />
+All right and so for now that's actually all.<br /><br />
+So I just want to show you the result of that right now.<br /><br />
+And I think we already actually have everything in place
+
+for this to work. So just keep in mind
+
+that the route is called monthly plan and then with a year.<br /><br />
+Which for now it's not gonna have any results
+
+but um, we have to define it anyway.<br /><br />
+So monthly plan and the year of 2021.<br /><br />
+So let's send this now.<br /><br />
+And indeed we now have uh this start date
+
+no longer as an array but only this first element
+
+of the array that we had before.<br /><br />
+Let's put them side-by-side. And so you see, we had
+
+or actually let's do it with the first one.<br /><br />
+So we had the first taker for April 25th,
+
+July 20th, and October 5th.<br /><br />
+And so now we have the first hiker on this date here,
+
+then we have the first hiker on uh, July 20,
+
+and now we will have the first hiker for October 5th.<br /><br />
+So, exactly the result that we wanted
+
+because now we have one document for each of the dates.<br /><br />
+Okay? So instead of having nine, we now have 27
+
+which is nine times three. All right.<br /><br />
+So, that's the first date. Now let's actually go ahead
+
+and select the documents for the year that was passed in.<br /><br />
+Okay? And remember which stage we use for that
+
+that's right, we use match.<br /><br />
+So remember, match is basically to select documents.<br /><br />
+So just to do a query.<br /><br />
+And so the year is in the start dates.<br /><br />
+So start dates is the one that we're gonna search for.<br /><br />
+So start dates, and now what do we want?
+
+Well we want the--the date basically to be greater
+
+than January 1st of the current year,
+
+so let's say 2021. And we want it to be less
+
+than January 1st of 2022, all right.<br /><br />
+So basically we want it to be 2020 and 2022. All right?
+
+So let's put that in code now.<br /><br />
+So start dates and then we need another object
+
+for the operators. So, greater or equal than
+
+and in MongoDB this works perfectly fine with dates.<br /><br />
+So Mongo is actually perfect for working with dates like
+
+doing date comparisons. So it works really great.<br /><br />
+So now we actually need to define a new date here
+
+so that, that one can then be compared with the date
+
+that's in each of the documents.<br /><br />
+So the formula of the date is year, month, and date.<br /><br />
+And so let's do a template string here
+
+and use our year variable.<br /><br />
+So January 1st.<br /><br />
+So, we want our date to be greater or equal than
+
+January 1st, 2021 and let's actually write that here
+
+just to keep it in mind. And we want it to be less
+
+less than, or we can say less than, equal.<br /><br />
+Let's go ahead and copy this one and then
+
+December 31st. Okay? So, basically we want it to be between
+
+the first day of the year and the last day
+
+of the current year. Okay?
+
+So let's keep testing it, so I will test it now
+
+after each of the stages. So sending this
+
+and now we should have only tours here that are in 2021.<br /><br />
+So let's confirm that 2021, here as well, here as well,
+
+here as well.<br /><br />
+Mm, so you see we really have no other year. Right.<br /><br />
+It's always 2021. Okay? So I think we've seen enough.<br /><br />
+And so, let's go back. Next up is where the magic happens.<br /><br />
+And so that is usually in the group stage.<br /><br />
+So let's add the group here, so just like before
+
+so group and remember we need to specify the ID field
+
+basically to say what we want to use to group our documents.<br /><br />
+Now we want to group them by the months, right?
+
+But currently we simply have the entire date,
+
+with the year, the month, the date, and even the hour.<br /><br />
+So I guess it's 10 in the morning or something.<br /><br />
+But again we only want the month. So let me show you
+
+just another like magical MongoDB operator.<br /><br />
+So, where is that? So, here, back in this reference here
+
+we actually have a couple of aggregation pipeline operators.<br /><br />
+And it's in here where we have this really handy uh
+
+date operator. So let's take a look at this.<br /><br />
+And the one that we're gonna use is month.<br /><br />
+So it returns to month for a date as a number.<br /><br />
+And so this will basically extract the month
+
+out of our date. And there are lots of other operators.<br /><br />
+Like this for example, we could even calculate the week
+
+or just the year, okay?
+
+But the week could also be very handy.<br /><br />
+But let's uh, let's keep it with the month. All right?
+
+So again, you can take a look at these uh--
+
+special aggregation operators.<br /><br />
+Because there are a ton of them, as you see here.<br /><br />
+Okay? So actually these operators that we're using here
+
+in the aggregation pipeline are uh, yeah exactly that.<br /><br />
+They are aggregation pipeline operators.<br /><br />
+We have stages and then operators that we can use. Okay.<br /><br />
+And in this case, again, we use the month.<br /><br />
+And then again the name of the field,
+
+where we want to basically extract the date from.<br /><br />
+All right, give it a save, then that error disappears, okay.<br /><br />
+So we are grouping it now by the month.<br /><br />
+And now the real information that we want
+
+for each of the month is how many tours start in that month?
+
+Right? And for that all we're gonna do is basically count
+
+the amount of tours that have a certain month, right?
+
+So num of tours starts.<br /><br />
+And so this one is actually
+
+very similar to what we did before.<br /><br />
+So we use add and then for each of the documents
+
+we add one. So just like we did before.<br /><br />
+But actually it is sum and not add, okay so just like here
+
+when we counted the tours for each of the difficulties
+
+we simply added the number one for each of the documents.<br /><br />
+And so here we do the same.<br /><br />
+All right, so let's again test this.<br /><br />
+And we're getting really close already to our end result.<br /><br />
+And indeed, here we go. So we have February with one tour.<br /><br />
+December with one tour, we have November or actually
+
+September with two tours.<br /><br />
+And then we have two tours in all of this in here
+
+actually we have three tours in July.<br /><br />
+So this is getting pretty close to our result.<br /><br />
+So that's absolutely fantastic.<br /><br />
+So this part here, which I think was the most difficult one
+
+is already working.<br /><br />
+All right.<br /><br />
+Now we actually want some more information
+
+which is not only how many tours
+
+but also which tours? So let's do that.<br /><br />
+So if you want information about which tours
+
+that should actually be an array.<br /><br />
+Right? Because how else would we specify
+
+two or three different tours in one field, right?
+
+And so basically we want to create an array
+
+and we do that by using push
+
+and then what we're gonna push into that array
+
+as each document goes through this pipeline
+
+is simply the name of the document,
+
+or actually the name field. So not the name of the document
+
+but the name field.<br /><br />
+So in this case the name of the tour. Okay so let's test it.<br /><br />
+And...<br /><br />
+bam, here we go!
+
+So we have also now the name of the tours in there.<br /><br />
+So fantastic. Let's see, yeah. Here we have all the three.<br /><br />
+Next up, let's actually uh change the name
+
+of this field here, okay?
+
+Now not really change but we're simply gonna add
+
+another field which will have the same value here
+
+so that later on we can basically delete this ID.<br /><br />
+Okay, and so for that we're gonna use the next stage
+
+which is called: add field.<br /><br />
+So add field and this one
+
+is pretty straight forward. It simply does what it says.<br /><br />
+So add field is used to add fields and actually it is
+
+called add fields.<br /><br />
+And so now, the name that we want to add or the field
+
+is called month and it has the value of
+
+the field with the name ID.<br /><br />
+All right. So, pretty straight forward
+
+simply the name of the field and then the value.<br /><br />
+Which as usual, we need to use the uh the dollar sign.<br /><br />
+All right, just to test it again.<br /><br />
+Indeed now we have the month.<br /><br />
+Then next up, let's actually get rid of this
+
+and so we use project.<br /><br />
+So I'm really trying to put as many stages in here as I can
+
+to-- to show you really everything I can.<br /><br />
+So how does project work? Well we simply give
+
+each of the field names a zero or a one.<br /><br />
+So let me show that to you. So we can say ID
+
+and set it to zero. And that will then make it so
+
+the ID no longer shows up. If I put a one here, well,
+
+then it would actually show up, okay?
+
+So this one I'm not gonna test. Let me just add the next one
+
+which is the sort one which I believe I used it before
+
+but still I want to sort it here by the number or tours.<br /><br />
+Okay, so right now it's not 100% useful we are still missing
+
+because we should actually sort it by uh, really by the
+
+number of tour starts.<br /><br />
+So the name of the field is number of tour starts
+
+and uh remember we had one before which was for ascending
+
+and minus one which was for descending and of course
+
+that's what we want.<br /><br />
+So starting with the highest number.<br /><br />
+So it should be three in our case and yeah, it is.<br /><br />
+So July is the busiest month with three tour starts
+
+the Forest Hiker, the Sea Explorer, and the Sports Lover.<br /><br />
+Okay, so this is kind of done.<br /><br />
+Let me just show you one, uh last stage here
+
+which is uh, not really helpful here
+
+but I wanted to show it to you anyway.<br /><br />
+So we have the limit, and this one is exactly the same
+
+as limit in uh query. So basically it is gonna allow us to
+
+only uh, have six documents here.<br /><br />
+Okay so basically six outputs.<br /><br />
+Okay so let's test that, and so now indeed
+
+we should only have six.<br /><br />
+One, two, three, four, five, and six. All right.<br /><br />
+Again, not really useful because that's uh gonna cutoff
+
+the six least biggest month, which we don't want.<br /><br />
+So let's simply set it to 12 here,
+
+just so we can leave it here as a reference for you.<br /><br />
+All right, so one more time but it, uh should be working now
+
+and the real business problem is now solved.<br /><br />
+And I know this is quite a lot of moving pieces
+
+that we have here. A lot of different stages.<br /><br />
+And so I know it's a lot for you to take in at this moment.<br /><br />
+But don't worry, you don't have to know all of this stuff
+
+all at the same time.<br /><br />
+With practice you will keep improving
+
+and you will know when to use which of the tools
+
+that you have at your disposal.<br /><br />
+Just keep in mind that you can always read the documentation
+
+which is kind of complete and really great learning material
+
+besides this course, okay?
+
+And that applies to all of the technologies
+
+that we're learning here.<br /><br />
+So I really encourage you to always study the documentation.<br /><br />
+And I know it can be really frightening to look at it
+
+and without this course it would be a lot more difficult
+
+to learn from the documentation
+
+but with this really good starting point
+
+that you get in these videos it's then a lot easier
+
+for you to keep learning more and more uh,
+
+using that documentation, okay?
+
+So I wouldn't expect you to solve this challenge
+
+on your own of course, which is why we basically
+
+did it together here, right?
+
+But I hope you had as much fun as I did
+
+because again, I really love to solve this kind of problems
+
+it's-- it's really fun I think.<br /><br />
+But anyway, enough talking now.<br /><br />
+In the rest of the section we will now talk about
+
+a couple of uh, other features we have available to us
+
+in Mongo, so that should be pretty fun as well.
+</body>
+</html>

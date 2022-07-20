@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In this video, we're gonna talk about
+
+the second type of Mongoose middleware,
+
+which is query middleware.<br /><br />
+And, as the name says, query middleware
+
+allows us to run functions before or after
+
+a certain query is executed.<br /><br />
+And so let's now add a pre-find hook,
+
+so basically, a middleware that is gonna run
+
+before any find query is executed.<br /><br />
+So let's add another comment here.<br /><br />
+So this is query middleware.<br /><br />
+And of course, it works in a very similar way
+
+as before.<br /><br />
+So the tourSchema, and then pre,
+
+and in here we define the hook,
+
+which is gonna be "find."
+
+So, function, and again, we have access
+
+to the next function.<br /><br />
+And actually, let's start by calling it here
+
+at the end so that we don't forget it.<br /><br />
+Okay, and so you see, that it looks
+
+exactly like the other middleware,
+
+the other pre-hook.<br /><br />
+The only difference here is really this find hook,
+
+which will make this query middleware
+
+and not document middleware.<br /><br />
+All right?
+
+And so, the big difference here is
+
+that the this keyword will now point at the current query
+
+and not at the current document,
+
+because we're not really processing any documents here.<br /><br />
+We're really gonna be processing a query.<br /><br />
+Okay?
+
+And the use case that we're gonna do here is this.<br /><br />
+So let's suppose that we can have
+
+secret tours in our database,
+
+like for tours that are only offered internally,
+
+or for a very small, like, VIP group of people,
+
+and that the public shouldn't know about.<br /><br />
+Now, since these tours are secret,
+
+we do not want the secret tours to ever appear
+
+in the result outputs.<br /><br />
+Right?
+
+And so what we're gonna do is to create a secret tour field
+
+and then query only for tours that are not secret.<br /><br />
+All right?
+
+So, let's do that.<br /><br />
+Start by adding here, and let's do it right at the end.<br /><br />
+secretTour, so the type should be a Boolean,
+
+and I think this is the first time
+
+we're actually using a Boolean,
+
+so this would either be true or false.<br /><br />
+So if it's true, then it is a secret tour,
+
+and we don't want it to show up,
+
+and, by default, it is false.<br /><br />
+All right?
+
+And so, basically, usually the tours are not secret.<br /><br />
+Okay.<br /><br />
+Next up, let's actually go ahead and create a secret tour
+
+so that we can then test using it, okay?
+
+So let's call this here the Super Secret Tour.<br /><br />
+All of this doesn't matter,
+
+and let me just say that secretTour is indeed true.<br /><br />
+Okay?
+
+Save it here ...<br /><br />
+And, uh, where is that?
+
+Yeah. So secretTour is true.<br /><br />
+And let's now actually head over to Compass
+
+and delete all of these other tours that we had there.<br /><br />
+So, let's reload this ...<br /><br />
+And then, down here, we should have ...<br /><br />
+Yeah, this test tour here, we can delete that.<br /><br />
+Another test tour ...<br /><br />
+So all this clutter here, basically,
+
+we want to get rid of it.<br /><br />
+We only keep the secretTour here
+
+so that we can now experiment with it.<br /><br />
+Okay, and you see here that secretTour is set to true,
+
+while the other ones, of course,
+
+do not have this attribute,
+
+because, by the time we created them,
+
+we didn't have the secretTour yet.<br /><br />
+So, now, just before we start,
+
+back in Postman, let's confirm that, indeed,
+
+the last tour here, and actually it's not the last tour,
+
+so where is it?
+
+Oh, it's the first one.<br /><br />
+So here we have the Super Secret Tour,
+
+of course, set to true.<br /><br />
+All right? So, moving back now,
+
+let's now execute the query
+
+like we just said in the beginning.<br /><br />
+So, again, keep in mind that this here
+
+is now a query object, all right?
+
+And so we can chain all of the methods
+
+that we have for queries.<br /><br />
+And so that simply adds a find method here,
+
+and then basically select all the documents
+
+where secretTour is not true, okay?
+
+So secretTour ...<br /><br />
+And then is not equal to true.<br /><br />
+And I'm doing it like this because, remember,
+
+the editors are not currently set to false.<br /><br />
+They do simply not have this attribute.<br /><br />
+All right?
+
+Okay, so let's test it out now again.<br /><br />
+And so it should now be gone here.<br /><br />
+And indeed, it is no longer here.<br /><br />
+Okay, we have all the tours that are not secret,
+
+but not the secret tour.<br /><br />
+And I'm now seeing that we actually have
+
+secretTour set to false here,
+
+but that's really just a Mongoose thing,
+
+so let's take another look here at Compass,
+
+and reload.<br /><br />
+And so you see that, actually, in the database,
+
+secretTour is not set to false.<br /><br />
+Mongoose is simply adding that because we have it
+
+in our schema as the default, and it's not in the database.<br /><br />
+And so it's basically, then, putting it there anyway.<br /><br />
+So you see that we actually have 11 documents,
+
+but then here in Postman we only get ten results.<br /><br />
+And that is, of course,
+
+because our Secret Tour is basically filtered out.<br /><br />
+Okay?
+
+So, let's try to understand again
+
+what really happens.<br /><br />
+So as soon as we hit this route, here,
+
+using the get method,
+
+let's see what happens.<br /><br />
+So, what happens is that we create a query
+
+using tour.find.<br /><br />
+Okay?
+
+And then, of course, we chain all these methods to it
+
+as we talked about in one of the last lectures,
+
+and then, by the end,
+
+we then execute that query here by using await.<br /><br />
+Right? Remember that?
+
+So this is where we execute the query.<br /><br />
+But, before it actually is executed,
+
+then, our pre-find middleware here is executed.<br /><br />
+Okay?
+
+And it is executed because it is find,
+
+just like we used here.<br /><br />
+Right?
+
+So, we're creating a find query,
+
+and so, therefore, the find hook is then executed.<br /><br />
+Then, in here, since it is query middleware,
+
+the this keyword points to the query.<br /><br />
+And so, to that query, we can then chain
+
+yet another find method, right?
+
+And in there, we then filter out the secretTour
+
+using this filter object.<br /><br />
+Okay?
+
+So basically saying that we only want tours
+
+where the secretTour is not equal to true.<br /><br />
+And it would actually work the same
+
+if we simply said here, false,
+
+but I find it cleaner like this.<br /><br />
+Okay, there is now just one thing that we need to fix,
+
+because right now this middleware is running
+
+for find, but not for find1.<br /><br />
+Okay?
+
+So let me show you the problem that we might get with that.<br /><br />
+So, uh, let's take the ID of the Secret Tour.<br /><br />
+So we have the Secret Tour here,
+
+and that's its ID, and so if we get tour,
+
+then that should give us the Super Secret Tour here.<br /><br />
+Right?
+
+And so you see, that that filter
+
+that we just built in the middleware
+
+is not working for this command.<br /><br />
+Okay?
+
+And that's because the handle function for this route,
+
+as you might remember,
+
+is using findByID, which, behind the scenes,
+
+is find1, and so it's different from find.<br /><br />
+All right?
+
+So, we need to specify the same middleware also for find1.<br /><br />
+Now, there are two ways of doing that,
+
+and the first one would be simply to go ahead,
+
+copy this code, and then put find1 here.<br /><br />
+But that's not really good,
+
+and so instead we're gonna use a regular expression.<br /><br />
+And that is quite easy, and so ...<br /><br />
+And let me actually just duplicate this here,
+
+comment this piece out,
+
+and then, remember, a regular expression
+
+starts and ends with a slash.<br /><br />
+And then in here, what I want to say,
+
+is that this middleware should be executed
+
+not only for find,
+
+but for all the commands that start with the name find.<br /><br />
+Okay?
+
+So, find, and find1, and also find1 and delete,
+
+find1 and update,
+
+and so all of these will now actually trigger
+
+this middleware function that we have here.<br /><br />
+All right?
+
+So, no need for that.<br /><br />
+This regular expression here is way better.<br /><br />
+So again, this here simply means
+
+all the strings that start with find.<br /><br />
+And actually, since we're here,
+
+let me show you the Mongoose documentations again.<br /><br />
+So, when we go here, to middleware in these guides,
+
+you'll then have an overview of all the middleware.<br /><br />
+For example, document middleware
+
+is the one that we talked about before,
+
+which runs, for example, on save.<br /><br />
+But in fact, document middleware can also
+
+run for stuff like remove.<br /><br />
+All right?
+
+Or for validate.<br /><br />
+Okay, but I didn't talk about these because
+
+usually the one that we always use is just for save.<br /><br />
+Now, query middleware can run for
+
+all of these query functions.<br /><br />
+So find, as we just specified,
+
+and now, with our regular expression,
+
+it's also gonna run for find1,
+
+findOneAndDelete, findOneAndRemove,
+
+and findOneAndUpdate.<br /><br />
+Anyway, moving back to Postman now,
+
+this should now have fixed this situation here.<br /><br />
+So when we now run this query,
+
+it should have no results.<br /><br />
+And indeed, it doesn't.<br /><br />
+Because, remember, we were trying to get a secretTour.<br /><br />
+So the tour with this ID here is secret,
+
+but we never want the secretTours
+
+to show up in any query.<br /><br />
+And so that's why, right now, we get zero results.<br /><br />
+Okay?
+
+So that works now.<br /><br />
+Don't save this,
+
+and now, back to our code.<br /><br />
+Let's now actually also specify
+
+a post middleware for find.<br /><br />
+So, tourSchema, and then, just like before, post,
+
+and then let's use our regular expression here again
+
+for anything starting with find.<br /><br />
+And then just a regular function,
+
+and then here, in the post-find middleware,
+
+we actually get access to all the documents
+
+that we returned from the query.<br /><br />
+So let's call that Docs.<br /><br />
+All right?
+
+So, remember that this middleware is gonna run
+
+after the query has already executed.<br /><br />
+And so, therefore, it can have access
+
+to the documents that were returned.<br /><br />
+Again, because that query has
+
+actually already finished at this point.<br /><br />
+So let's log these documents to the console,
+
+so docs,
+
+but I also want to do something else here.<br /><br />
+So basically, let's create, kind of,
+
+a clock to measure how long it takes
+
+to execute the current query.<br /><br />
+All right?
+
+So, how are we gonna do that?
+
+Well, quite simple.<br /><br />
+We can simply set a property onto the this object,
+
+because this query object is really just a regular object.<br /><br />
+Of course it has access to all these methods,
+
+such as find,
+
+but we can also use it
+
+to set any property that we want on it.<br /><br />
+So, again, just a regular object.<br /><br />
+And so here we can say this.start
+
+should be the current date.<br /><br />
+Okay?
+
+And so this will set it as the
+
+current time in milliseconds, okay?
+
+And so then, here, in the post middleware,
+
+which is gonna run after the query has executed,
+
+we can then subtract the current time
+
+minus the start time.<br /><br />
+So console.log,
+
+query took,
+
+and now the current date
+
+minus this.start,
+
+milliseconds.<br /><br />
+Okay, let's give it a save,
+
+and so let's now try to run a query and see our results.<br /><br />
+Okay?
+
+So, here we get all our tours,
+
+here we have the console,
+
+and let's actually clear that.<br /><br />
+There's a lot of stuff in there.<br /><br />
+Request again,
+
+and so here are all the results.<br /><br />
+So basically these are all the tours that were found,
+
+and so that's the result of console.log of the docs.<br /><br />
+So basically the documents that matched the query.<br /><br />
+But I'm now interested in this first console.log,
+
+and so, here we see "Query took 120 milliseconds,"
+
+and so that was basically the time that passed
+
+from the beginning, where we defined this,
+
+to after the query has executed, at this point in time.<br /><br />
+All right.<br /><br />
+And that is all that I had to show you for now
+
+about query middleware,
+
+and just like before,
+
+of course we're gonna use this a lot
+
+throughout the course,
+
+because, as I mentioned in the beginning,
+
+middleware is really a fundamental concept
+
+that's really important for a lot of stuff
+
+that we need in our applications.<br /><br />
+So we're almost done talking about middleware.<br /><br />
+Next up is the last one,
+
+which is aggregation middleware.
+</body>
+</html>

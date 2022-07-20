@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    And now to finish the section,
+
+let me show you a nice trick on how we can
+
+basically run many promises all at the same time.<br /><br />
+So lets suppose that we actually wanted to get three
+
+random dog images and not just one.<br /><br />
+We could do something like this.<br /><br />
+So simply awaiting D3API calls, one after the other.<br /><br />
+But, why would we actually make the second API
+
+call wait for the first one,
+
+and the third one wait for the second one?
+
+That would just add unnecessary waiting time
+
+when we could just run all of these
+
+promises at the same time.<br /><br />
+So let me show you how we could do that.<br /><br />
+So, the solution is not going to be something like this,
+
+but instead, what we will do is to not await a
+
+promise at this point, but instead save
+
+the promise into a variable.<br /><br />
+So again, we want to now save the promise
+
+and not the resolved value of the promise.<br /><br />
+So, lets call this one here, result one, pro,
+
+which stands for promise.<br /><br />
+So remember that this one here returns a promise.<br /><br />
+Okay, and if we don't await it,
+
+well, we will simply save the promise to the variable
+
+and not its resolved value.<br /><br />
+So lets do that here two more times.<br /><br />
+So one for each random image that we want.<br /><br />
+Okay, and so like this, we have three promises.<br /><br />
+Now in order to actually get the resolved values,
+
+so the three images,
+
+we create a new variable and ow what we do await is
+
+promise dot all, okay.<br /><br />
+And into promise dot all, we pass an array of promises.<br /><br />
+And so that's going to be res one pro,
+
+res two pro, and res three pro.<br /><br />
+Okay, so again, we have these three promises
+
+and these three variables and we can pass an array
+
+containing these three promises into promise dot all.<br /><br />
+And if we then await that, it will basically run
+
+these three promises all at the same time
+
+and then save to three resolved values
+
+into this all array here, okay.<br /><br />
+So lets actually take a look at that,
+
+at that all variable, okay.<br /><br />
+So this here will probably give us an error now
+
+but nevermind that.<br /><br />
+Yeah, exactly.<br /><br />
+But what I'm interested in here is to see if the
+
+all variable and what I want to show you is that
+
+it is indeed an array but I see that it is way too big here
+
+because it has all these informations
+
+about all these http requests.<br /><br />
+We're going to take a look at this kind of stuff
+
+here later on and we'll note sections.<br /><br />
+I just can't, ah, here's the beginning.<br /><br />
+So, you see that it actually starts with this bracket
+
+meaning that it is an array, okay.<br /><br />
+But what we're interested in here is,
+
+in each of these elements, we are interested in
+
+body dot message, right?
+
+So that's what we used to read before
+
+from each of the results.<br /><br />
+So, we need to now create a new array
+
+which only contains these body dot messages.<br /><br />
+Okay, make sense?
+
+And lets use maps for that.<br /><br />
+So images and all
+
+dot maps.<br /><br />
+And I hope that you are familiar with these,
+
+all these array methods.<br /><br />
+So maps will loop through the all array
+
+and the safety value that we return in each iteration
+
+into a new array called images, okay.<br /><br />
+And the current value in each iteration
+
+is called element and what we will return
+
+is element dot body dot message.<br /><br />
+Okay, so that is basic JavaScript
+
+and you should be familiar with that kind of stuff by now.<br /><br />
+Alright.<br /><br />
+So, if we now look at images, that should,
+
+well, where is that?
+
+Oh, all dot maps, oh, of course it's not maps,
+
+it's just maps, sorry for that.<br /><br />
+And here indeed, we have now our array
+
+with these three images.<br /><br />
+So, great, they are three different images.<br /><br />
+And now all we have to do is to
+
+actually save them to our file.<br /><br />
+So right now we still get res as not defined
+
+and that's because we are still attempting to
+
+write res dot body dot message.<br /><br />
+But res does not exist so that's why we get that error.<br /><br />
+So instead, what we want to write here is
+
+a string, basically, containing these three strings.<br /><br />
+So what we do is images dot join.<br /><br />
+And we will join them by putting a
+
+new line character between them.<br /><br />
+So back slash n, means a new line, okay.<br /><br />
+And so that basically will put these three strings,
+
+each one, in a new line, alright.<br /><br />
+So join, joins the three strings into a new string
+
+and joins them by using a new line character between them.<br /><br />
+Okay, and so that should do the trick.<br /><br />
+Give it a save.<br /><br />
+And yeah, so now it says random dot image saved to file,
+
+no more errors.<br /><br />
+Let's take a look, dot image, and it did, here we go.<br /><br />
+And we have three different images.<br /><br />
+First this one, then this guy, and finally the third one.<br /><br />
+So, three different dog images.<br /><br />
+And we got them all at the same time
+
+by using promise dot all, okay.<br /><br />
+I hope that made sense and in fact,
+
+I hope that this entire section made sense to you
+
+because from now on, I will assume that you
+
+know the basics of promises and a single wait.<br /><br />
+And we'll actually start using them throughout
+
+the rest of the course, assuming that you
+
+know what we are doing, okay.<br /><br />
+And Node actually supports a single wait since
+
+its version seven point six,
+
+and so now we can use it without any problem.
+</body>
+</html>

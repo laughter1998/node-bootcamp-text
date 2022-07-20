@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now actually start to learn
+
+how to solve callback hell by using promises.<br /><br />
+And we're gonna start off by using a promise
+
+for the agent appear request
+
+instead of the callback.<br /><br />
+And this is gonna work because the super agent library
+
+actually has support for promises out of the box,
+
+and so we can simply use them here.<br /><br />
+For node functions, coming from internal node packages
+
+like Read File, we will actually have to build the promise
+
+ourselves, and we will do that later in the next lecture,
+
+or so.<br /><br />
+But for now,
+
+I want you to learn how to consume promises
+
+and only later how to build them.<br /><br />
+Okay, so again we're going to start
+
+with the super agent library
+
+and more specifically with the get method here.<br /><br />
+Because this method here actually returns a promise.<br /><br />
+So without going into too much detail, for now,
+
+a promise basically implements
+
+the concept of a future value.<br /><br />
+So basically, a value that we are expecting to receive
+
+some time in the future,
+
+so it's a bit like us saying, "Hey, server,"
+
+or "Hey, API, please get me a random dog image
+
+"in the background and let me know when you're ready
+
+"and then give me that data back."
+
+Okay?
+
+So that random image is the value that we expect
+
+sometime in the future.<br /><br />
+And that is exactly the kind of request
+
+that we're doing using a super agent library
+
+in this example.<br /><br />
+Right.<br /><br />
+And the get method that we use again will automatically
+
+and immediately return a promise as soon as we start
+
+the request.<br /><br />
+So the promise doesn't have a value yet,
+
+because the server is actually still getting the data
+
+from the server asynchronously in the background
+
+but the promise is immediately available
+
+and basically promising us that it will get some data back
+
+in the future.<br /><br />
+Okay, does that make sense?
+
+And that state of the promise in that case,
+
+so right in the beginning, is a pending promise.<br /><br />
+So it's still pending, it still hasn't gotten back
+
+with any data, okay?
+
+So here at this point, we already have a promise
+
+that we can work with.<br /><br />
+Now all we need to do is consume it,
+
+which basically means that we wait for it to come back
+
+with the data.<br /><br />
+And to do that, we use the then method on it.<br /><br />
+So, all we do is to use then
+
+and then in here, we pass a callback function.<br /><br />
+This callback function will then be called as soon
+
+as the promise is done doing its work and has come back
+
+with the data.<br /><br />
+And that data is then available as an argument
+
+to that callback.<br /><br />
+Now I like to call that the result.<br /><br />
+And so, again in that callback function that we have here
+
+we then have that data available.<br /><br />
+So let's take all of this here and put it into
+
+this then callback function
+
+and actually get rid of this.<br /><br />
+So we no longer need that,
+
+and give it a save.<br /><br />
+Now you might be thinking, well, we're still using
+
+callbacks here, and yeah, that's actually true.<br /><br />
+So this does not look like a big change for now,
+
+but after we transform the whole example here to
+
+promises, you will see
+
+the big impact that promises will have on our code.<br /><br />
+So that's basically if we have multiple promises,
+
+we will be able to chain these callbacks onto one other
+
+instead of nesting them.<br /><br />
+Which is already a huge improvement.<br /><br />
+Now one thing that I forgot to mention earlier
+
+is that a promise as soon as it comes back with the data
+
+is called a resolved promise.<br /><br />
+So in the beginning it's a pending promise and
+
+when it successfully gets the data,
+
+it is then a resolved promise.<br /><br />
+However, a resolved promise might not always be
+
+successful because there might have been an error.<br /><br />
+So we say that a resolved promise can either be fulfilled
+
+or rejected.<br /><br />
+The fulfilled promise actually has a result that we want
+
+to use.<br /><br />
+While a rejected promise is when there was an error.<br /><br />
+So remember the situation that we had before
+
+where we had a wrong dog breed.<br /><br />
+So in that case, we had an error,
+
+and we handled that error using this piece of code here.<br /><br />
+Okay.<br /><br />
+Now the thing with this then method here is that it
+
+actually only handles fulfilled promises but it doesn't do
+
+anything if there was an error,
+
+because for that, we actually have another method.<br /><br />
+So another mechanism of handling that.<br /><br />
+And that is the catch method.<br /><br />
+So right after the then method, we can chain
+
+another method which is called catch.<br /><br />
+Okay.<br /><br />
+And so this one will get called if there was an error.<br /><br />
+So in here, we actually have access to that error object.<br /><br />
+And so let's now go ahead,
+
+take this piece of code,
+
+and put it here,
+
+and now we can get rid of this.<br /><br />
+Because actually in this then method,
+
+we have no information if there was an error
+
+or not because it only ever gets called
+
+in case the promise was successful.<br /><br />
+So if it's a fulfilled promise.<br /><br />
+Okay, so this is kind of nice to actually separate
+
+these two cases automatically for us.<br /><br />
+So instead of having that weird handling
+
+that we had before,
+
+we can simply write all the logic for the successful case
+
+which is the most usual one
+
+because we usually expect everything to work all right,
+
+but in case there was an error, we can input
+
+some other logic down here into this error handler here.<br /><br />
+So we keep that nicely separated.<br /><br />
+Let's change it here again.<br /><br />
+Give this one another save to run it again.<br /><br />
+And so here we have Not Found,
+
+and so you see that actually it did enter this catch
+
+method here and didn't do any of the things
+
+that's in this then method.<br /><br />
+Now go ahead and fix this here,
+
+close it,
+
+give this one a save,
+
+and here we go.<br /><br />
+So that is how we consume promises.<br /><br />
+So we started with this method here which
+
+returned a promise and so on that,
+
+we can chain the then method
+
+which handles basically the successful case,
+
+and then in the end, we also chain the catch method
+
+which handles the unsuccessful, so the rejected, promise.<br /><br />
+But as I said before, this kind of still looks like
+
+it did before.<br /><br />
+Right?
+
+So we still have this callback function up here
+
+so all of this callback function
+
+and also here inside our then method, we have this callback
+
+function of the writeFile.<br /><br />
+So let's go ahead and fix that right in the next video.
+</body>
+</html>

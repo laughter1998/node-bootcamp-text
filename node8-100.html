@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Another nice small feature
+
+that we can add to an API is
+
+to provide an alias route to a request
+
+that might be very popular,
+
+so it might be requested all the time.<br /><br />
+And, for example, we might want
+
+to provide a route specifically
+
+for the five best cheap tours.<br /><br />
+So, if we'd use our regular route here
+
+with the filters and with all the features
+
+that we already have,
+
+the request would look a little bit like this.<br /><br />
+So, let's get ride of all of this.<br /><br />
+So, the five best and cheapest tours.<br /><br />
+So, that means we have a limit of five
+
+and then we're gonna sort by ratings and by price.<br /><br />
+So, sort and then the average rating,
+
+and descending, so minus ratings average.<br /><br />
+And, in case they have the same average,
+
+then we want the cheapest price possible.<br /><br />
+And so, we're gonna sort also by price.<br /><br />
+Let's quickly take a look at the results.<br /><br />
+And, indeed, we get five tours here.<br /><br />
+And, Postman does this scrolling again.<br /><br />
+So, we have tours with 4.9,
+
+4.9, 4.9 again,
+
+4.8, and 4.7.<br /><br />
+And so, these are actually our five best and cheapest tours.<br /><br />
+If we said cheapest and best, well,
+
+then maybe we would have to sort by price first
+
+because some of them are not really cheap.<br /><br />
+For example, this one.<br /><br />
+But, we selected, first, the average.<br /><br />
+And so, we sorted by the highest average first
+
+and, only then in case of a tie, basically,
+
+only then, by the price.<br /><br />
+Now, let's say that this is a request
+
+that is done all the time and we want
+
+to provide a route that is simple
+
+and easy to memorize for the user.<br /><br />
+So, let's go to our app and try to implement that.<br /><br />
+And, we're gonna start at their routes, so tour router.<br /><br />
+And, we then need to create a new route.<br /><br />
+And, let's do that here, right at the top.<br /><br />
+So, router.route.<br /><br />
+And so, how are we gonna call this route?
+
+Well, let's say top-5-cheap.<br /><br />
+So, quite a simple name, but it's gonna work.<br /><br />
+And then, we actually only want
+
+to get requests to this route.<br /><br />
+And so, now it's time to think.<br /><br />
+How are we gonna implement this functionality?
+
+Well, in essence, what we want is
+
+to actually still get all the tours just like here.<br /><br />
+And so, let me go ahead and start by copying
+
+and pasting that here.<br /><br />
+So, we really still want to use this function here
+
+because it doesn't really make sense
+
+to rewrite all of the logic that is in there.<br /><br />
+But, before we can call this route ender,
+
+we basically want to prefill some of the fields
+
+in the query string.<br /><br />
+So, we already know
+
+that our query string should look like this.<br /><br />
+And, actually we can add some more stuff here.<br /><br />
+But, in essence, our query string
+
+has to look something like this.<br /><br />
+And so, the solution is gonna be to run a middleware
+
+before we actually run this getAllTours handler.<br /><br />
+And so, that middleware function is then
+
+gonna manipulate the query object that's coming in.<br /><br />
+And so, this is yet another really nice example
+
+of using middleware because you really need
+
+to get familiar and used to this concept
+
+of using middleware strategically in order
+
+to change the request object as we need it.<br /><br />
+So, let's add it here then.<br /><br />
+So, tourController.<br /><br />
+And then, the middleware function
+
+that we're gonna create in a second,
+
+which is gonna be called aliasTopTours.<br /><br />
+So, let's copy that name, move to the tourController
+
+and I'm gonna put it here at the very top.<br /><br />
+So, exports.,
+
+then request,
+
+response,
+
+and what's the third argument
+
+that we need in the middleware, remember?
+
+And, I know the Express section is kind of far away already
+
+at this point, but I hope you remember
+
+that the third argument here needs to be next.<br /><br />
+So, in order to call the next middleware
+
+that's in the middleware stack.<br /><br />
+Give it a save.<br /><br />
+And so, this error there should disappear.<br /><br />
+And so, let's do what we said we would do.<br /><br />
+So, basically to manipulate the query object
+
+so that when it reaches the getAllTours handler,
+
+it's then already different.<br /><br />
+So, let's first do that and then really
+
+take a look at what happens.<br /><br />
+So, remember, the limit is gonna be set to five.<br /><br />
+And, remember that everything is strings here
+
+and so I'm setting this also to a string.<br /><br />
+Now, what else did we had?
+
+So, we have this sort, so let's just copy this here
+
+and say req.query.sort.<br /><br />
+It should be this.<br /><br />
+And then, we can actually also specify some fields
+
+so that the user doesn't get all of the fields
+
+that we have in there.<br /><br />
+So, let's say that we only want the name, the price,
+
+the ratings average, the summary,
+
+and the difficulty.<br /><br />
+Give it a save and now all we need is next,
+
+otherwise this middleware will be stuck here forever
+
+and cannot move on.<br /><br />
+So, let's now figure out a bit better
+
+what's actually gonna happen here.<br /><br />
+So, as soon as someone hits the top-5-cheap route,
+
+we will start.<br /><br />
+The first middleware that's gonna be run is aliasTopTours.<br /><br />
+So, the function that we just created.<br /><br />
+So, what this is gonna do is
+
+that it will set these properties of the query object
+
+to these values that we specified here.<br /><br />
+Basically prefilling parts of the query object
+
+before we then reach the getAllTours handler.<br /><br />
+And so, as soon as we then get to this function,
+
+the query object is already prefilled,
+
+even if the user didn't put any
+
+of these parameters in the query string.<br /><br />
+And so, in essence,
+
+what we're doing here is prefilling the query string
+
+for the user so that the user doesn't have
+
+to do it on his own.<br /><br />
+And so, let's now actually go ahead and try this.<br /><br />
+So, I'm copying this.<br /><br />
+And, here it's not tours.<br /><br />
+It is top-5-tours.<br /><br />
+Whoa, what's going on here?
+
+For some reason, it doesn't find this route,
+
+so let's go back.<br /><br />
+So, top-5-tours.<br /><br />
+And so, here in the route, ah, okay.<br /><br />
+It's called top-5-cheap,
+
+so my mistake here.<br /><br />
+So, cheap, send it now,
+
+and that's still not correct.<br /><br />
+Ah, yeah.<br /><br />
+Of course, I still have to put the tours here, of course.<br /><br />
+So, we are in the tours resource
+
+and the whole router is mounted
+
+onto this tours route, remember that.<br /><br />
+And so, it's in that tours,
+
+that kind of mini application, remember that,
+
+where I created this top-5-cheap route.<br /><br />
+So, let's hope it works now.<br /><br />
+And, indeed, it does.<br /><br />
+So, that worked, that's fantastic.<br /><br />
+Now, of course, we could do a lot more alias routes here,
+
+but that's not really necessary.<br /><br />
+I really just wanted to show you the concept,
+
+show you that it can be a nice feature
+
+to add to any API and also I wanted to, again,
+
+show you the power of middlewares.<br /><br />
+So, we're talking about Mongoose here,
+
+but still, it's very important to keep getting familiar
+
+with the Express concepts that we talked about before.<br /><br />
+Anyway, we're now done with our API features.<br /><br />
+In the next video, we're just gonna quickly refactor all
+
+of this to make the entire code a bit more modular
+
+and, of course, better.
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    We just learned a lot about MVC,
+
+and so lets now very quickly refactor our code
+
+in order to fit that architecture a bit better.<br /><br />
+And actually we already have our controller folder here,
+
+and the tour and user controllers in them,
+
+and we already have the routes
+
+here in the route folder.<br /><br />
+And so really what we need to do in this video
+
+is to create a model folder,
+
+and create a tour model in there.<br /><br />
+So, let's do that.<br /><br />
+(clicking)
+
+So, models and in there
+
+the tourModel.js
+
+Let's close out these guys,
+
+and so let's go ahead and copy,
+
+or cut actually, this schema
+
+and this entire model declaration here,
+
+and put it in the tour model.<br /><br />
+We will also want the Mongoose importing here.<br /><br />
+All right, and in fact,
+
+let's get completely rid of this code.<br /><br />
+All right, so this here was just for testing,
+
+and we don't need it anymore.<br /><br />
+So it has done its job,
+
+and so all we really want to do
+
+in this file here is to connect to the database,
+
+but everything that is about the models themselves,
+
+will always live inside of a file,
+
+inside of the models folder.<br /><br />
+All right, now in here eslint tells us
+
+that this variable here has not been used,
+
+but actually we want to use it
+
+because we want to export the model from this file.<br /><br />
+So module.exports, and this should actually
+
+be the only thing we export from this file,
+
+and so we use the kind of default export with module.exports
+
+Okay, and so this is our very simple tour model
+
+that we created in our last lecture,
+
+and now here we put it in it's own standalone file,
+
+and then finally exported it from here.<br /><br />
+Okay, now where do we actually need this tour.<br /><br />
+So, in other words, where are we actually going to create
+
+and query, and delete and update tours.<br /><br />
+Well we're going to do so in the tourController, right?
+
+So right here,
+
+and so let's go ahead and actually import the model in here.<br /><br />
+So right here at the top,
+
+(clicking)
+
+and I'm giving it the exact same name.<br /><br />
+So still tour,
+
+and now I want to require, so the current folder,
+
+then up one folder,
+
+and then down into the models folder,
+
+and in there, tour model.<br /><br />
+Okay, now of course it's telling me
+
+that I'm not using this variable,
+
+but don't worry about that for now.<br /><br />
+So, next up, I want to get rid
+
+of this place here where we actually import
+
+the data as a json file.<br /><br />
+So, of course, we no longer need this.<br /><br />
+This here was just for testing purposes.<br /><br />
+So let's get rid of it.<br /><br />
+You can also comment it out
+
+if you want to leave it maybe as a reference for yourself.<br /><br />
+Then just go ahead and comment it out.<br /><br />
+Then down here we get this error
+
+because the variable that we just deleted
+
+is no longer defined,
+
+and so let me comment out this piece of code here
+
+because, again, we're gonna need something similar to this.<br /><br />
+Okay, get tour, let's comment all
+
+of this here out as well just so that we don't get
+
+any errors as soon as we save this file.<br /><br />
+Then here, actually, we can get rid,
+
+well kind of, of all of this.<br /><br />
+So we're no longer gonna use any of this.<br /><br />
+So let me just keep this piece here.<br /><br />
+So I'm gonna copy it,
+
+delete everything else from this,
+
+and put it back here.<br /><br />
+We still got this error,
+
+and so I'm commenting out this piece of code.<br /><br />
+All right, and here we don't get any errors.<br /><br />
+So let's just leave it like this for now, okay?
+
+So what I just did here was to basically
+
+clean the code that we wrote before
+
+in order to no longer depend on the data
+
+that we had in the json file.<br /><br />
+All right, so now we should have no more errors,
+
+or actually we should in this checkID function,
+
+and this checkID function, we,
+
+in fact, no longer will need it, okay?
+
+Because from now on we're gonna start working
+
+with the IDs that are coming from MongoDB,
+
+and Mongo itself will give us an error
+
+if we use an invalid ID,
+
+and so this function that we have here
+
+was actually very useful for showing you
+
+how middleware actually works,
+
+by giving you this very practical example here,
+
+and later in the course, people,
+
+of course, use more middleware,
+
+but this particular function here,
+
+we will no longer need it.<br /><br />
+So, let's get rid of it,
+
+and also of this file system import,
+
+again, because we're no longer using the file here.<br /><br />
+So we still got some error here.<br /><br />
+Let's see what's happening,
+
+and it looks like it is in the
+
+in the tour routes, okay?
+
+And so actually that was the one
+
+that I was gonna change next.<br /><br />
+So the problem here is that
+
+this tourController.checkID, of course no longer
+
+exists because we just deleted it,
+
+and so let's get rid of this as well,
+
+or actually let me just comment it out, okay?
+
+So you keep in mind that you can use
+
+this .param function here to define
+
+parameter middleware in your own applications, okay?
+
+So I don't want you to forget that,
+
+and so just leave it here in your code
+
+so that maybe later when you come back to it
+
+you still know that it's there, okay?
+
+So now I saved it,
+
+and so we're back on track here.<br /><br />
+So everything is back to working,
+
+and our code is now sufficiently well refactored
+
+so that in the next video we can actually start
+
+implementing the correct functions in our API.<br /><br />
+So basically, getting all tours,
+
+creating tours, deleting tours, and updating tours.<br /><br />
+So, one by one, we will start
+
+implementing these controller functions,
+
+or handler functions if you prefer that,
+
+starting in the next video.
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So far in this section,
+
+we have talked about Mongoose models,
+
+CRUD operations with Mongoose,
+
+we did a lot of querying, and we learned about
+
+the aggregation pipeline, but now for the next
+
+couple of videos, let's actually return
+
+to our data model and learn some super useful features
+
+that Mongoose offers us in order to model our data.<br /><br />
+And the first one we're gonna talk about
+
+are virtual properties.<br /><br />
+And so let's open our tour model here.<br /><br />
+All right, now virtual properties are basically fields
+
+that we can define on our schema
+
+but that will not be persisted.<br /><br />
+So they will not be saved into the database
+
+in order to save us some space there.<br /><br />
+And most of the time, of course,
+
+we want to really save our data to the database,
+
+but virtual properties make a lot of sense
+
+for fields that can be derived from one another.<br /><br />
+For example a conversion from miles to kilometers,
+
+it doesn't make sense to store these two fields
+
+in a database if we can easily convert
+
+one to the other, right?
+
+Okay, so let's now define a virtual property
+
+that contains the tour duration in weeks.<br /><br />
+And so that's a field basically
+
+that we can very easily convert from the duration
+
+that we already have in days, right?
+
+And so here is how it works.<br /><br />
+We define that virtual properties on the tour schema,
+
+and so we say, tourSchema.virtual and then the name
+
+of the virtual property.<br /><br />
+So let's call it duration weeks,
+
+and then on there we need to define the get method.<br /><br />
+And that's just because this virtual property here
+
+will basically be created each time
+
+that we get some data out of the database.<br /><br />
+And so this get function here is called a getter.<br /><br />
+Now in here we pass a function,
+
+and actually this call back function
+
+is gonna be a real function, so not an arrow function,
+
+and I'm gonna explain to you why in a second.<br /><br />
+Now how do we then basically define
+
+the virtual property?
+
+Well it's very simple, all we have to say
+
+is that we want to return this, .duration in this case,
+
+divided by seven.<br /><br />
+So this is how we calculate the duration in weeks,
+
+so the duration in days divided by seven
+
+because there are seven days in the week,
+
+and so that's then the duration in weeks.<br /><br />
+For example, if a tour has seven days,
+
+then it's of course gonna be one week.<br /><br />
+Now I used this regular function here
+
+because remember, an arrow function does not get
+
+its own disk keyword.<br /><br />
+In here we actually need the disk keyword
+
+because the disk keyword in this case
+
+is going to be pointing to the current document.<br /><br />
+And so usually when we want to use this,
+
+then we should always use a regular function.<br /><br />
+So really everywhere in Mongoose,
+
+I'm gonna always be using these regular functions
+
+that we're used to.<br /><br />
+So give it a save here, and that's actually it.<br /><br />
+That's how we define duration weeks,
+
+which is not going to be persisted in the database,
+
+but it's only gonna be there as soon as we get the data.<br /><br />
+Now right now it's actually not gonna be there yet,
+
+because there's one piece missing here,
+
+so let me start by showing you that.<br /><br />
+So if we try to get all tours,
+
+you will see that duration weeks is nowhere
+
+to be found here.<br /><br />
+And that's because we need to explicitly define
+
+in our schema that we want the virtual properties
+
+in our output.<br /><br />
+And so remember how I said that into this Mongoose.schema,
+
+we can pass in not only the object
+
+with the schema definition itself,
+
+but also an object for the schema options.<br /><br />
+And so let's add that here at the end,
+
+so this first object here is the schema definition,
+
+and now second an object for the options.<br /><br />
+And what we need to specify here is the two JSON
+
+property here, and what we say is then
+
+that each time that the data is actually outputted as JSON,
+
+we want virtuals to be true.<br /><br />
+So basically the virtuals to be part of the output.<br /><br />
+And now I'm duplicating this because we also
+
+want to say to object.<br /><br />
+So basically when the data gets outputted
+
+as an object.<br /><br />
+And so if we now go back here, we should then
+
+be able to see duration weeks.<br /><br />
+Let's wait for it, and indeed, here it is.<br /><br />
+So it's five days, and so that is 0.71 weeks.<br /><br />
+Here we have seven days, and so that's one week.<br /><br />
+Okay, so that actually works, great.<br /><br />
+Now one thing that we need to keep in mind
+
+is that we cannot use this virtual property here
+
+in a query, because they're technically
+
+not part of the database.<br /><br />
+So we can not say, for example,
+
+tour.find where duration weeks is equal to one.<br /><br />
+That's not gonna work, again because this property
+
+is not actually part of the database.<br /><br />
+Now of course we could also have done this conversion
+
+each time after we query the data, for example,
+
+like in a controller, but that would not
+
+be the best practice simply because we want to try
+
+to keep business logic and application logic
+
+as much separated as possible, remember?
+
+So that was that whole talk about fat models
+
+and thin controllers that we talked about before
+
+which says that we should have models
+
+with as much business logic as we can offload to them
+
+and thin controllers with as little
+
+business logic as possible.<br /><br />
+And so virtual properties like this are actually
+
+a good example of how we can achieve
+
+that kind of architecture.<br /><br />
+So knowing the duration in weeks
+
+is a business logic because it has to do
+
+with the business itself, not with stuff like requests
+
+or responses, and so we do the calculation
+
+right in the model where it belongs
+
+and not in the controller.
+</body>
+</html>

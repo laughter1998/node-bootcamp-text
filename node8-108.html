@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So, Mongoose offers us developers
+
+very powerful ways of validating data
+
+that's coming into our model.<br /><br />
+And so, in this video you're gonna learn
+
+all about data validation with Mongoose.<br /><br />
+Now, what exactly does validation actually mean?
+
+Well, validation is basically checking if the entered
+
+values are in the right format for each field
+
+in our document schema, and also that values
+
+have actually been entered for all of the required fields.<br /><br />
+Now, on the other hand, we also have sanitization,
+
+which is to ensure that the inputted data is
+
+basically clean, so that there is no malicious code
+
+being injected into our database,
+
+or into the application itself.<br /><br />
+So, in that step we remove unwanted characters,
+
+or even code, from the input data, all right?
+
+And this is actually a crucial step, like,
+
+a golden standard in back-end development.<br /><br />
+To never, ever accept input data
+
+coming from a user as it is.<br /><br />
+So, we always need to sanitize that incoming data.<br /><br />
+But, anyway, I will leave data sanitization
+
+for the security section of the course,
+
+so that in this lecture
+
+we can focus entirely on data validation.<br /><br />
+And we are doing this data validation
+
+right here on the model.<br /><br />
+And that, again, is because of the fat model
+
+and thin controller philosophy,
+
+which makes the model the perfect place
+
+to perform validation, right?
+
+And, in fact, Mongoose already comes with a bunch
+
+of validation tools out of the box.<br /><br />
+And so, let's now actually do some data validation here.<br /><br />
+And actually, we already did.<br /><br />
+So, when we used this require here, that is actually
+
+already a built in data validator, all right?
+
+So you see that we use a validator like required
+
+right here in the schema type options.<br /><br />
+And required is actually available for all the data types.<br /><br />
+So, not just strings, but really everything.<br /><br />
+Numbers, Booleans, dates, or really,
+
+whatever type you're using.<br /><br />
+Then we also have unique here, but please note,
+
+that this is actually, technically, not a validator.<br /><br />
+It will still produce an error
+
+when we have a duplicate name,
+
+but again, this is not really a validator, all right?
+
+But, required is a validator,
+
+and so I'm going to show you now another one
+
+which is specifically just for strings,
+
+which is called max length and also min length.<br /><br />
+So, we have max length
+
+and as the name says, we use this to specify
+
+the maximum length that a string can have.<br /><br />
+And if it's longer than that, well then,
+
+it's going to produce an error, all right?
+
+So, let's do that just like we did before with required,
+
+where we specified an array, and then set the value.<br /><br />
+So, let's say we want 40 as the maximum string length,
+
+and then, we add the error after that.<br /><br />
+So, basically, the error message that we get.<br /><br />
+So, a tour name must have
+
+less or equal then 40 characters.<br /><br />
+Okay, so, that is max length,
+
+and then we also have min length.<br /><br />
+All right, and so let's set that one to 10,
+
+so a tour name must have more or equal then 10 characters.<br /><br />
+Okay, and so just like this we have these two validators
+
+that are actually only available on strings, okay?
+
+And, so let's now actually go ahead and try that.<br /><br />
+So, I'm going to create a new tour here.<br /><br />
+And, this is not a secret tour,
+
+but then here the rest does not matter.<br /><br />
+I will just call this one Test Tour,
+
+and let's see how many characters we have,
+
+so four plus one, plus four,
+
+so we only have nine characters.<br /><br />
+And so, we should now expect to actually get an error.<br /><br />
+So, let's try that out.<br /><br />
+And, indeed, a tour name must have
+
+more or equal then 10 characters.<br /><br />
+Great, but now what about updating tours?
+
+So, let's get one of these here.<br /><br />
+So, we have this test tour two here,
+
+so let's try to update this one.<br /><br />
+So, we go to our update tour route.<br /><br />
+And now let's here, change the name to Test,
+
+send the request, and, we get the same error.<br /><br />
+Now, this only works because of a setting
+
+that we set way back,
+
+when we implemented this updating handler.<br /><br />
+So, let me quickly show that to you in the tour controller.<br /><br />
+Delete and update, and so it's because of this option
+
+here runValidators, set to true
+
+that the validators are run again.<br /><br />
+If I set it now to false,
+
+then Mongoose should happily accept this name.<br /><br />
+And indeed, it does, all right.<br /><br />
+So, let's set it back to something longer,
+
+it doesn't matter,
+
+okay, and if I set it back to true,
+
+then it should not accept it,
+
+and indeed, we get our error back, all right?
+
+So, just wanted to quickly
+
+show you the fact of that setting.<br /><br />
+All right, and so, yeah, these are now working.<br /><br />
+Let's try a couple of more validators here.<br /><br />
+For example, now on numbers.<br /><br />
+So, let's go here to the ratings average.<br /><br />
+And we know that the rating must always
+
+be between one and zero, and we know that a rating
+
+must always be between one and five, okay?
+
+And so, very similar to the min and max length,
+
+on numbers we simply have min and max.<br /><br />
+So, the minimum that we want is one,
+
+and then again our error message.<br /><br />
+So, rating must be above 1.0, let's say.<br /><br />
+And then the max is five.<br /><br />
+Must be below 5.0, okay,
+
+and let's quickly test this one as well.<br /><br />
+So, creating a new tour, let's call it the Test Tour Amazing
+
+because it has an average rating of six.<br /><br />
+Okay, so let's see what happens then,
+
+and indeed, the rating must be below five.<br /><br />
+Okay, and so, that again is not going to work,
+
+and of course it cannot be zero, either.<br /><br />
+So, it must be above one, and of course,
+
+with four, it is gonna work, and indeed, here is our tour.<br /><br />
+Next up, I want to restrict this difficulty value here
+
+to only three difficulties.<br /><br />
+So, easy, medium, and difficult.<br /><br />
+And if the user puts in something else,
+
+then it's not going to work.<br /><br />
+So, let's try that out.<br /><br />
+So, the validator that we use for that is called enum,
+
+okay, and so, here we can pass an array
+
+of the values, basically, that are allowed.<br /><br />
+So, we have easy, we have medium, and we have difficult.<br /><br />
+All right, now we also want to specify our error message
+
+here, but right now that's not really possible, right?
+
+I mean, if we added another argument here,
+
+then that would not be for the error message,
+
+it would of course be for yet another possible value, okay?
+
+And so, the solution that we need to do here,
+
+is to create yet another object here,
+
+and then, actually specify that these here are the values.<br /><br />
+And then, our message, all right?
+
+And so, this is actually how it really works.<br /><br />
+This notation here is really just a shorthand for
+
+this complete object here, all right?
+
+So, difficulty is either: easy, medium, or difficult.<br /><br />
+Okay, and so, that is a very nice, very handy validator
+
+that is automatically available on all strings, okay,
+
+so, don't try to use this one here on numbers, for example.<br /><br />
+This is only for strings.<br /><br />
+And, by the way this min and max here
+
+is actually not only for numbers,
+
+but it's also gonna work with dates, all right?
+
+Anyway, let's now finally test this out as well.<br /><br />
+So, we need to change the name,
+
+and in here let's put something else,
+
+all right, and so indeed, we get our error.<br /><br />
+If we now put easy, then it works.<br /><br />
+Okay, and that's actually all I wanted to show you
+
+here in this lecture,
+
+but there are actually a bunch of other validators.<br /><br />
+For example, on strings you have a match validator
+
+in order to check if the input
+
+matches a given regular expression.<br /><br />
+But, I believe that these ones that I just showed you here
+
+are the most important built in validators.<br /><br />
+And, for a complete list of all of them,
+
+of course, you can always check out the documentation.<br /><br />
+Now we can also specify our own validators,
+
+and so, that is exactly what we will do
+
+right in the next video.
+</body>
+</html>

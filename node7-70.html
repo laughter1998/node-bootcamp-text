@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Just like in the previous sections,
+
+before we dive into a new technology,
+
+let's actually learn what it's all about.<br /><br />
+So in this case, let's learn what MongoDB actually is,
+
+how it works, and a quick overview
+
+of how it compares to more traditional databases.<br /><br />
+And let's begin with a simple overview.<br /><br />
+So MongoDB is obviously a database,
+
+and it's a so-called NoSQL database.<br /><br />
+Now some people also say No S Q L,
+
+but I'm just gonna keep saying "no sequel", all right?
+
+Now, the other type of database, which is
+
+sort of more traditional, is the relational database,
+
+which NoSQL is often compared to.<br /><br />
+Anyway, in Mongo, which we can also say instead of MongoDB,
+
+each database can contain one or more collections.<br /><br />
+So if you actually are coming from one of
+
+these more traditional relational database systems,
+
+you can think of a collection as a table of data.<br /><br />
+Then, each collection can contain one
+
+or more data structures called documents,
+
+and again, in a relational database,
+
+a document would be a row in a table.<br /><br />
+So each document contains the data
+
+about one single entity, for example,
+
+one blog post or one user or one review,
+
+or anything else, really.<br /><br />
+You get the point, right?
+
+Now the collection is like the parent structure
+
+that contains all these entities.<br /><br />
+For example, a blog collection for all posts,
+
+a users collection or a reviews collection.<br /><br />
+And you can also see here that the document
+
+has a data format that looks a lot like JSON,
+
+which will make our work a lot easier
+
+when we start dealing with these documents.<br /><br />
+And of course we will talk a lot about this later,
+
+but for now on, let's learn about Mongo's main features.<br /><br />
+So, according to MongoDB's website,
+
+MongoDB is a document database with the scalability
+
+and flexibility that you want,
+
+and with the querying and indexing that you need.<br /><br />
+Now, that sounds a bit over the top,
+
+so let's try to understand what this actually means.<br /><br />
+So, as we saw before, MongoDB is a document-based database,
+
+so it stores data in documents which
+
+are field-value paired data structures like JSON.<br /><br />
+So again, it stores data in these document
+
+instead of rows in a table
+
+like in traditional relational databases.<br /><br />
+It's therefore a NoSQL database
+
+and not a relational one.<br /><br />
+Also, MongoDB has built-in scalability,
+
+making it very easy to distribute data
+
+across multiple machines as your apps
+
+get more and more users
+
+and starts generating a ton of data.<br /><br />
+So whatever you do, MongoDB will make it very easy
+
+for you to grow.<br /><br />
+Next up, another big feature of MongoDB
+
+is its great flexibility.<br /><br />
+So there is no need to define a document data schema
+
+before filling it with data,
+
+meaning that each document can have a different number
+
+and type of fields.<br /><br />
+And we can also change these fields all the time.<br /><br />
+And all this is really in line
+
+with some real-world business situations,
+
+and therefore can become pretty useful.<br /><br />
+MongoDB is also a very performant database system.<br /><br />
+Thanks to features like embedded data models,
+
+indexing, sharding, the flexible documents
+
+that we already talked about, native duplication
+
+and so much more.<br /><br />
+And you don't need to know all of this, of course,
+
+but it's sure nice to know that MongoDB is highly performant
+
+if we need it to be.<br /><br />
+Finally, I just wanted to add that MongoDB
+
+is a free and open-source database,
+
+published under the SSPL license.<br /><br />
+So in summary, we can say that MongoDB
+
+is a great database system
+
+to build many types of modern, scalable
+
+and flexible web applications.<br /><br />
+And in fact, Mongo is probably the most used database
+
+with no JS, and so it's a perfect fit
+
+for us to use in this course.<br /><br />
+Okay, now let's talk a bit deeper
+
+about these documents, and returning
+
+to our blog posts example from the beginning,
+
+this could be a very simple representation
+
+of a single post document, right?
+
+And now just for the sake of comparison,
+
+here is how that exact same data
+
+could look like as a row in a relational database
+
+like MySQL, or even in an Excel spreadsheet,
+
+if you're more used to that.<br /><br />
+So as I mentioned a bit earlier,
+
+MongoDB uses a data format similar to JSON
+
+for data storage called BSON.<br /><br />
+It looks basically the same as JSON,
+
+but it's typed, meaning that all values
+
+will have a data type such as string, Boolean,
+
+date and teacher, double object or more.<br /><br />
+We will learn all about this later in practice.<br /><br />
+So what this means is that all MongoDB documents
+
+will actually be typed,
+
+which is different from JSON, all right?
+
+Now just like JSON, these BSON documents
+
+will also have fields and data is stored
+
+in key value pairs.<br /><br />
+On the other hand, in a relational database,
+
+each field is called a column.<br /><br />
+So here again you can see how
+
+these databases arrange data in table structures
+
+while our JSON data is so much more flexible.<br /><br />
+Take for example the tags field,
+
+where we actually have an array,
+
+so we have basically multiple values for one field, right?
+
+So MongoDB, space and DV in this case.<br /><br />
+But in relational databases, that's not really allowed.<br /><br />
+We cannot have multiple values in one field,
+
+and so we would actually have to find workarounds for this
+
+which could then involve more work
+
+and more overall complication.<br /><br />
+Now another extremely important feature in MongoDB
+
+is the concept of embedded documents,
+
+which is, again, something not present
+
+in relational databases.<br /><br />
+So in our comments field here,
+
+we have an array which contains three objects.<br /><br />
+One for each document,
+
+and each of them could actually be
+
+its own document, right?
+
+So just imagine we had a comments collection
+
+which contained a bunch of comment documents.<br /><br />
+Each of them could actually look exactly like this,
+
+so with an author and with the comment text,
+
+but instead of doing that,
+
+we include these comments right into the blog post document,
+
+so in other words, we embed the comment documents
+
+right into the post document.<br /><br />
+So this process of embedding, or de-normalizing
+
+as we can also call it, is basically to include,
+
+so, to embed, some related data all
+
+into one single document.<br /><br />
+In this example, the comments are related to the post,
+
+and so they are included in the same document.<br /><br />
+And this makes a database more performant
+
+in some situations because this way,
+
+it can be easier to read all
+
+the data that we need all at once.<br /><br />
+And this is something that we're gonna talk about a lot
+
+when learning about data modeling,
+
+but for now, I hope that this still makes sense to you.<br /><br />
+Now, the opposite of embedding or de-normalizing,
+
+is normalizing, and that's how the data is always modeled
+
+in relational databases.<br /><br />
+So in that case, it's not possible to embed data,
+
+and so the solution is to create
+
+a whole new table for the comments
+
+and then join the tables by referencing
+
+to the ID field of the comments table.<br /><br />
+Now we're not gonna use relational databases
+
+in this course, but I believe it's still important
+
+to know the differences if you wanna become
+
+a good back-end developer.<br /><br />
+Anyway, and now just to finish,
+
+two more things about BSON documents.<br /><br />
+First, the maximum size for each document
+
+is currently 16 MB, but this might increase in the future.<br /><br />
+And second, each document contains a unique ID,
+
+which acts as a primary key of that document.<br /><br />
+It's automatically generated with the object ID data type
+
+each time there is a new document,
+
+and so we don't have to worry about it.<br /><br />
+All right, and that should be a brief enough overview
+
+to get us started,
+
+and to actually use MongoDB from the next lecture on.<br /><br />
+So, let's move on now.
+</body>
+</html>

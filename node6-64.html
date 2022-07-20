@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In this video, let's create a special type
+
+of middleware called param middleware.<br /><br />
+So param middleware is middleware that only runs
+
+for certain parameters, so basically,
+
+when we have a certain parameter in our URL.<br /><br />
+Now in our example here, the only parameter
+
+that we might have in our route URL is the id, right?
+
+And so we can write middleware that only runs
+
+when this id is present in the URL,
+
+okay, so let me show you how to do it.<br /><br />
+It is quite simple actually, so it's on our router
+
+and then the param method, okay.<br /><br />
+And so here we specify first the parameter
+
+that we actually want to search for,
+
+so basically the parameter for which
+
+this middleware is gonna run, and it's called id,
+
+and then of course our actual middleware function.<br /><br />
+And as usual, we have access to the request
+
+and to the response object, and then
+
+senses a middleware function also
+
+to the next function, right?
+
+Now in a param middleware function,
+
+we actually get access to a fourth argument
+
+and that one is the value of the parameter in question.<br /><br />
+So we usually call that one val, which stands for value.<br /><br />
+And so now we can go ahead and simply log it
+
+to the console, just to take a look
+
+if this actually works, so let's say Tour id is
+
+and then id, right?
+
+Next up, we also have to call next, right?
+
+Because otherwise the request response cycle
+
+will get stuck in this middleware function
+
+and it's not gonna be able to move on
+
+to the next middleware in the stack, right?
+
+Which are gonna be these routes down here.<br /><br />
+All right, so let's give it a save and check it out now.<br /><br />
+And we want it to not for get all users
+
+but for get one Tour, right?
+
+Well let me show you first what happens
+
+if we do not have any id, okay, and so now,
+
+we don't see any log down in our console.<br /><br />
+But if I now sent the same request on this route
+
+where we have the id, let's see what happens then.<br /><br />
+Oh, it tells me that id is not defined,
+
+and indeed it's not id, so that was a stupid mistake.<br /><br />
+So it is val for value, right?
+
+So remember how I said that this value parameter
+
+is the one that will actually hold
+
+the value of the id parameter, and so of course
+
+that's the one that we need to then use here
+
+in order to get access to that id.<br /><br />
+So let's try that again, and now indeed
+
+we have Tour id is two, right?
+
+So that log came right from this function here.<br /><br />
+Now, what I also want to show you is that
+
+this middleware function is not going to
+
+run for any of the user routes.<br /><br />
+So let's say we call a user with a specific id,
+
+so let's go ahead and copy this one here,
+
+create a new request with an id,
+
+and let me actually save it also.<br /><br />
+So get user and save to user, and when I send it here
+
+we of course get our standard response of
+
+this route is not defined, but you also see
+
+that we have no log like we had before.<br /><br />
+And so that is of course because this middleware function
+
+is only specified in our tour router.<br /><br />
+So in this kind of local mini application,
+
+so again, that is the analogy that I like to make.<br /><br />
+So basically that each router is
+
+kind of a mini sub-application, one for each resource.<br /><br />
+And so since this middleware is only specified
+
+on this router, well then of course,
+
+it is only part of the middleware stack
+
+if we are actually inside of this sub-application.<br /><br />
+Makes sense?
+
+So let's suppose we have an incoming request on tours/id.<br /><br />
+So that request will then go through all these middleware,
+
+so first this middleware, then this one,
+
+then this middleware, then this one,
+
+so all of these are part of the middleware stack
+
+and then it will finally hit this middleware
+
+and since this is actually the route,
+
+it will then get into tourRouter middleware.<br /><br />
+Okay, and so from there it then goes right into
+
+this middleware, and so then this code will be run.<br /><br />
+And again, that's only because it has an id in the route.<br /><br />
+If not, well, then this would simply be ignored
+
+and it would move on right to the next middleware
+
+in the stack, so these down here, right?
+
+Cool, so that is how param middleware works;
+
+but for now it is not really that useful.<br /><br />
+But we can actually use it for
+
+a very practical use case here.<br /><br />
+So let's go to our handler functions here
+
+and you see that in all of the handler functions
+
+that actually use the id, we check if the id is valid.<br /><br />
+So we do it here in get tour, and we also do it
+
+in update tour, so here, and in delete tour.<br /><br />
+So all these three functions have this very similar code
+
+where they check if the id is valid
+
+and if not, they send back this Invalid ID response.<br /><br />
+So we have all this code in the same place
+
+and as you already know, it is not a good practice
+
+to repeat code and so what we can do here
+
+is to use the concept of param middleware;
+
+and perform this check here in an outside middleware
+
+that it's gonna run before the request
+
+even hits these handler functions.<br /><br />
+So let's go ahead and copy or actually cut
+
+the code from here and create a new middleware function
+
+called checkID, and of course I also need to export that.<br /><br />
+So checkID and we have access, request, response,
+
+next, and again, keep in mind that
+
+it is a param middleware and so the fourth argument
+
+will be the value of the parameter.<br /><br />
+Okay, paste it here, and then don't forget
+
+to call next at the end of the middleware, all right?
+
+And what's also very important is that
+
+we have this return statement here,
+
+because if we didn't have this return here,
+
+well, then express would send this response back
+
+but it would still continue running
+
+the code in this function.<br /><br />
+And so after sending the response,
+
+it will then still hit this next function
+
+and it would move on to the next middleware
+
+and will then send another response to the client.<br /><br />
+But that is really not allowed,
+
+so remember that we actually run into this error before,
+
+where it told us that we were not allowed
+
+to send headers after the response had already been sent.<br /><br />
+And so that's the kind of error
+
+that we would run into if we didn't
+
+have this return statement, okay.<br /><br />
+So again, just make sure that after sending this response,
+
+the function will return so that it will finish
+
+and it will never call this next.<br /><br />
+So never forget that, but of course
+
+we're gonna do this multiple times
+
+throughout the rest of the course
+
+and so you will get used to this kind of pattern.<br /><br />
+So let's go ahead and remove this repeated code
+
+from all of these other functions
+
+so here we have it again, and yeah.<br /><br />
+I also want this code here just to make sure
+
+that the function's actually running,
+
+and okay, so now we can get rid of this here
+
+and replace it with our newly created controller function.<br /><br />
+So tourController, checkID,
+
+so let's check that out now,
+
+and well again, just to make sure
+
+that it doesn't run where we
+
+do not have an id, so we have no log here,
+
+so everything is still working on that side.<br /><br />
+And now get tour with a regular id,
+
+so a valid id, and so let's see.<br /><br />
+Well, we get the Tour id is log,
+
+and so that means if it did actually run
+
+our checkID middleware, right?
+
+And if we now try an invalid id,
+
+well then we get our Invalid ID message,
+
+the 404 error code, and of course our tour id.<br /><br />
+Let's do the same with the patch,
+
+we already have an invalid ID here
+
+and so it also runs on this one.<br /><br />
+So, perfect, right?
+
+So we no longer have the checkID code
+
+in the update handler that we just invoked basically,
+
+but still our ID is checked because
+
+we have that middleware, so this here.<br /><br />
+We have that middleware in the stack
+
+before it actually hits the update tourController.<br /><br />
+So this middleware is now part of our pipeline
+
+as you can imagine it, now you might argue
+
+that we might simply create a simple function
+
+which could also check for the ID
+
+and I call that function inside of
+
+each of these tour function, and then call it inside
+
+each of these relevant tour controllers;
+
+but that would really go against
+
+the philosophy of express, where we should always work
+
+with the middleware stack, so with this pipeline
+
+as much as we can, okay, and so these functions here,
+
+they do not have to worry at all about validation.<br /><br />
+Each of these functions has only one purpose
+
+which is to do what they say,
+
+so this one just gets the tour,
+
+this one just creates a tour, this one just updates,
+
+and this one just deletes, it doesn't check,
+
+it doesn't have to worry about any of that.<br /><br />
+And if we would now add another controller here
+
+also depending on the id, well then that would automatically
+
+also check if the id is invalid
+
+without us having to do any additional steps.<br /><br />
+So this automatically will check for the id
+
+and so that's really handy and also how
+
+express apps should work, great.<br /><br />
+So we have another tool in our express toolbox that
+
+we can now use in order to write our express applications.
+</body>
+</html>

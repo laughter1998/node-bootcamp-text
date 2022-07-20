@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So in the last lecture, we learned about
+
+Mongoose schemas and models,
+
+and so let's now implement a very simple
+
+schema and model for our application.<br /><br />
+And for now, let's do that right here
+
+in our server.js file.<br /><br />
+Later, of course, we're gonna move
+
+that into a different file.<br /><br />
+So, Mongoose is all about models,
+
+and a model is like a blueprint
+
+that we use to create documents.<br /><br />
+So it's a bit like classes in JavaScript,
+
+which we also kind of use as blueprints
+
+in order to create objects out of them, right?
+
+So again, we create a model in Mongoose
+
+in order to create documents using it,
+
+and also to query update and delete these documents.<br /><br />
+So basically, to perform each of the CRUD operation,
+
+so create, read, update, and delete,
+
+we need a Mongoose model, and in order to
+
+create a model, we actually need a schema.<br /><br />
+So, we actually create models out of
+
+Mongoose schema just like we learned
+
+in the last video, and we use the schema
+
+to describe our data, to set default values,
+
+to validate the data, and all kinds of stuff like that.<br /><br />
+So just as you will see right now,
+
+because now we're actually gonna start creating
+
+a very simple schema for our tours.<br /><br />
+So, let's say tourSchema
+
+is a new mongoose.Schema.<br /><br />
+Add that in here we actually pass our schema as an object.<br /><br />
+All right, we can then also pass in some options
+
+into the schema, but I'm leaving that to a future video
+
+where we actually need that feature.<br /><br />
+So, remember the tour documents that we used
+
+to create in the last section when
+
+we started exploring Mongoose DB?
+
+So we always gave them a name,
+
+a rating and a price, right,
+
+and so let's now replicate that here
+
+by saying name, and then describing
+
+what type of data we want after name,
+
+and we want it to be a string.<br /><br />
+So Mongoose actually uses the native
+
+JavaScript data types, and so here we can say string,
+
+or after rating we can say that we want a number
+
+and the same as the price.<br /><br />
+It should also be a number, right?
+
+So this is the most basic way of describing our data.<br /><br />
+So we have a name, a rating, and a price,
+
+and we specified the data type
+
+that we expect for each of these fields.<br /><br />
+So again, this is the most basic way
+
+of describing a schema, but we can take it
+
+one step further by defining something called
+
+schema type options for each field,
+
+or only for some specific field.<br /><br />
+So let's start here with the name,
+
+and instead of just specifying it
+
+as a string, let's actually pass in another object.<br /><br />
+And so now, we say that we want the type
+
+to be string but we can now
+
+define a couple more options, okay?
+
+For example, we can say that this field is required,
+
+and so we simply set
+
+the required property here to true, all right?
+
+So again, this object here are the schema type options,
+
+and they can be different for different types,
+
+for example the number type has some different
+
+schema options than the string here,
+
+but many of them are also similar.<br /><br />
+So for example, the required, we can use it
+
+on number as well, and so let's do that here.<br /><br />
+So the type, we still want it to be a number,
+
+and we also want it to be required, okay?
+
+Now, here in the required we can actually
+
+specify the error that we want to be displayed
+
+when we're missing this field.<br /><br />
+So, in order to do that we just have to
+
+pass in an array, and the first one is true.<br /><br />
+So the first element is true, and the second one
+
+is the error string.<br /><br />
+Let's say, a tour must have a name,
+
+and then here let's do the same.<br /><br />
+The tour must have a price, okay?
+
+Then we can also set default values
+
+and let's do that here for the rating.<br /><br />
+So again, I'm gonna specify some
+
+schema type options here, which is not mandatory,
+
+so it's enough to simply define
+
+the type here like we did, but if you want
+
+some more features, then we need to to at least
+
+specify the schema type options object.<br /><br />
+Okay, and then we need to specify the type again,
+
+which is number, and as a default, I want it to be 4.5.<br /><br />
+And so if we'd now create a new tour document
+
+using this schema and not specifying the rating,
+
+it would then automatically be set to 4.5, all right?
+
+And just to finish, let's try another one here,
+
+which is to say that the name should be unique.<br /><br />
+So, unique and set it to true,
+
+and so like this, we can now have two
+
+tour documents with the same name, all right?
+
+So, this is our very basic schema,
+
+let's now go ahead and actually
+
+create a model out of it, all right?
+
+And that's very simple,
+
+we simply create a variable called Tour,
+
+and then mongoose.model,
+
+then the name of the model, which is Tour with an uppercase
+
+T here, all right.<br /><br />
+And so that's just kind of a convention
+
+in programming to always use uppercase
+
+on model names and variables.<br /><br />
+So here it's the same, so I also created
+
+this tour variable here with a capital T
+
+just so we know that we're dealing with a model here.<br /><br />
+All right, so the name of the model
+
+and then the schema, and that's it.<br /><br />
+So just like this, we created a tour
+
+out of the schema that we created here in the beginning.<br /><br />
+All right, and so in the next video
+
+we're gonna then use this model here
+
+in order to create our very first tour document, all right?
+
+So just a recap here, we used new mongoose.Schema here
+
+to specify a schema for our data.<br /><br />
+So, basically describing it and also doing some validation.<br /><br />
+For example, this required here,
+
+this is actually something called a validator
+
+because it is used to validate our data.<br /><br />
+In this case, simply to validate
+
+if the name is actually there.<br /><br />
+And there are a lot of validators in Mongoose,
+
+and we can actually also create our own,
+
+and so of course we're gonna talk about that
+
+a bit later, again, once we actually need these features.<br /><br />
+Anyway, let's now quickly move on
+
+in order to finally start using
+
+the model that we just created.
+</body>
+</html>

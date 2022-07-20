@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In this video, I want to, very quickly,
+
+refactor the API features that we've implemented
+
+over the last couple of lectures.<br /><br />
+Now, this is not only to make our code a bit cleaner,
+
+it's also to make it more modular and more reusable
+
+in the future.<br /><br />
+So, right now, we have all this code for the features
+
+that we built before in this getALLTours function, right?
+
+And this looks a bit messy.<br /><br />
+It's a bit hard to understand, okay?
+
+And, also imagine that we wanted to use these same features
+
+for another resource.<br /><br />
+For example, for the users or, later, for the reviews.<br /><br />
+It would be not very practical to, basically,
+
+copy the code from here and use it, then,
+
+in the other resources, right.<br /><br />
+And so, what I'm going to do is to, now,
+
+create a class in which I'm going to add one method
+
+for each of these API features or functionalities,
+
+as you might call them as well.<br /><br />
+All right?
+
+So, let's go ahead and do that here
+
+and I'm going to do it here, for now, then, later on,
+
+I'm actually going to export it to its own file,
+
+basically, to create a reusable module that we can,
+
+later on, import into other controllers.<br /><br />
+All right?
+
+So, class, and I'm calling it APIFeatures.<br /><br />
+All right.<br /><br />
+Then, we start with our constructor function
+
+and remember that this is the function that gets
+
+automatically called as soon as we create a new object
+
+out of this class, all right.<br /><br />
+Now, what do I actually want in these API features?
+
+Actually, I'm going to parse in two variables here, okay?
+
+So the mongoose query and also the queryString
+
+that we get from express.<br /><br />
+So, basically, coming from the route, all right.<br /><br />
+So that's what we usually have access to
+
+in the req.query, okay.<br /><br />
+Now, again, I'm passing the query here because I do not
+
+want to query inside of this class because that would then
+
+bounce this class to the tour resource but, again,
+
+I want this to be as reusable as possible.<br /><br />
+All right.<br /><br />
+So, what we usually do in this constructor function
+
+is to say this.query equals the query that we got
+
+as an argument and then this.queryString
+
+is equal to the queryString.<br /><br />
+Okay?
+
+So very simple, very typical constructor function.<br /><br />
+And now, as I mentioned, I'm going to create one method
+
+for each of the functionality, starting with filter.<br /><br />
+All right.<br /><br />
+And so, let's now go ahead and cut the code from here.<br /><br />
+Or, actually, I'm going to copy it and them comment it,
+
+so that I don't do any accidental damage.<br /><br />
+So, copy and the comment
+
+and put it right here.<br /><br />
+So, a couple of things that we need to change.<br /><br />
+First on, request.query is not going to be available
+
+inside of this class.<br /><br />
+And so, that's why we actually parsed in the queryString.<br /><br />
+And so, this here is going to get replaced
+
+with this.queryString.<br /><br />
+Okay?
+
+So, again, this is just basic Javascript.<br /><br />
+Has actually nothing to do with Note or Express at all.<br /><br />
+Then the rest here is okay but this here is not okay at all.<br /><br />
+So I do not want to query the tour directly here, remember,
+
+but instead, I simply want to now add this find
+
+to the query that we already have.<br /><br />
+So this.query.find
+
+and so, that will then be this.<br /><br />
+All right?
+
+Let's, now, get rid of this.<br /><br />
+And before we add any more methods here,
+
+let's actually go ahead and use this class
+
+just so this makes more sense to you.<br /><br />
+Okay?
+
+So, how is this actually going to work?
+
+And I'm going to do it all here at the end here
+
+under Execute Query.<br /><br />
+All right?
+
+And so, what I can do now is to create a variable
+
+called Features, for example.<br /><br />
+And then from here, I will create a new API features object.<br /><br />
+Okay?
+
+So, basically, creating an instance of this API features
+
+that will then get stored into Features.<br /><br />
+And this here, we'll, then, have access to all the methods
+
+that we're going to define in the class definition.<br /><br />
+Okay?
+
+So, remember, in here, we need to pass a query
+
+and the queryString.<br /><br />
+So, the query, how do we create one?
+
+Remember, it's Tour.find.<br /><br />
+So, there's a query object and so, that's the one that
+
+we parsed into this class and then, of course,
+
+the queryString which is req.query.<br /><br />
+Okay, now, on this features here, remember,
+
+we have no access to filter.<br /><br />
+And so, let's actually put it right here afterwards.<br /><br />
+So, .filter.<br /><br />
+Give it a save.<br /><br />
+And so, just like this, we're going to run or code
+
+for the API filtering functionality.<br /><br />
+Then, here, the next line is, of course,
+
+not going to work because this query here
+
+does not anymore exist.<br /><br />
+Instead, what we have now is features.query, right?
+
+So after all this processing now, basically.<br /><br />
+Okay, so, right now, after this filter, this.query
+
+will then have this new find method on it.<br /><br />
+Okay, and so, again, this is then stored in this.query.<br /><br />
+And, later on, we will have all this other methods which,
+
+all of them, will manipulate this.query
+
+so that, in the end, this.query is the query
+
+that we want to execute.<br /><br />
+So, just like here.<br /><br />
+Okay, so, just like here, we always kept manipulating
+
+the query variable.<br /><br />
+We kept adding more and more methods to it
+
+until we, then, executed it by the end.<br /><br />
+And so, here, we're doing exactly the same.<br /><br />
+We are simply moving the code into all of these methods.<br /><br />
+Okay?
+
+Then, in the end, as I said, the query is going to be stored
+
+inside of this property here and so, yeah,
+
+that's where we, then, do the the await
+
+and get back the results.<br /><br />
+All right?
+
+Anyway, let's keep moving here and implement the sorting.<br /><br />
+So, I'm copying and commenting.<br /><br />
+So, filter and the next one is called Sort.<br /><br />
+All right.<br /><br />
+And so, here again, we need to replace request.query
+
+with this.queryString, okay.<br /><br />
+And then, query is now this.query.<br /><br />
+So let's get these four in this.query.<br /><br />
+Okay, now, the goal here is to basically
+
+chain these methods here one after another.<br /><br />
+So let me show that to you here.<br /><br />
+So we have filter and then, after that, we want to chain
+
+the sort method.<br /><br />
+Now, right now, that is not really going to work
+
+because where are we actually chaining this sort on?
+
+So, basically, we're trying to call it on the result of this
+
+but, right now, what is the result of this?
+
+Well, it's not really anything because this filter method
+
+here doesn't return anything, right?
+
+Now, this piece of code here, of course, returns
+
+the object that has just been created and so, then,
+
+we can chain the filter method on that.<br /><br />
+But the filter method, in turn, does not return anything.<br /><br />
+And so, at this point, we cannot really call a sort
+
+on the object, right?
+
+And so, the simple solution to that,
+
+and maybe you've done it earlier sometime in your code,
+
+is that we have to now return this.<br /><br />
+So, return this and this is simply the entire object, okay?
+
+And the same, then, down here.<br /><br />
+So, return this.<br /><br />
+In order to, again, return the entire object which,
+
+of course, then has access to these other methods
+
+so that we can, then, call them there.<br /><br />
+All right?
+
+So, next up is the limiting.<br /><br />
+And I'm going to call this one limitFields.<br /><br />
+And that's because all of these methods
+
+will have these verbs as names.<br /><br />
+So it's filter, sort, limit, and the paginate
+
+is going to be the next one.<br /><br />
+So, again, req.query is now this.queryString
+
+and query here is now this.query.<br /><br />
+All right?
+
+Return this and this is not correct.<br /><br />
+Okay, and finally, the pagination.<br /><br />
+Copy, comment.<br /><br />
+So, paginate.<br /><br />
+Return this and, of course, we need to
+
+replace these req.query
+
+this.queryString.<br /><br />
+And then here, just like before,
+
+it's going to be this.query.<br /><br />
+And I just realized that up there,
+
+right in the first method, we didn't do this here.<br /><br />
+So, we simply said this.query
+
+and then added the find there.<br /><br />
+But then, of course, we need to actually save it
+
+into this query property.<br /><br />
+Okay, and so, I forgot that.<br /><br />
+And we got some error here.<br /><br />
+All right, that doesn't really matter here
+
+at this moment.<br /><br />
+Or, actually, it does because this line of code here
+
+is actually in our paginate method.<br /><br />
+So let's go there.<br /><br />
+And, in fact, I actually wanted to talk to you
+
+about this here.<br /><br />
+Because, if you think about it, requesting the next page,
+
+which has zero result, is not really an error.<br /><br />
+The fact that there are no results is enough for the user
+
+to realize that, basically, the page that was requested
+
+doesn't contain any data.<br /><br />
+So we do not really need an error in this situation.<br /><br />
+And so, I'm just going to go ahead and delete all this code.<br /><br />
+Okay?
+
+So let me save it now here.<br /><br />
+And so now, of course, the error is gone.<br /><br />
+And here, we also still have to keep adding
+
+these other methods.<br /><br />
+So, limitFields and .paginate.<br /><br />
+Give it a save and, again, remember that all of this
+
+chaining here only works because after calling
+
+each of these methods, we always return this.<br /><br />
+And this is the object itself which has access
+
+to each of these methods here, making it possible
+
+to chain them just like we have it here.<br /><br />
+Okay, so, just to recap:
+
+We are creating a new object of the API features class.<br /><br />
+In there, we are parsing a query object
+
+and the query string that's coming from express.<br /><br />
+Okay?
+
+Then, in each of these four methods here that we call
+
+one after another, we, basically, manipulate the query.<br /><br />
+We keep adding more methods to it just like we've been doing
+
+up here before we did any of this refactoring, right.<br /><br />
+So, we keep adding stuff to the query here until the end,
+
+and then, by the end, we simply await the result
+
+that query so that it can come back with all the documents
+
+that were selected, okay?
+
+And that query now lives at features
+
+which is this object here.<br /><br />
+So features.query.<br /><br />
+Okay, I hope that make sense.<br /><br />
+So, before we do anything else, let's go back to Postman
+
+and actually try it out.<br /><br />
+And we can try it out right here with this Top-5-cheap route
+
+because that, actually, behind the scenes,
+
+uses all of these API features, right.<br /><br />
+So, if I send it, well, it still works.<br /><br />
+So that's fantastic.<br /><br />
+So let's close it and let me actually save it here.<br /><br />
+So, Get Top Five Cheap Tours.<br /><br />
+And yeah, I'm going to leave it there at the end.<br /><br />
+And now, just here, let's do some testing.<br /><br />
+For example, remove the sort, let me leave the limit.<br /><br />
+Difficulty, duration, price.<br /><br />
+So, I'm going to leave all of this here
+
+just to see if it still works.<br /><br />
+And it looks like everything is still working, right.<br /><br />
+So these are the exact same results that we got
+
+before our refactoring.<br /><br />
+So, great, perfect.<br /><br />
+That worked and so, let's, now, actually delete
+
+all this code from here which makes our route handler
+
+so much cleaner, doesn't it?
+
+So, that's so much better, really, it's day and night.<br /><br />
+Okay?
+
+Now, the next step is to actually go ahead
+
+and take all this code, cut it and put it into
+
+a new file, so a new module, basically.<br /><br />
+Okay, and for that, I'm going to create a new folder here
+
+which I'm going to call Utils.<br /><br />
+So that stands, basically, for utilities.<br /><br />
+And I'm going to add a couple of stuff in here
+
+over the rest of the course.<br /><br />
+Okay?
+
+So this one is going to be called
+
+APIFeatures.js and with a capital F here.<br /><br />
+All right?
+
+So, here goes our class and, in the end,
+
+we do a module.exports of this class.<br /><br />
+So, nothing new at this point.<br /><br />
+Give it a save, close it,
+
+and now, in here, we can require it.<br /><br />
+Const APIFeatures then require.<br /><br />
+Then we need to move one folder up,
+
+then into Utils and APIFeatures.<br /><br />
+Okay?
+
+One more test.<br /><br />
+And it's taking some time, and here we go.<br /><br />
+Beautiful, that's really just beautiful.<br /><br />
+Now, if we create another resource again,
+
+for example, for the users, it's going to be so easy
+
+to drop in this same functionality.<br /><br />
+All we're going to have to do is to require this file
+
+and then, basically, do the same as here.<br /><br />
+Or maybe, in that case, we don't even want
+
+to have this sorting ability or we don't want
+
+to have the filtering ability and then, all we have to do
+
+is to simply take out this line of code.<br /><br />
+And then, like magic, it'll only do
+
+these three functionalities
+
+or these three features, okay.<br /><br />
+And so, that's really great.<br /><br />
+I hope you can see the value of this
+
+and, yeah, I'm really happy with this result.
+</body>
+</html>

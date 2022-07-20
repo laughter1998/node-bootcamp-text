@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now implement result sorting.<br /><br />
+In order to enable our users to sort result
+
+based on a certain field.<br /><br />
+So, let's now take a look at all our results here for now.<br /><br />
+All right, and so let's say that we actually want
+
+to sort these results, let's say by price.<br /><br />
+Okay, so starting with the lowest price and then moving up
+
+all the way to the highest price.<br /><br />
+All right, so we have all kinds of prices.<br /><br />
+397, 497, 1197, 1497, 997.<br /><br />
+We have even almost 3,000 here.<br /><br />
+Then 1497 and so they're not really in order,
+
+and so let's allow the user to basically sort these results
+
+based on a field that can be passed using the query string.<br /><br />
+So let's say we want to sort by price.<br /><br />
+All right.<br /><br />
+So if we run this now, of course, nothing will happen,
+
+it will still show the exact same nine results
+
+and in the same order, because before in the last lecture,
+
+we filtered out basically this sort field.<br /><br />
+Right?
+
+And so let's now actually go ahead and use it.<br /><br />
+All right?
+
+So, remember here how we created the query object
+
+and then excluded the sort field here,
+
+so that it didn't pollute our filtering, right?
+
+But now we actually need it and so let's now use it.<br /><br />
+So, the third feature here is sorting.<br /><br />
+Or actually, well that's the second one,
+
+so let's just call this one 1A and 1B.<br /><br />
+All right?
+
+So, let's say that if there actually is a sort,
+
+sort req.query.sort.<br /><br />
+Okay, and you see it down here.<br /><br />
+Now it's gone because of this error here, but anyway.<br /><br />
+From our last request we got, of course,
+
+there's a query object here and so in there
+
+we had the sort property, all right?
+
+And if there is a sort property,
+
+well, that means that then
+
+we want to actually sort the results based on the value.<br /><br />
+Now one quick thing that we need to do,
+
+is to change this query of variable here from
+
+a constant to a normal variable.<br /><br />
+So let, okay?
+
+'Cause now we actually want to chain something
+
+to this query.<br /><br />
+So, the new query will be query.sort.<br /><br />
+And we want to sort it by req.query.sort.<br /><br />
+All right, 'cause that will be the value of the field,
+
+so in this case price,
+
+and Mongoose will then automatically sort the result
+
+based on the price.<br /><br />
+And now in case you're wondering,
+
+why it works this way, so why we did this here,
+
+just remember what we talked about over the last lectures.<br /><br />
+So, remember how this tour.find here
+
+is gonna return a query, right?
+
+And so we stored that query object here
+
+in this variable, so that later on
+
+we can keep chaining more methods to it.<br /><br />
+So more of these methods that are available
+
+on all documents created through the query class.<br /><br />
+Okay, remember that?
+
+I think we talked about that in depth two lectures ago.<br /><br />
+So in case this is still a bit confusing to you,
+
+then just go back there
+
+or you can also take a look at the documentation, all right?
+
+Now let's actually test this out.<br /><br />
+So sort is still set to price.<br /><br />
+So I'll send it now.<br /><br />
+Let's take a look at the result.<br /><br />
+And indeed we start with the lowest price,
+
+but I think we already had that before.<br /><br />
+So we start with 397, then 497, then 997, 1197,
+
+1497, and you see that the prices actually keep increasing.<br /><br />
+So 1997, 2997.<br /><br />
+And so yeah, indeed, they are now sorted.<br /><br />
+Okay?
+
+So we sorted them by the price in an ascending order.<br /><br />
+But we can also sort them in a descending order.<br /><br />
+That's very simple.<br /><br />
+All we have to do is to set as the minus here.<br /><br />
+So, minus price and Mongoose will then automatically
+
+sort them in the other order.<br /><br />
+So, in the descending order.<br /><br />
+So let's test out that one as well.<br /><br />
+And so now we should start with, yeah exactly,
+
+with this one.<br /><br />
+So, the first one is now the highest
+
+and the last one is the 397 one.<br /><br />
+Cool.<br /><br />
+But we can actually take it one step further,
+
+because we have many cases here which have the same price.<br /><br />
+But how are these results with the same price then
+
+ordered within them?
+
+So let's say we have this one with this price
+
+and then this one with the same price.<br /><br />
+So why does this one appear before the second one?
+
+The same thing with this one here maybe,
+
+oh actually not.<br /><br />
+So this one is just the only one with 1997.<br /><br />
+But then here again we have these two with the same price.<br /><br />
+We have, okay, they are all different.<br /><br />
+Okay, these are all different.<br /><br />
+But we want to rank them, basically,
+
+according to a second criteria.<br /><br />
+So in case there is a tie,
+
+then we want to have a second field
+
+by which we can then sort where the first one is the same.<br /><br />
+So in this case the price.<br /><br />
+So in Mongoose that's quite easy,
+
+and let me show that to you here as a comment for example.<br /><br />
+So in Mongoose we would just say sort
+
+and then right now we have the price,
+
+so we have it just like this,
+
+but then in Mongoose all we have to do
+
+is to add another field name to the string.<br /><br />
+So for example, rating average.<br /><br />
+Or I think it's ratings.<br /><br />
+Okay, and so we now want to pass this field here as well
+
+to our sort.<br /><br />
+Okay?
+
+Now we cannot leave a space here in the URL
+
+and so instead we're gonna add a comma.<br /><br />
+Okay?
+
+So we want to sort first by price
+
+and then as a second criteria, also by ratings average.<br /><br />
+Okay?
+
+And so now all we need to do
+
+is to basically replace this comma here with a space.<br /><br />
+All right?
+
+And of course, we could have even more fields
+
+by which we sort.<br /><br />
+Okay?
+
+But for now let's just leave it like this
+
+and implement it very quickly in our code.<br /><br />
+All right?
+
+And actually let me create a new variable here.<br /><br />
+Let's call it sort by.<br /><br />
+And so we have req.query.sort
+
+and what we're gonna do is to now split it by the comma.<br /><br />
+So split the string by the comma,
+
+and so this will then return an array of all the strings,
+
+so all the field names,
+
+and then all we have to do is to put it back together
+
+using join, and as the join string we use a space.<br /><br />
+All right?
+
+And so just to make sure that it's correct.<br /><br />
+Console.log, sort by, and then of course here
+
+we want to use that sort by variable.<br /><br />
+Okay?
+
+So let's take a look at that.<br /><br />
+And.<br /><br />
+So 4.7 here, and the other one also has 4.7, all right?
+
+And so let's actually go ahead and use our API
+
+to change this ratings average here.<br /><br />
+Okay?
+
+So just as a fun experiment,
+
+let's copy this ID here, then update tour,
+
+and so let's come here to the body,
+
+and so I want to update ratings average to 4.9.<br /><br />
+Okay?
+
+Let's send that, and indeed, you see that it got updated.<br /><br />
+And so now let's change that again,
+
+or let's try that again actually.<br /><br />
+And so now you see the first one still has 4.7
+
+and this one here now has 4.9.<br /><br />
+And so they are now ordered with an ascending rating.<br /><br />
+Right?
+
+And of course, we could put a minus here
+
+and so then they should change positions,
+
+meaning that the one with 4.9 should appear first.<br /><br />
+Let's try that as well.<br /><br />
+And yeah, indeed.<br /><br />
+So now this one, the sports lover tour,
+
+is the one that appears first.<br /><br />
+All right, great.<br /><br />
+So it looks like it's working.<br /><br />
+Let's a take a look at our results here.<br /><br />
+And yeah, indeed.<br /><br />
+And let's just take a look at what we logged here
+
+at the console.<br /><br />
+And so, yeah, this is our sort by variable, which yeah.<br /><br />
+Which kind of looks similar to what we have here.<br /><br />
+And so that was the goal of creating this variable.<br /><br />
+Great, so that's now working.<br /><br />
+Let's get rid of this console and this one here as well.<br /><br />
+And all right.<br /><br />
+And just to finish here,
+
+let's actually add a default one.<br /><br />
+And we do that by simply adding an else block here.<br /><br />
+So in case that the user does not specify
+
+any sort field in the URL query string,
+
+we're still gonna add a sort to the query.<br /><br />
+So query.sort and we will then sort
+
+by the created add field, all right?
+
+And actually in a descending order,
+
+so that the newest ones appear first.<br /><br />
+So minus created at.<br /><br />
+All right?
+
+Give this a save.<br /><br />
+And so yeah, I think like this, we're done.<br /><br />
+Let's just turn off this option here as well.<br /><br />
+And so now we just are back to our regular URL
+
+without any query strings.<br /><br />
+And so let's take a look
+
+if this is now actually ordered by the created at.<br /><br />
+So this one here ends in 59 seconds and 30.<br /><br />
+5930 as well.<br /><br />
+And yeah.<br /><br />
+So they were all created at the exact same moment,
+
+because we imported them all at the same time.<br /><br />
+All right?
+
+And so in this case, we cannot really see
+
+the effect of this piece of code
+
+that we just added here, but in case these documents
+
+were added at different times, then they would now
+
+be ordered by the date they were created.<br /><br />
+All right?
+
+So that's it for sorting.<br /><br />
+Next up, we're gonna talk about limiting the fields
+
+that we want in our results.
+</body>
+</html>

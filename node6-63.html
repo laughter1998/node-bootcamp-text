@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now completely refactor
+
+our application that we have so far,
+
+and create a lot of new files,
+
+and a whole new file structure.<br /><br />
+So remember from the last video
+
+that we wanted to separate our routers
+
+into different files.<br /><br />
+And so that's gonna be the first step that we will do here.<br /><br />
+So I'm gonna create a new folder called Routes now,
+
+and then in there I will have one folder for tour routes
+
+.js, and then user routes,
+
+.js as well.<br /><br />
+Okay, and so this is gonna be the first time
+
+that we will really work with different modules,
+
+okay, and actually use them in a very meaningful way.<br /><br />
+So, let's start with the tour router.<br /><br />
+Copy it here, then take this tour router here,
+
+and put it here.<br /><br />
+And so, next we need actually Express here,
+
+because we're using that variable,
+
+and so we need to import the Express module.<br /><br />
+So express,
+
+require express.<br /><br />
+Okay, it's kind of a convention to simply call this router,
+
+and not tourRouter.<br /><br />
+So router, and now we will export the router,
+
+and then import it into our main application, okay?
+
+So, remember how we do it
+
+when we only have one thing to export?
+
+Well, we use module.exports,
+
+and then put the router on there.<br /><br />
+Give it a save, and of course, we still get some errors,
+
+but that's because the tour router
+
+is not defined in our main application file.<br /><br />
+Okay, also what's not defined in this file
+
+is all of these functions here.<br /><br />
+Okay, so let's very quickly get them,
+
+and put them in the router file.<br /><br />
+At least for now, we will later create
+
+a new file for that as well.<br /><br />
+So it starts here.<br /><br />
+Careful, not copying everything.<br /><br />
+Yeah, so just like this.<br /><br />
+And actually, I'm gonna put them before the routes.<br /><br />
+Give it a save.<br /><br />
+And so that should work now.<br /><br />
+And now do the same for the user.<br /><br />
+So get the router.<br /><br />
+And don't worry about all these errors that we're getting.<br /><br />
+Again, that's just because we are missing
+
+some variables in some places.<br /><br />
+So again, we'd express here,
+
+then we call this here just router,
+
+and then we export it.<br /><br />
+Okay, and now I'm also getting the handlers.<br /><br />
+Okay, so we can get rid of these route handlers now.<br /><br />
+Okay, and actually this one here is missing
+
+in our tour routes,
+
+so this piece of code where we actually read
+
+the tours from the JSON file.<br /><br />
+So put that right at the top here.<br /><br />
+And now finally, we actually need to import
+
+the tour router and the user router
+
+so that these routes here continue to work.<br /><br />
+Okay, but that should be fairly easy, so let's do that.<br /><br />
+So with the tour router,
+
+is at require,
+
+routes/tourRoutes.<br /><br />
+Okay, and we don't need the JS,
+
+and then the same for the userRouter.<br /><br />
+So tourRoutes actually is here, the userRoutes.<br /><br />
+Now you might be wondering why I actually called
+
+the variables the userRoute,
+
+but then the file is userRoutes,
+
+and well that's because this folder here is called routes,
+
+and so in there we have the tourRoutes and the userRoutes.<br /><br />
+Okay, but what we actually export from that file
+
+is simply the router, alright?
+
+But I believe it makes more sense
+
+to actually call this folder here Routes.<br /><br />
+Okay, and so that's why we have this small difference
+
+between routes and router.<br /><br />
+Now we still get some error here,
+
+and so fs is not defined,
+
+so let's take that, and actually we don't need it here,
+
+so let's put it in the tour routes right here.<br /><br />
+We get another error.<br /><br />
+And this time, because this folder here is now not defined,
+
+because our dirname is now the routes.<br /><br />
+So we need to get out of that.<br /><br />
+So go up one folder, and then in there,
+
+go into dev-data, data, and tour-simple.<br /><br />
+Now don't worry about getting all these errors.<br /><br />
+That's kind of normal when we are doing all this refactoring
+
+'cause we're changing stuff all over the place,
+
+so it's normal that stuff breaks.<br /><br />
+Anyway, it's now back to working,
+
+and so we are now in the place where we can
+
+retest our routes here.<br /><br />
+And indeed, it works.<br /><br />
+The same for the users, let's suppose.<br /><br />
+And so everything is correct.<br /><br />
+So we have our routers now each in one different file,
+
+and we can say that each of them
+
+is one small sub-application.<br /><br />
+So one tour application and one user application.<br /><br />
+And we then put everything together in our global app file
+
+by importing these routers,
+
+and then mounting the routers
+
+on the two different routes
+
+that we have currently implemented, okay?
+
+So again, this is where we mount our routers.<br /><br />
+And I know that this concept
+
+can be a bit difficult to grasp,
+
+but don't worry about that.<br /><br />
+The longer that you keep working on this project
+
+and the more code you keep writing,
+
+the clearer everything will automatically become.<br /><br />
+For now, the most important thing to keep in mind
+
+is that we created these different routers
+
+for each of the resources to have a nice
+
+separation of concern between these resources.<br /><br />
+So basically creating one small application for each of them
+
+and then putting everything together in one main app file,
+
+which is of course this one.<br /><br />
+So this <span class="notranslate">app.js</span>  file that we have here
+
+is usually mainly used for middleware declarations.<br /><br />
+So we have all our middleware
+
+that we want to apply to all the routes.<br /><br />
+So in this case, we have these four middlewares here.<br /><br />
+So one, two, three, four.<br /><br />
+These middlewares, we want to apply it for all of the routes
+
+and then for this route,
+
+we want to apply the tourRouter middleware,
+
+and for this route, we want to apply
+
+the userRouter middleware.<br /><br />
+Okay, so again, these two routers are actually middleware,
+
+which is why we can use app.use in order to mount them.<br /><br />
+Okay, and with that being said,
+
+let's take it one step further,
+
+and actually remove these route handlers
+
+from the routes file.<br /><br />
+Okay, and so let's again create a new folder here,
+
+and this one will be called controllers, okay?
+
+So I've been calling them route handlers,
+
+and so it would make sense to create a handlers folder.<br /><br />
+But later in this course,
+
+we will start using a software architecture
+
+called the Model View Controller,
+
+and in that architecture, these handler functions here
+
+are actually called controllers.<br /><br />
+And so that's why I'm going to call the folder,
+
+and also the files in there, controllers.<br /><br />
+So let's now create the tourController.js,
+
+and the userController.js.<br /><br />
+Okay, and this will make a bit more sense
+
+once we reach the part of the course
+
+where we actually talk about the MVC,
+
+or Model View Controller pattern.<br /><br />
+Alright, so let's now take this code,
+
+and put these handlers into the controller folder,
+
+or file actually.<br /><br />
+So all of this code.<br /><br />
+It's the tourController, yeah, that's the one.<br /><br />
+Also, we need this FS module here,
+
+obviously at the top.<br /><br />
+And here we go.<br /><br />
+Now, we want to actually export all of these functions
+
+from this module, so how do we do that?
+
+Well, in this case we do not only have one export,
+
+so we're not gonna use module.export,
+
+but instead we will put all of these functions
+
+on the exports object, okay?
+
+And so let me select all of these,
+
+consts, so that I can actually
+
+replace them all at the same time.<br /><br />
+So exports.deleteTour, and .updateTour,
+
+createTour, getTour, and getAllTours.<br /><br />
+Okay, so that exports everything from this file.<br /><br />
+And so now, let's go into the tourRoutes,
+
+and simply import them.<br /><br />
+So const, tourController, equals require.<br /><br />
+Okay, now we're in the routes folder here, right?
+
+So we need to move up one level,
+
+and then go into controllers,
+
+and into the tourController.js.<br /><br />
+Okay, this is not correct, and alright.<br /><br />
+Now, remember that when we export data from a file
+
+using the exports object.<br /><br />
+So just like we did here.<br /><br />
+When we then import everything into one object,
+
+then all of the data that was on exports
+
+is now gonna be on tourController.<br /><br />
+And so we will have tourController.getAllTours
+
+.createTours.getTour,
+
+and really, all of these, okay?
+
+So this object here will be the equivalent
+
+of the exports that we have here.<br /><br />
+Remember that?
+
+And so, it's really simple.<br /><br />
+All I have to do now is to create
+
+tourController., and that's it.<br /><br />
+Now I could have also used the structuring,
+
+which I also showed you before.<br /><br />
+So just to demonstrate,
+
+I could have used it like this,
+
+and then specified the exact same names that we have here.<br /><br />
+So getAllTours, and then createTour, and all of these,
+
+and then I could have used them directly here
+
+without having to write tourController, and dot.<br /><br />
+Okay, but I actually like it like this,
+
+and I see no problem of having it like this.<br /><br />
+So it makes it nicely visible
+
+that all of these functions here actually come
+
+from this tourController module.<br /><br />
+Okay, so I saved it now, and so it should keep working,
+
+so let's test that, and yeah, it does.<br /><br />
+So, that's working now.<br /><br />
+Let's actually close it up, and now the same, where is it?
+
+Ah, here.<br /><br />
+Now the same of course with these functions.<br /><br />
+Put them here,
+
+and then export all these guys.<br /><br />
+So exports.<br /><br />
+Yeah, so that's correct.<br /><br />
+Now here, we just imported module,
+
+and the same as before, we need to move up one level.<br /><br />
+We go into controllers, and userController.<br /><br />
+Now finally, just add that here.<br /><br />
+Give it a save, and test it for this guy as well.<br /><br />
+And indeed, it works.<br /><br />
+So everything we did here was correct.<br /><br />
+So we're starting to have a bunch of files now,
+
+and so it's important to really get familiar,
+
+where exactly all the different pieces
+
+of the application are located, okay?
+
+So just to recap, the flow goes like this.<br /><br />
+We start receiving the request in the app.js file, right?
+
+It will then depending on the route
+
+enter one of the routers, so let's say the tour router,
+
+and then depending, again, on that route,
+
+and of the request, it will then execute
+
+one of these controllers here,
+
+and so these are in the tourController files.<br /><br />
+And that's where then finally the response gets sent,
+
+and finishing the request-response cycle.<br /><br />
+Okay, so we have now three files,
+
+instead of having everything just in one file.<br /><br />
+Alright, but that's still not the end of the story,
+
+because I'm adding one more step here.<br /><br />
+So what I'm gonna do is to create a server.js file as well.<br /><br />
+So server.js.<br /><br />
+And why am I doing that?
+
+Well, simply because it's a good practice
+
+to have everything that is related to express in one file,
+
+and then everything that is related to the server
+
+in another main file.<br /><br />
+So starting now, server.js will actually be
+
+our starting file where everything starts,
+
+and it's there when we listen to our server.<br /><br />
+So let's actually go ahead and copy, or cut,
+
+this part from here, and move it into the server.<br /><br />
+Now of course, this module here doesn't know about app,
+
+and so we need to import it.<br /><br />
+And to import it, we need to first export it.<br /><br />
+So we use module.exports,
+
+and we export our application from this file.<br /><br />
+Okay, and so now we have everything
+
+that is basically the application configuration
+
+in one standalone file.<br /><br />
+Okay, so back in the server, let's now import that.<br /><br />
+Require, and since it's our own module,
+
+we need to use this ./ to say
+
+that we're in the current folder,
+
+and here's it's simply app.<br /><br />
+So, simple as that.<br /><br />
+And later on we will actually have other stuff
+
+in this file that is not related to express,
+
+but still related to our application.<br /><br />
+So stuff like database configurations,
+
+or some error handling stuff, or environment variables,
+
+all of that stuff will live in this server.js,
+
+which is kind of our entry point, okay?
+
+So let's now finish the process that we have here,
+
+because now we do no longer run nodemon app.js,
+
+but instead, we need to run server.js.<br /><br />
+Okay, and actually since we're doing that,
+
+let me create an npm script for that.<br /><br />
+Closing that guy very quick.<br /><br />
+And so let me add here, npm start,
+
+nodemon server.js.<br /><br />
+Because this way, I no longer have to really know
+
+which is the file that I actually want to run.<br /><br />
+So all I have to write is npm start,
+
+and there's no doubt that it's gonna work.<br /><br />
+Otherwise, I might have to think,
+
+hm, is it app.js, or server.js, or what?
+
+What do we have to start here?
+
+But like this, I don't have to think,
+
+all I have to do is npm start, and it's gonna start.<br /><br />
+Okay, so just like this,
+
+and here we are back running our application.<br /><br />
+Close that guy, and by the way, this works,
+
+even without having nodemon installed
+
+as our dev dependency,
+
+because I have nodemon installed globally.<br /><br />
+So we did that in the first section,
+
+and hopefully you did it there as well.<br /><br />
+If not, then go ahead and in another tab
+
+do npm install nodemon,
+
+so if for some reason you skipped that section,
+
+you type npm install nodemon,
+
+and then you can either install it globally like this,
+
+or you can install it as a dev dependency,
+
+like this, alright?
+
+So just make sure that you have nodemon installed,
+
+no matter if it's globally or as a dev dependency,
+
+okay, in order to make this work.<br /><br />
+So final check, just to make sure,
+
+and want this one, and yeah, indeed.<br /><br />
+We have our app correctly refactored.<br /><br />
+So these were a lot of changes in one video alone,
+
+so after you finish this one,
+
+please go ahead and analyze everything that we did
+
+and really try to trace a path
+
+that a request will do inside of our app
+
+from start to finish.<br /><br />
+This way you will really get a feeling
+
+of how everything here works.<br /><br />
+And I'll see you after doing that in the next video.
+</body>
+</html>

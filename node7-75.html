@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    This video will be the first
+
+of the four CRUD operation videos.<br /><br />
+So this first one is about creating new documents.<br /><br />
+But before we start creating new documents,
+
+let me actually address a concern that you might be having.<br /><br />
+So maybe you're wondering,
+
+why are we actually doing all this stuff in a terminal?
+
+And how does this relate to our Express application
+
+that we built in the last section?
+
+Well, the answer for that is that right now,
+
+I want you to learn the absolute fundamentals of MongoDB,
+
+without the context of any application.<br /><br />
+So really, completely outside of Node.js.<br /><br />
+Because in theory, we could us MongoDB
+
+with any other language or any other framework.<br /><br />
+It doesn't have to be with Node.js,
+
+and so I think it's actually a good idea
+
+to learn MongoDB standing completely on its own,
+
+without the context of any other language.<br /><br />
+Okay?
+
+Later on, we will of course connect
+
+a MongoDB database with our application,
+
+so that in the next section,
+
+we can then actually start working with databases
+
+inside of our Express application.<br /><br />
+And by then we will use
+
+a MongoDB driver just for Node Express,
+
+so that we can use our JavaScript language
+
+to interact with our MongoDB database.<br /><br />
+All right?
+
+But for now, let's just learn MongoDB without any of that.<br /><br />
+All right?
+
+So in the last lecture, we created a new database.<br /><br />
+A new collection inside, called tours,
+
+and then one new document in there.<br /><br />
+Right?
+
+Remember that?
+
+And to do that, we used insert 1.<br /><br />
+Remember that?
+
+But now, let's actually create
+
+two documents at the same time.<br /><br />
+So that works like this.<br /><br />
+db, with just again, the current database, then .tours,
+
+which is the collection where we want
+
+to add our new documents, and then .insertMany.<br /><br />
+Okay?
+
+And insertMany is gonna accept an array of multiple objects.<br /><br />
+So an array, and then close it.<br /><br />
+So an empty object, and that may actually
+
+put the second empty object here also already,
+
+and so all we need to do is to fill up these objects.<br /><br />
+So name, this one is called The Sea Explorer.<br /><br />
+It has a price of 497, and a rating of 4.8.<br /><br />
+And then the next object.<br /><br />
+Let's give it a name of The Snow Adventurer.<br /><br />
+Which is one of the other nine tours that we have.<br /><br />
+Then the price is a bit more expensive, 997.<br /><br />
+And the rating is 4.9.<br /><br />
+And actually, let's add another field here.<br /><br />
+So, remember from the intro lecture
+
+how I said that MongoDB documents are very flexible.<br /><br />
+And so they do not all have to have the same structure.<br /><br />
+Okay?
+
+So we can have different fields in different documents.<br /><br />
+And so let's add the difficulty here.<br /><br />
+And set this one to easy.<br /><br />
+Okay?
+
+So that's it, let's hit return here.<br /><br />
+And so we inserted two new documents,
+
+and here we see the IDs that they got.<br /><br />
+So these two auto-generated
+
+unique identifiers for each of them.<br /><br />
+Okay?
+
+Now just to make sure, remember make db.tours.find,
+
+and here indeed, we now have our three tours.<br /><br />
+So that's the one we created in the last lecture,
+
+and then the two that we just created.<br /><br />
+Okay?
+
+So that's actually it for this lecture,
+
+just to recap, we used the insertMany function
+
+to pass in an array of two objects,
+
+or two documents that we wanted to create.<br /><br />
+Okay?
+
+So that's all I had for this one.<br /><br />
+In the next one, we will then learn how to do
+
+some advanced queries to search for data in our database.<br /><br />
+So that's an exciting one, so let's move on immediately.
+</body>
+</html>

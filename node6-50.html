@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Welcome back.<br /><br />
+Let's now finally set up Express,
+
+create a simple server, and do some basic routing
+
+just to get an initial feeling
+
+of how we actually work in Express.<br /><br />
+And so in this video, we're actually gonna start working
+
+on the natours project, so the big main project
+
+that is part of this course.<br /><br />
+So just like before, please go ahead
+
+and get the starter project from the course files.<br /><br />
+I already have it here.<br /><br />
+I have it opened up in my VS code.<br /><br />
+Let's take just a very quick look at what we have here.<br /><br />
+We have the prettier configuration file
+
+just like we set up like before.<br /><br />
+I also have a config file for ESLint,
+
+and ESLint we haven't set up at this point,
+
+but we're going to do that
+
+also later in this section.<br /><br />
+For now, I just want to start coding
+
+and not worry about linting our code.<br /><br />
+Linting is just to fix some errors.<br /><br />
+But again, we're going to do that later.<br /><br />
+Here we just have some files for later,
+
+like css, images, okay, and now also for example,
+
+some data that we need to build our application.<br /><br />
+Again, we're going to start using this data here
+
+throughout this section.<br /><br />
+Anyway, we now have a brand new project.<br /><br />
+The first thing that we usually do with a new project
+
+is to create the package.json file,
+
+just like I mentioned before.<br /><br />
+We did that in the nodefarm project,
+
+and now we're going to do that here as well.<br /><br />
+I open up the integrated terminal.<br /><br />
+You can do that by hitting this shortcut here
+
+or just come here to View and then Terminal.<br /><br />
+Let me put it up a little bit so you can see it.<br /><br />
+Remember the command is npm init.<br /><br />
+We gave a name to the project.<br /><br />
+It's called natours.<br /><br />
+Oh okay, it cannot have any capital letters.<br /><br />
+Let's do that again.<br /><br />
+The version is one, description, let's just say
+
+learning node, express, and mongoDB, mongoDB.<br /><br />
+Entry point, index.js, well actually,
+
+we're going to use app.js now.<br /><br />
+Let's call it app.js.<br /><br />
+We have no test command, no git, no keywords,
+
+author is me, and that's it, so okay.<br /><br />
+Here we have package.json.<br /><br />
+Just like before, nothing new here.<br /><br />
+Now it's time to install Express.<br /><br />
+Npm I express.<br /><br />
+I'm going to use Express for here,
+
+which is at the point of recording,
+
+the latest version, but for some time,
+
+the Express team has been working on version 5.<br /><br />
+That is a major version which could introduce
+
+breaking changes if you installed that one.<br /><br />
+Now, there's actually not a lot of stuff
+
+changing in version 5, but to make sure,
+
+please install Express at version 4 just like I'm doing.<br /><br />
+In order to do that, just hit at 4.<br /><br />
+That will then install the latest version inside of 4
+
+with the latest minor and patch versions, so 4.16.4.<br /><br />
+That's the version that I'm using now
+
+in this course, and yours will probably be
+
+a later version, but as long as you have the 4 here
+
+in the beginning, you should be fine.<br /><br />
+You see that it actually created
+
+our node modules folder over here.<br /><br />
+Now, we're ready to start.<br /><br />
+I'm creating a new file and it's called app.js.<br /><br />
+It's kind of a convention to have
+
+all the Express configuration in app.js.<br /><br />
+That's what I'm using here now.<br /><br />
+We have now the warning
+
+that it can't load ESLint.<br /><br />
+Again, we're going to configure that later
+
+throughout this section.<br /><br />
+So, let's now use Express.<br /><br />
+I'm going to require of course, the Express package.<br /><br />
+Nothing new at this point.<br /><br />
+Give it a safe.<br /><br />
+You see that preview already did its magic here
+
+by adding this semi-colon and also adding
+
+this new line down here.<br /><br />
+We have Express imported, and now what we do
+
+is to create a variable called app.<br /><br />
+Again, that's kind of a standard.<br /><br />
+So app and assigned result of calling express.<br /><br />
+That's actually it.<br /><br />
+This here is a function which upon calling
+
+will add a bunch of methods to our app variable here.<br /><br />
+The first one that we're going to use
+
+is actually app.listen to
+
+basically start up a server.<br /><br />
+That is a bit similar to what we did before
+
+with the http package in the previous sections, right.<br /><br />
+So again, keep in mind that Express
+
+is 100% no js under the hood,
+
+and some of the things work
+
+in a very similar way here in Express.<br /><br />
+All right, again, it simply makes our lives
+
+a bit easier by taking some of
+
+the complexity away from us.<br /><br />
+Just like before, into app.listen,
+
+we paste in the port.<br /><br />
+Let's actually create a variable for that here before.<br /><br />
+Port and let's say 3000 for now.<br /><br />
+We're going to change that a bit later.<br /><br />
+We paste in the port and a callback function.<br /><br />
+Again, this is the callback function
+
+that will be called as soon as
+
+the server starts listening.<br /><br />
+Let's simply do a console.log here,
+
+app running on port.<br /><br />
+All right, so that is our server
+
+now actually already listening.<br /><br />
+Now what we need to do next is to define route.<br /><br />
+And once more, we actually already
+
+kind of defined routes before
+
+in the nodefarm project, remember that,
+
+but it works very differently with Express.<br /><br />
+Remember that routing means basically
+
+to determine how an application responds
+
+to a certain client request, so to a certain URL.<br /><br />
+And actually, it's not just a URL
+
+but also the http method
+
+which is used for that request.<br /><br />
+Remember that from the http lecture that we had before.<br /><br />
+How do we do that?
+
+Well, it's very simple in Express.<br /><br />
+All we do is app, then the http method
+
+that we want to respond to,
+
+and let's start with the simplest one
+
+which is get, and then the URL.<br /><br />
+We're just specifying the kind of root URL here.<br /><br />
+Again, the route is basically the URL,
+
+which in this case, is just this root URL
+
+and also the http method, which is get in this case.<br /><br />
+Now, what do we actually want to happen
+
+when someone hits that URL with a get request?
+
+Well, whatever we want to do,
+
+we need to specify it in a callback function,
+
+which we specify as the second argument.<br /><br />
+We have a callback function
+
+just like this, and this callback function
+
+can accept a couple of arguments.<br /><br />
+The most basic one, and the ones that we usually
+
+always need are get request, entity response.<br /><br />
+In that regard, it is again very similar
+
+to what we did before in the nodefarm project.<br /><br />
+Back then, when we started our server,
+
+we also had access to the request
+
+and to response object.<br /><br />
+Now, they are a little bit different here in Express.<br /><br />
+They have a lot more data and methods on them,
+
+but the idea is exactly the same.<br /><br />
+So you see that Express apps
+
+and so also node apps for that matter,
+
+are all about requests and responses,
+
+simply because that is how the web actually works
+
+just as you learned in the previous sections.<br /><br />
+What do we want to do now?
+
+Well, all we want to do is to send
+
+some data back very quickly.<br /><br />
+We can use the response object
+
+and from there, we can use the send method
+
+and specify something that we want to send back.<br /><br />
+Hello from the server side.<br /><br />
+Just some string again that we want to send back.<br /><br />
+We can also specify the status code
+
+and that's very easy.<br /><br />
+All we have to do is to before we actually send
+
+the string to the client,
+
+we just add status before that.<br /><br />
+The status method, and in here,
+
+we specify our code.<br /><br />
+And again, we're going to use 200 for okay.<br /><br />
+That's actually all we have to do.<br /><br />
+Let's very quickly test this out
+
+and then add some more stuff to it.<br /><br />
+Let's use nodemon app.js.<br /><br />
+Let's see what happens
+
+and our app is running on port 3000.<br /><br />
+Great.<br /><br />
+And how do we now test this API?
+
+Well, that's why we installed Postman.<br /><br />
+Let's open up Postman.<br /><br />
+Actually it's still here from the last lecture.<br /><br />
+Let's go ahead and delete this
+
+and write the URL, or actually, the IP
+
+for local host and then our port.<br /><br />
+That is exactly the same as we did
+
+in the nodefarm project.<br /><br />
+We're hitting just the root.<br /><br />
+We can write the slash or it works
+
+just the same without anything.<br /><br />
+Let's send this and indeed, here we go.<br /><br />
+Hello from the server side.<br /><br />
+That's amazing, it already works.<br /><br />
+Just to make sure, we would of course
+
+get the exact same result in a browser.<br /><br />
+If I copy this here, you will see the same result.<br /><br />
+But again, we're going to use Postman
+
+because it makes all this API testing a lot easier for us.<br /><br />
+You will see, once we really start using
+
+more and more features of this great application.<br /><br />
+Now, going back here, let's add some more stuff
+
+because send simply sends this string here
+
+back to the client, but it's also very easy
+
+to send json to the client.<br /><br />
+Instead of using send, let's actually use json.<br /><br />
+The json method, and then in here,
+
+we can paste in an object.<br /><br />
+Let's do it like this.<br /><br />
+Let's say this is the message.<br /><br />
+And then just some other field here, natours.<br /><br />
+Okay, and now you see, that preview here
+
+auto-formatted this for us
+
+and they also want this in another line.<br /><br />
+Ah okay, we're missing a comma here of course.<br /><br />
+But the preview extension still put it
+
+up here for some reason.<br /><br />
+But of course, that doesn't really matter.<br /><br />
+It's just a matter of formatting.<br /><br />
+Let's take a look at what happens now.<br /><br />
+Now we have our nicely formatted json here.<br /><br />
+Gives us all these different colors here
+
+for the keys and for the values.<br /><br />
+Here we have the status codes.<br /><br />
+Here we have the time it took to do this request.<br /><br />
+We also have the size of the response.<br /><br />
+We could, for example, change the code here very easily.<br /><br />
+404 is not found, remember.<br /><br />
+Do it again, and then here you see, 404, not found.<br /><br />
+That's the kind of stuff that
+
+Postman is really great for.<br /><br />
+Let's actually increase the size of all this.<br /><br />
+Let's now continue, just add something else here.<br /><br />
+Just something very easy.<br /><br />
+Remember, all of this is just to test it out,
+
+to get our feet wet, and start getting
+
+a little bit of experience.<br /><br />
+Remember that this here is the http method for the request.<br /><br />
+This response that we're sending here,
+
+so this one here, is only sent
+
+when this get method is sent to our server on this URL.<br /><br />
+Let me actually show it to you.<br /><br />
+If we do, for example, a post.<br /><br />
+That's very easy again with Postman.<br /><br />
+If we do a post, then we will not get anything.<br /><br />
+Instead, what Express automatically sends back is
+
+this html here which says cannot post
+
+and then with a 404, not found.<br /><br />
+That's because we don't have any route defined
+
+for this URL and for this http method.<br /><br />
+Let's now very quickly do that.<br /><br />
+So post, we want the same URL,
+
+the request and the response object.<br /><br />
+Let's simply say res.send,
+
+you can post to this endpoint.<br /><br />
+Just so you see that this is how
+
+we send different responses for
+
+different http methods in the request.<br /><br />
+Let's run that again, and indeed,
+
+you can post to this endpoint with a 200 status code.<br /><br />
+This is actually the default one
+
+when we do not specify any in our codes.<br /><br />
+Here we have 404 which is not correct.<br /><br />
+But again, 200 is actually the default.<br /><br />
+Another quick thing that I want to show you
+
+is that by using this json method here for example,
+
+this will automatically set our content type
+
+to application json, so remember that
+
+we did that manually in the nodefarm app
+
+when we created our very simple API.<br /><br />
+Back then, we also sent back some json,
+
+but we then had to manually define that
+
+the content was json so that the browser knew
+
+what it was expecting.<br /><br />
+But Express takes that work away from us.<br /><br />
+Let's actually check that.<br /><br />
+Going back to get.<br /><br />
+Here we have our result headers.<br /><br />
+Here you see that the content type
+
+is indeed set to application json.<br /><br />
+Express then also automatically sends
+
+a bunch of other headers, for example,
+
+this powered by Express or the date or the connection.<br /><br />
+But again, we're going to take more care
+
+of headers a bit later in the course.<br /><br />
+This was just a very small and simple example here,
+
+but you can already start to appreciate
+
+how much easier it is to do this kind of responses.<br /><br />
+To create this route in order to respond to client request,
+
+in a much easier way than in just plain node.js.<br /><br />
+With that being said, in the next video,
+
+we're going to learn all about building APIs
+
+using the rest architecture, so that after that,
+
+we can finally start building our API.
+</body>
+</html>

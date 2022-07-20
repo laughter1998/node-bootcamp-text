@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Welcome back, so now the time has come
+
+to finally start building our API.<br /><br />
+So this lecture is really gonna be the first step
+
+in a long journey of building this main course project.<br /><br />
+And let me actually start by showing you again
+
+the project that we're talking about.<br /><br />
+So this is the Natours project.<br /><br />
+It's basically an application
+
+where we can see tours and also book them.<br /><br />
+We can create user accounts, we can log in,
+
+and really do all kinds of different stuff.<br /><br />
+So for example, we can take a look at the tour here.<br /><br />
+It has all these details, this map,
+
+it has reviews from other users that are using the platform,
+
+and we can even book the tour then.<br /><br />
+We would have to log in before we are able to book
+
+and I'm not gonna do that now
+
+because it's just a very simple demo here,
+
+so I just wanted to show you this graphical interface,
+
+basically, of the project that we are building.<br /><br />
+Now this part that you're seeing here
+
+is actually the part that we're gonna build
+
+by the end of the course,
+
+because this first part of the course
+
+is to build an API using the exact same data
+
+that you see here on this dynamic website.<br /><br />
+So again, we start by building the API
+
+and then the dynamically rendered website,
+
+and I choose to do it like this
+
+because this way, we don't have to mix
+
+all this different content all together,
+
+so in order to learn Express and Mongodb and Mongoose,
+
+I find it much easier to just work with data
+
+and not to worry about the graphical stuff,
+
+even though that's maybe a bit more exciting
+
+because you get to see the real results
+
+in this beautiful interface.<br /><br />
+But to learn, it's better to again,
+
+simply just deal with the data itself
+
+and worry about making it beautiful later.<br /><br />
+Okay, so let me actually show you the API as well.<br /><br />
+And for that, of course, I use Postman.<br /><br />
+Create a new tab here.<br /><br />
+And so the final API we accessed at
+
+slash API, slash version one,
+
+and then for example, we can take a look at tours.<br /><br />
+So we use the get request
+
+and then we get all of these different tours.<br /><br />
+Right, so again, the exact same tours
+
+that you saw on the graphical interface,
+
+so on the rendered website before.<br /><br />
+Okay, we can then also go ahead, take the ID,
+
+and request only that ID, so on that tour for that ID,
+
+and so you see that now we only have this one here
+
+with even more data than we had before.<br /><br />
+So we have start locations here,
+
+we have tour guides which in turn has other ID's,
+
+we have locations, we have reviews,
+
+so all of that we have in a tour.<br /><br />
+So you see, it's really advanced stuff
+
+and so we actually have more than just tours.<br /><br />
+We have users but we will not be able to access them
+
+because we need to be authenticated.<br /><br />
+So you're not logged in and so right now,
+
+we would need to log into our app.<br /><br />
+Now at this point, I'm gonna stop showing you
+
+all the features because we will build this
+
+throughout the course,
+
+just to show you that there is really a lot going on here
+
+and so there is a lot of material
+
+and of stuff to learn ahead of you,
+
+so I hope you're excited for that,
+
+and that you want to take the first step with me right now.<br /><br />
+So let's go back and implement the tours route
+
+or starting to implement it, at least.<br /><br />
+Okay, so this piece of code here, we no longer need,
+
+and I'm not deleting it, just commenting it up.<br /><br />
+So again, we use app.get
+
+because in this lecture, we're gonna start
+
+by just handling the get requests
+
+and the URL will be slash API and tours.<br /><br />
+So I'm not using v1,
+
+well, I could use v1 right away,
+
+so it's a good practice to specify the API version.<br /><br />
+Okay, so that in case you want
+
+to do some changes to your API,
+
+you can do that but simply then on v2
+
+without breaking everyone who is still using v1.<br /><br />
+Okay, so basically, you can branch off,
+
+create a new version of your API,
+
+but all users can then still be using it.<br /><br />
+If we did it just like this
+
+and you did changes then to API slash tours,
+
+then the users who started to use it
+
+before you did the change would run into some problem.<br /><br />
+Okay, so we always should specify the version of the API.<br /><br />
+We could also do it in the subdomain,
+
+but it's easier to just simply include it in the URL.<br /><br />
+Okay, and then of course, our route handler.<br /><br />
+So this is how we usually call this function.<br /><br />
+We call it the route handler.<br /><br />
+Okay, so just to get familiar with these Express terms.<br /><br />
+Now what do we want to do when someone hits this route?
+
+Well, we want to simply send back all the tours.<br /><br />
+So that is similar to what we just learned
+
+in the last lecture, right.<br /><br />
+We have this URL or this endpoint, slash tours,
+
+and that will usually send back all of the data
+
+for that resource, right.<br /><br />
+So, also tours is the resource now,
+
+and I'm starting with tours here
+
+because it's, I would say, the most obvious one
+
+since we're building a website or a Web application
+
+for selling tours, right.<br /><br />
+Now where do we actually get these tours
+
+that we wanna send back to the client?
+
+Well, it's here in the dev-data folder,
+
+then data, and then tours-simple.<br /><br />
+So it's this JSON file, and it's very similar
+
+to the one that we had for the note farm,
+
+so again, it's an array of JSON objects
+
+which then has a bunch of data about each of the tours.<br /><br />
+And so yeah, that's the data
+
+that we're gonna be sending to the client.<br /><br />
+Now before we can send the data,
+
+we actually need to first read it
+
+and so again, we don't do it inside the route handler,
+
+but we do it before.<br /><br />
+Okay, and just like I explained in the previous project,
+
+we can do that because the top-level code
+
+is only executed once, which is right after
+
+the application startup, right.<br /><br />
+And now that you know all about the event loop,
+
+it makes even more sense for you at this point, right.<br /><br />
+So only this callback function, for example here,
+
+will run inside the event loop
+
+and so in here, we cannot have any block and code.<br /><br />
+But outside, it is no problem at all.<br /><br />
+So that simply reads the tours into a variable
+
+outside of all of this in a synchronous way.<br /><br />
+So fs, and for that, of course,
+
+we need to require the module actually,
+
+and so we do that here at the top.<br /><br />
+And I like to always start with the core modules
+
+and so I do that at the first one.<br /><br />
+So require, fs,
+
+so fs.readFileSync, it's already here.<br /><br />
+And now, let's use the dirname.<br /><br />
+And so again, at this point,
+
+you already know why we actually have access
+
+to this variable here, so dirname is the folder
+
+where the current script is located,
+
+and that is this main folder.<br /><br />
+So from here, we need to move into dev-data,
+
+then into data, and then in there,
+
+we have tours-simple.json.<br /><br />
+Okay, and now let's also, right in this step here,
+
+parse the result of this.<br /><br />
+So JSON, actually the uppercase one,
+
+so JSON.parse, so that the JSON that we have in here
+
+will automatically be converted to a Javascript object
+
+or an array of Javascript objects, actually.<br /><br />
+So saving it and so this will reformat it
+
+and so now all we have to do
+
+is to really send it back to the client,
+
+so res.json,
+
+and let me actually specify the status code here,
+
+even if 200 is the standard,
+
+I like to do it in each and every single response.<br /><br />
+All right, so JSON, and what do we want to send back now?
+
+Not message, that's for sure.<br /><br />
+So what do we wanna send back?
+
+Well, remember that we were gonna use
+
+the Jsend JSON formatting standard.<br /><br />
+Okay, and so in there, we specify a status,
+
+and so status, and that can either be
+
+success, fail, or error, okay.<br /><br />
+So success is obvious.<br /><br />
+It's when we have a 200 code or a 201
+
+or really just any code that starts with 200.<br /><br />
+Then we have the fail, which is an error at the client,
+
+and then we also have error,
+
+when there was an error at the server.<br /><br />
+All right, but we are gonna use these a bit later.<br /><br />
+Anyway, we also have then the data property
+
+which is, as I mentioned,
+
+the so-called envelope for our data.<br /><br />
+So we specify the data property
+
+and that data will then in turn have an object
+
+which then contains the data,
+
+so the response step we actually wanna send.<br /><br />
+And in this case, that is tours.<br /><br />
+So tours and then tours,
+
+which is the same name in this case.<br /><br />
+So with ES6, we actually do not need to specify
+
+the key and the value if they have the same name,
+
+so we could just write tours,
+
+but I just wanted to specify it here
+
+that I wrote tours here because, well,
+
+that is the name of the resource and of the endpoint,
+
+and so that's why, inside of data,
+
+I then send back an object that has the tour property.<br /><br />
+Okay, so if this was called x, for example,
+
+then I would call this one here x,
+
+but here, I would still need to say tours, okay.<br /><br />
+I'm putting it back to tours because that makes more sense
+
+and now I can delete this here and just leave it like this.<br /><br />
+And that is actually all we have to do.<br /><br />
+So we read our data and then we formatted our response
+
+like this here, using the JSend data specification.<br /><br />
+Okay, so very simple stuff.<br /><br />
+Let's now just test it out
+
+and we now have to change, of course, the URL,
+
+so we have slash API, slash version one, and tours.<br /><br />
+So that is our URL.<br /><br />
+We still do a get request,
+
+and so that's the one that we're responding to in code,
+
+so remember, using this get method,
+
+and so hit Send, and indeed, here we go.<br /><br />
+So here, we have all our tours.<br /><br />
+So, awesome, that's really cool.<br /><br />
+Really, really nice work.<br /><br />
+Now just to finish, something else that I like to do
+
+usually when we are sending multiple responses
+
+is to include a field called results
+
+with the number of results that we are sending.<br /><br />
+Okay, and this is not really part
+
+of the JSend specification,
+
+but I still really like to do it
+
+because that makes it very easy for the client
+
+to get very quick information
+
+about the data it is receiving.<br /><br />
+So we know that tours is an array
+
+and so all we have to do is to say tours.length.<br /><br />
+Okay, and this actually only makes sense
+
+whenever we are sending an array, so multiple objects.<br /><br />
+If we only were sending one tour,
+
+then it wouldn't make sense to have results
+
+such as one, right,
+
+and so I only do this whenever we're sending an array
+
+with multiple objects in there.<br /><br />
+So let's do that again.<br /><br />
+And indeed, we have nine results,
+
+then we have the data property, then in there, tours,
+
+to specify that we're sending tours,
+
+and then an array with all the nine tours in there.<br /><br />
+So you can see another object
+
+and another one and another one,
+
+and all the way to the end,
+
+so that is the very first step to our API.<br /><br />
+Of course, at this point, it's like a file-based API,
+
+so we're reading this data from an API,
+
+but later, of course, we're gonna store this data
+
+in a database and then read it from there.<br /><br />
+But anyway, this already looks kind of for real
+
+and that for sure makes me feel really good,
+
+and I hope it makes you feel good as well.<br /><br />
+So that's it for the get request.<br /><br />
+Next up, we're gonna take care of the post request
+
+so that we can actually add a new tour to our data.
+</body>
+</html>

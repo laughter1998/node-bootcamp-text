@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    As the last part in this section,
+
+    let's talk about how NODE.<br /><br />JS modules actually work
+    
+    behind the scenes.<br /><br />
+    
+    First of all in the NODE.<br /><br />JS module system
+    
+    each JavaScript file is treated as a separate module.<br /><br />
+    
+    And we already played around a bit with modules
+    
+    in the intersection,
+    
+    'specially by using the require function
+    
+    and exporting data from modules.<br /><br />
+    
+    So that's the fundamentals of Common JS modules
+    
+    which is the module system that node uses.<br /><br />
+    
+    Because it works especially well on the server.<br /><br />
+    
+    Now, there's also the native ECMA script
+    
+    or ES module system that
+    
+    you might already be familiar with,
+    
+    'specially if you took my JavaScript course,
+    
+    or if you have been writing JavaScript
+    
+    on the front end lately.<br /><br />
+    
+    This ES module system that I was talking about was developed
+    
+    to work in the browser using the import export syntax.<br /><br />
+    
+    So, I just wanted to make it clear that these are
+    
+    two different module systems that you will see
+    
+    in different situations,
+    
+    so don't be confused.<br /><br />
+    
+    There have also been attempts to implement
+    
+    native ES modules in NODE.<br /><br />JS,
+    
+    'specially using file extensions
+    
+    like .<br /><br />mjs.<br /><br />
+    
+    But so far, it's not really become
+    
+    a popular thing to use.<br /><br />
+    
+    So unless you're watching this course
+    
+    in the far future,
+    
+    you will probably always be using
+    
+    the Common JS system with node.<br /><br />
+    
+    Now, you might be wondering why in NODE.<br /><br />JS
+    
+    each and every module actually gets access
+    
+    to the require function in order
+    
+    to import modules in the first place.<br /><br />
+    
+    Right?
+    
+    I mean, it's not a standard JavaScript function.<br /><br />
+    
+    So where does it come from?
+    
+    And how exactly does it work behind the scenes?
+    
+    Well, let's find out.<br /><br />
+    
+    So the question here is,
+    
+    what happens each time that we require
+    
+    a module by calling the require function
+    
+    with a module name, is the argument.<br /><br />
+    
+    As a very broad overview,
+    
+    the following steps are executed behind the scenes.<br /><br />
+    
+    First, the path to the required module
+    
+    is resolved and the file is loaded.<br /><br />
+    
+    Then a process called wrapping happens
+    
+    after that,
+    
+    the module code is executed
+    
+    and the module exports are returned.<br /><br />
+    
+    And finally the entire module gets cached.<br /><br />
+    
+    So let's now look at each step in more detail.<br /><br />
+    
+    First off, how does node know which file to load
+    
+    when we require a module?
+    
+    Because remember, we can actually load
+    
+    three different kinds of modules.<br /><br />
+    
+    Node's core modules,
+    
+    our own modules or third party modules from npm
+    
+    like express which is the node framework that we're
+    
+    going to use throughout most of the course.<br /><br />
+    
+    So this process is known as resolving the file path.<br /><br />
+    
+    And here is how it works.<br /><br />
+    
+    When the require functions receives the module name
+    
+    as its input,
+    
+    it will first try to load a core module with that name.<br /><br />
+    
+    Like for example, the http module.<br /><br />
+    
+    It will automatically find a path to that module
+    
+    and then load it.<br /><br />
+    
+    Now if the path starts with a dot,
+    
+    or two dots,
+    
+    it means that it's a developer module.<br /><br />
+    
+    Because we indicate the relative path to our file.<br /><br />
+    
+    So node will try to load that file,
+    
+    but if there is no file with that name,
+    
+    then it will look for a folder instead
+    
+    and load index.<br /><br />js if it's in that folder.<br /><br />
+    
+    So in this example,
+    
+    it will try to load lib/controller.<br /><br />js.<br /><br />
+    
+    Remember that we can drop the dot js
+    
+    when requiring a module.<br /><br />
+    
+    In case there is no file at this path,
+    
+    it will then, instead, try to open
+    
+    index.<br /><br />js from the lib/controller folder instead.<br /><br />
+    
+    Make sense?
+    
+    And finally, if the required module
+    
+    is neither a core module,
+    
+    nor a developer module,
+    
+    node will assume it's a module from npm.<br /><br />
+    
+    And remember, on a module that we load from npm,
+    
+    we actually don't need to write the path when we require it.<br /><br />
+    
+    Just the module name,
+    
+    just the way it works on a core module.<br /><br />
+    
+    So these third party modules are stored
+    
+    in a node module folder,
+    
+    so node will step into that folder and try to find
+    
+    a module there and then load it.<br /><br />
+    
+    And of course, if the file can't be found anywhere,
+    
+    then an error is thrown and the execution
+    
+    of the app is stopped.<br /><br />
+    
+    Moving on, after the module is loaded,
+    
+    the module's code is wrapped into a special function
+    
+    which will give us access to a couple of special objects.<br /><br />
+    
+    So this step is where the magic happens.<br /><br />
+    
+    It is here where we get the answer to the question,
+    
+    where does the require function actually come from
+    
+    and why do we have access to it?
+    
+    It's because the nodejs run time,
+    
+    takes the code off our module
+    
+    and puts it inside the immediately invoked
+    
+    function expression, or IIFE that you can see here.<br /><br />
+    
+    So node does actually not directly
+    
+    the execute the code that I rewrite into a file,
+    
+    but instead, the wrapper function that will contain
+    
+    our code in it's body.<br /><br />
+    
+    It also passes the experts require module,
+    
+    file name and dir objects into it.<br /><br />
+    
+    So that is why in every module
+    
+    we automatically have access
+    
+    to stuff like the require function.<br /><br />
+    
+    So these are basically like global variables
+    
+    that are injected into each and every module.<br /><br />
+    
+    Now by doing this, node achieves two very important things.<br /><br />
+    
+    First, of course, is giving developers access
+    
+    to all these variables we just talked about,
+    
+    which is very helpful.<br /><br />
+    
+    Second, it keeps the top-level variables that we
+    
+    define in our modules private.<br /><br />
+    
+    So it's scoped only to the current module
+    
+    instead of leaking everything into the global object.<br /><br />
+    
+    So imagine for a second,
+    
+    that we declared a variable x in one of our modules
+    
+    and then included an npm module that also used
+    
+    a variable called x.<br /><br />
+    
+    Without this mechanism,
+    
+    our own variable would then get overridden
+    
+    and the entire app would just not work.<br /><br />
+    
+    So each module having its private scope
+    
+    is absolutely crucial and is achieved
+    
+    through this clever trick of wrapping our code
+    
+    into this special function.<br /><br />
+    
+    Let's now take a quick look at each object
+    
+    that our module gets.<br /><br />
+    
+    First the require function,
+    
+    which we already know about.<br /><br />
+    
+    Then, there is a module object,
+    
+    which is just a reference to the current module
+    
+    and which for us is most important
+    
+    when it comes to exporting data.<br /><br />
+    
+    The same applies to the export's object
+    
+    which we're gonna discuss in a moment.<br /><br />
+    
+    Finally, there are the convenience
+    
+    variables file name and dir name
+    
+    which simply contain the absolute path
+    
+    to the current module's file
+    
+    as well as the current directory name.<br /><br />
+    
+    And that is how the wrapping step of loading a module works.<br /><br />
+    
+    Next up, the code in the module,
+    
+    or to be more precise,
+    
+    in the module's wrapper function,
+    
+    actually gets executed by the NODE.<br /><br />JS runtime.<br /><br />
+    
+    So, nothing fancy here.<br /><br />
+    
+    Up until this point,
+    
+    the require function has been called with a module name
+    
+    as the argument the path
+    
+    to the module's file has been resolved into file loaded,
+    
+    all the code has been wrapped into the wrapper function
+    
+    which has then been executed.<br /><br />
+    
+    Now, it's time for the require function
+    
+    to actually return something.<br /><br />
+    
+    And what it returns is the exports of the required module.<br /><br />
+    
+    These exports are stored in the module.<br /><br />exportsobjects.<br /><br />
+    
+    It might look a little bit like this.<br /><br />
+    
+    So, again, in each module we can export variables,
+    
+    which will, in the end be returned by the require function.<br /><br />
+    
+    And we do that by assigning variables to module.<br /><br />exports
+    
+    or simply to exports
+    
+    where it is just a pointer to module.<br /><br />export.<br /><br />
+    
+    We will do this in practice in the next video,
+    
+    because I know this sounds kind of confusing
+    
+    when I just say it like this.<br /><br />
+    
+    Anyway, here's what you need to know
+    
+    about when to use module.<br /><br />export or just export.<br /><br />
+    
+    So if all you want to do is to export one single variable,
+    
+    like one class or one function,
+    
+    you usually use module.<br /><br />exports and set it equal
+    
+    to the variable that you want to export.<br /><br />
+    
+    Just like in this example.<br /><br />
+    
+    On the other hand,
+    
+    if you're looking to export multiple named variables
+    
+    like multiple functions, for example,
+    
+    then you should create these
+    
+    as properties of the export object.<br /><br />
+    
+    For example, if we were doing a calculator module
+    
+    you could create exports.<br /><br />add,
+    
+    exports.<br /><br />multiply,
+    
+    exports.<br /><br />divide and so on and so forth.<br /><br />
+    
+    Makes sense?
+    
+    Again, we're gonna do this in the next video
+    
+    and it will make more sense to you by then.<br /><br />
+    
+    This is effectively how we export and import data
+    
+    from one module into the other.<br /><br />
+    
+    Of course, this is also why we usually assign
+    
+    the result of a require function called to a new variable.<br /><br />
+    
+    So that we can save the returned exports.<br /><br />
+    
+    Now, just to finish this video real quick,
+    
+    the last step is that modules are actually cached
+    
+    after the first time they are loaded.<br /><br />
+    
+    What this means is that if you require the same module
+    
+    multiple times, you will always get the same result.<br /><br />
+    
+    And the code in the modules is actually only executed
+    
+    in the first call.<br /><br />
+    
+    In subsequent calls,
+    
+    the result is simply retrieved from cache.<br /><br />
+    
+    Perfect.<br /><br />
+    
+    So I hope that all the logic behind
+    
+    how to work with modules
+    
+    doesn't really look like magic anymore.<br /><br />
+    
+    It's really important to know how all of this works,
+    
+    in order to become a great,
+    
+    and above all,
+    
+    a more independent NODE.<br /><br />JS developer.<br /><br />
+</body>
+</html>

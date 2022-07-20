@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    (Man) So in this lecture, you're gonna learn how to
+
+chain multiple middleware functions for the same route.<br /><br />
+So up until this point, whenever we wanted to define
+
+a middleware, we only ever passed one middleware function.<br /><br />
+So for example here, for handling this post request,
+
+well we only passed in this middleware function
+
+which is our createTour handler.<br /><br />
+Okay? And so that's the only function that is gonna
+
+be called whenever we get a post request.<br /><br />
+Right? But lets now say that we want to actually
+
+run multiple middleware functions.<br /><br />
+Now you might ask "Why would we want to do that?".<br /><br />
+Well we might, for example, run a middleware before
+
+createTour here to actually check the data that is
+
+coming in the body.<br /><br />
+Right? So a bit similar to what we had before.<br /><br />
+So we did this check ID middleware before in order to
+
+check if the ID is actually valid and doing so outside
+
+of the actual route handlers so that they are
+
+only concerned with getting, updating, or deleting
+
+a tour.<br /><br />
+Right? And so here, in this specific example with post, we
+
+might want to do the same thing.<br /><br />
+So as I said, we might want to check if request.buddy
+
+actually contains the data that we want for the tour.<br /><br />
+Okay? And so lets do that.<br /><br />
+And actually, I want you to first do it on your own.<br /><br />
+So this is kind of a challenge that I want you to complete
+
+in order to use the concepts that we've talked about
+
+so many times at this point and create your own
+
+middleware function.<br /><br />
+So let me just write it here as a comment.<br /><br />
+So I want you to create
+
+a checkBody middleware function
+
+and in there I want you to check
+
+if the body contains the name property for the tour name
+
+and the price property.<br /><br />
+All right? And if not, I want you to send back a
+
+four-hundred status code.<br /><br />
+If not, send back four-hundred, which stands for
+
+bad request.<br /><br />
+So basically, an invalid request from the client, which is
+
+in this case, trying to create a new tour without a name
+
+and without a price property.<br /><br />
+Okay! And that's actually it.<br /><br />
+And (laughs) actually not.<br /><br />
+So I also want you to add it to the post handler stack.<br /><br />
+Basically. Okay?
+
+So I want you to add it in here.<br /><br />
+And I will actually tell you how to do that
+
+because we didn't do it at this point.<br /><br />
+So its very easy. Lets say our function is called middleware
+
+and so what you have to do is to simply add that function
+
+here before the createTour handler that will
+
+ultimately create the tour. Okay?
+
+So this way when we have a post request for this route,
+
+it will then run this middleware first and only then
+
+the createTour.<br /><br />
+Okay? So that's how we chain two different middlewares.<br /><br />
+But now I want you to go ahead and uh create this middleware
+
+actually called checkBody.<br /><br />
+So pause the video now and please try to do it on your own.<br /><br />
+Okay! So I hope you were successful doing that and then you
+
+tested it and that everything works.<br /><br />
+So now let me go ahead and implement it in my way.<br /><br />
+So we have this error here but don't worry about it.<br /><br />
+Its because of this middleware that's not defined.<br /><br />
+And so let me do it here right after the checkID middleware.<br /><br />
+So exports.checkBody.<br /><br />
+We have to request response and next.<br /><br />
+And so its actually quite simple.<br /><br />
+So if there is no request.body.name,
+
+and I think that's the name but lets quickly go
+
+ahead and check that.<br /><br />
+So it is here is tour simple.<br /><br />
+Yeah, and indeed its called 'name'
+
+and the other one is 'price'.<br /><br />
+So if there is no request body name or
+
+no request body.price
+
+well, in this case, we will, just as before, return from
+
+this function and send back a response.<br /><br />
+So the status here is remember: four-hundred add then
+
+some 'json' where the status is fail.<br /><br />
+So that's always when we have a four-hundred code.<br /><br />
+Add then the message
+
+"Missing name
+
+or price".<br /><br />
+Okay? So price and name need to be there at the same time.<br /><br />
+So if either the price is not there or the name is not there
+
+then we already send this error message.<br /><br />
+Okay? But if everything is correct, well then we want
+
+to move on to the next middleware.<br /><br />
+And so that's what we say here.<br /><br />
+And then next middleware will of course be createTour.<br /><br />
+So this one.<br /><br />
+So, lets go ahead and then add it here.<br /><br />
+So tourController.checkBody.<br /><br />
+All right so now the error is gone and we should be able
+
+to test it now. So lets close the ones we're not interested
+
+in and create a new tour.<br /><br />
+So right now we have our body with the name, duration, and
+
+difficulty but there is no price.<br /><br />
+So we should now get our error. Right?
+
+So lets test that. Send. And indeed, we have 'Missing name
+
+or price' with our four-hundred bad request.<br /><br />
+Okay? And so lets analyze what happened here again.<br /><br />
+So our request hit this route here and it was a post
+
+request. And so, it then run this middleware function
+
+and from this function, we then send out this uh response
+
+saying that, uh, well the name or the price is missing.<br /><br />
+Okay? But if now add the price...<br /><br />
+...so it doesn't really matter what price,
+
+send it, well then everything works just fine
+
+and we get a 201 created.<br /><br />
+So what happened this time? Well, it checked for the body
+
+and this condition was not true and so it called the next
+
+middleware in the stack which is createTour.<br /><br />
+So it created a tour and sent back the result
+
+and like this, finished the request-response cycle.<br /><br />
+Right? So I hope that was a, uh, nice small challenge and
+
+we will be using this kind of logic here all the time
+
+where we chain multiple kind of handlers here for the
+
+same route. So for example here we could check if a
+
+certain user is logged in or if he has the privileges, so
+
+the access rights, to even write a new tour.<br /><br />
+Or really all kinds of stuff that we want to happen
+
+before the tour is actually created.<br /><br />
+Okay? And once again we do that because we want to take
+
+all the logic that is not really concerned with creating the
+
+new resource outside of that handler. So that that handler
+
+is only concerned really with the work
+
+that is supposed to do.
+</body>
+</html>

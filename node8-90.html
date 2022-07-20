@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hey, there!
+
+So let's now learn how to read documents with Mongoose
+
+in order to implement or get tour and get all tour's
+
+route handlers.<br /><br />
+And starting with the getAllTours handler.<br /><br />
+So first off, let's delete this piece of code here.<br /><br />
+And now what we're gonna do
+
+in order to get all the tours from the database
+
+is to use Tour.<br /><br />
+So the model again.<br /><br />
+At the end on there, we use the find method.<br /><br />
+All right.<br /><br />
+So remember from the MongoDB intersection,
+
+where when we wanted to query for all the documents,
+
+we simply used find, okay?
+
+And so here, it's the exact same method.<br /><br />
+And again, when we don't pass anything into it,
+
+so just like we're doing here,
+
+then it will return all the documents
+
+in that collection, okay?
+
+So in this case, in the tour collection obviously.<br /><br />
+Now just like before, this is gonna return a promise
+
+that we will await.<br /><br />
+And since we wanna await,
+
+we need to make this an async function.<br /><br />
+So async.<br /><br />
+Then here we can await, and save the result into tours.<br /><br />
+All right.<br /><br />
+And that's actually it.<br /><br />
+So, let's get rid of these comments here.<br /><br />
+We also don't want the requestedAt property.<br /><br />
+So that was just for testing before.<br /><br />
+And so, yeah, I think that's it.<br /><br />
+So this is how we get all the tours
+
+from the Tour collection.<br /><br />
+So using find, then awaiting that result,
+
+and then sending it down here.<br /><br />
+So remember that we have this data property here
+
+to basically envelope the tours.<br /><br />
+And then we also send this property here,
+
+which simply measures the number of results
+
+that are in the tours, all right.<br /><br />
+Okay?
+
+Because of course, this find method here
+
+will return an array of all these documents,
+
+and will also very nicely convert them
+
+into JavaScript objects, okay?
+
+So this function here, this find method,
+
+really does all the work for us.<br /><br />
+Now just like before,
+
+one more step before we can actually try this out,
+
+which is to wrap all of this here in the try block
+
+and then catch any potential errors.<br /><br />
+Now in this case,
+
+there are not gonna be any validation errors like before.<br /><br />
+But let's still send an error here, in this case,
+
+and let's just make it a 404.<br /><br />
+And it doesn't really matter so much at this point
+
+because again, we are gonna implement
+
+some better error handling here
+
+in the next, or in one of the next, sections.<br /><br />
+All right?
+
+So let's just set it here to status: 'fail',
+
+and the message to whatever error that we might get here.<br /><br />
+Okay.<br /><br />
+So, let's test it out now.<br /><br />
+It's this one, Get All Tours.<br /><br />
+And, yup, it works.<br /><br />
+So here we have the array of the three tours
+
+that we currently have in our database.<br /><br />
+Perfect.<br /><br />
+So next up, let's implement the getTour handler.<br /><br />
+So let's write the next one that we have here.<br /><br />
+And let's get rid of this code,
+
+and this code.<br /><br />
+All right.<br /><br />
+And this one is actually gonna work in a very similar way.<br /><br />
+So I'm still doing this try catch here.<br /><br />
+So error, like this.<br /><br />
+Because we're still using async await in this one.<br /><br />
+So async.<br /><br />
+Because now in order to find one tour,
+
+we are still going to be awaiting Tour.find.<br /><br />
+But it's not gonna be just find,
+
+but instead we're gonna use findById, all right.<br /><br />
+So findById, but where is that ID actually coming from?
+
+Remember that?
+
+So let's actually take a look at the route.<br /><br />
+So going back here to Postman,
+
+this is how we call this end point,
+
+oh, let's actually put a more real ID here already.<br /><br />
+So, for example, this one
+
+from The Park Camper.<br /><br />
+And so our request might come from a route like this.<br /><br />
+And so here, we have this ID parameter
+
+right in our route, right?
+
+So let's take a look at our router here.<br /><br />
+And so remember that this is how we specify it,
+
+the ID in the URL.<br /><br />
+So this ID is gonna be part of the request obviously.<br /><br />
+And so how do we actually get access to that ID here,
+
+and this handler?
+
+Well, we do req.params,id.<br /><br />
+And it is ID
+
+because that's what we called this variable here, right?
+
+If it was name here,
+
+then here we had req.params.name, right?
+
+Remember that?
+
+And now, let's save that to tour.<br /><br />
+Now all right.<br /><br />
+Then let's get this code here back.<br /><br />
+Copy it here.<br /><br />
+And then also this one for the error block.<br /><br />
+And don't worry, I'm gonna explain this function here
+
+in a second.<br /><br />
+I just wanna finish this code here first.<br /><br />
+So this piece of code here is gonna be exactly the same
+
+for this catch block.<br /><br />
+Give it a save now,
+
+and so we get no errors here from eslint.<br /><br />
+Now about this find ID method here,
+
+well, remember how up here we just used find, okay?
+
+So find is to find all of the documents.<br /><br />
+And then we also have findOne
+
+to find only one document, okay?
+
+And so this findById is really just a shorthand,
+
+so a helper function for,
+
+let me write it here as a comment,
+
+for writing findOne,
+
+and then with the filter object,
+
+which is exactly like we learned
+
+in the MongoDB intersection.<br /><br />
+So we have the ID field.<br /><br />
+And then we could set that to req.params.id.<br /><br />
+So this here would work the exact same way as this, okay?
+
+So _id, because that is what the ID looks like.<br /><br />
+So MongoDB is called _id.<br /><br />
+And we could of course query for that field, right?
+
+We did exactly that in the last section.<br /><br />
+So we specified this filter object here,
+
+and then the property that we're searching for,
+
+and then the value that we want to search for.<br /><br />
+So exactly the same again, as we did in the last section.<br /><br />
+And this findOne method here
+
+will then only return one of the documents.<br /><br />
+Now this findById, as I mentioned before,
+
+is simply a shorthand for having to write this.<br /><br />
+So behind the scenes, it's gonna do exactly this.<br /><br />
+But Mongoose simply wants to make our life easier.<br /><br />
+And therefore, gives us access to an easier method
+
+called findById,
+
+which simply expects the ID that we're looking for.<br /><br />
+All right?
+
+So let me actually leave that here, just as a reference.<br /><br />
+And so now, this would actually work already.<br /><br />
+So, let's take a look at that.<br /><br />
+So we already put the ID of this tour.<br /><br />
+I think it was this Park Camper.<br /><br />
+So ac2.<br /><br />cd
+And ac2, that should be The Park Camper,
+
+and indeed, it is.<br /><br />
+Great.<br /><br />
+And that is the easiest way of finding
+
+or of querying documents from the database.<br /><br />
+There is a ton more that we can do with queries,
+
+and we're gonna do all of that
+
+once we start implementing something like filtering
+
+or sorting or pagination,
+
+and all that good stuff a bit later in this section,
+
+so in a couple of videos from now.<br /><br />
+At this point though,
+
+it's enough to simply return all of the documents here
+
+in this route handler.<br /><br />
+And then here, simply the one for the matching ID.<br /><br />
+And that works now,
+
+and so let's move on to the next one.
+</body>
+</html>

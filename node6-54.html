@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So in this lecture,
+
+you're gonna learn an easy way
+
+of defining parameters right in the URL,
+
+how to then read these parameters,
+
+and also, how to respond to them.<br /><br />
+Now, what we want to actually implement in this lecture
+
+is a way of getting only one tour.<br /><br />
+So right now, we have this endpoint here,
+
+which gives us all the tours,
+
+and we want to have something like this.<br /><br />
+So let's copy it into a new request for now,
+
+and then, we want slash, and then the ID of the tour.<br /><br />
+So for example, let's say five, okay?
+
+So, this is just like we talked about
+
+in the REST API lecture,
+
+where I said that if we hit this endpoint without any ID,
+
+so just like this here,
+
+well, then we would get all the tours.<br /><br />
+But if we would specify an ID after that,
+
+so, just like this,
+
+and of course it doesn't have to be an ID,
+
+it can be any unique identifier,
+
+but in this case, the easiest way of implementing it
+
+is to just use IDs, okay?
+
+So, this here is of course a variable,
+
+because it can be five, but it can also be anything else.<br /><br />
+And so this piece of the URL here,
+
+so this here, this is a variable, okay?
+
+And so what we need to do
+
+is to define a route which can accept a variable.<br /><br />
+All right, and so let's do that here,
+
+and actually right after this one.<br /><br />
+And I'm just gonna go ahead and copy it,
+
+because you already know how to write it at this point.<br /><br />
+And so, yeah.<br /><br />
+So here we have the route,
+
+and so now all we need to do is to add that variable.<br /><br />
+And that's very easy.<br /><br />
+So we have our slash again, and then the variable,
+
+we define it using a colon, like this.<br /><br />
+And so like this, we created a variable called ID.<br /><br />
+It could of course be anything else,
+
+like var, or X.<br /><br />
+Doesn't really matter.<br /><br />
+But this one is called ID, all right?
+
+Now we don't want to send back anything like this,
+
+so let's just comment it out.<br /><br />
+And what I want you to take a look at
+
+is at console dot log,
+
+req dot params.<br /><br />
+Okay, so request dot params is where all the parameters
+
+of all the variables that we define here are stored, okay?
+
+So these variables here in the URL are called parameters,
+
+and again, they are in req dot params,
+
+available for us to use now.<br /><br />
+So let's take a look now
+
+and actually do this request.<br /><br />
+And for now, it's not gonna do anything,
+
+so it will not give us tour number five
+
+automatically, of course.<br /><br />
+But what I want to do for now
+
+is to just take a look at req dot params.<br /><br />
+And so indeed, here we have, ID is five.<br /><br />
+So, request dot params is a very nice object
+
+which automatically assigns the value
+
+to our variable, so our parameter that we defined.<br /><br />
+And we could actually define multiple.<br /><br />
+So we could say ID,
+
+and then we could say X, and we could say Y,
+
+and then we, of course, would have to define all of them.<br /><br />
+So 23
+
+and 45, let's say.<br /><br />
+Send this guy.<br /><br />
+And then, indeed, we have an object
+
+with all these three variables in them.<br /><br />
+Okay, now if we define them like this in the URL,
+
+we actually have to then specify.<br /><br />
+So if we didn't have the Y parameter,
+
+we would run into an error,
+
+because we are now not hitting this exact route, okay?
+
+So our route is now no longer exactly this,
+
+but it's only this.<br /><br />
+And so, there is an error, okay?
+
+Make sense?
+
+Now there is actually one thing that we can do,
+
+and that is optional parameters.<br /><br />
+So if you want to make this parameter optional,
+
+we just add a question mark to it,
+
+and now, it is optional, so we no longer have to specify it.<br /><br />
+So just like this.<br /><br />
+And so now we only have five, 23,
+
+and then Y is still here, but it's undefined,
+
+because it's now optional.<br /><br />
+All right.<br /><br />
+But let's get rid of all of this,
+
+because we only really need the ID, okay?
+
+And so now all we need to do
+
+is to actually get the tour with this ID
+
+from our data.json, from our JSON file, right?
+
+So basically, from the tours array.<br /><br />
+And so that shouldn't be all too hard.<br /><br />
+And so let's say,
+
+const tour is equals
+
+to tours
+
+dot find.<br /><br />
+And I'm not sure if you are familiar
+
+with this find method here.<br /><br />
+So once, more this has nothing to do Node or Express,
+
+it's just a regular JavaScript function
+
+which you can use on arrays.<br /><br />
+And the way it works is this.<br /><br />
+So in here, we pass a callback function,
+
+and so let me actually start by writing that one out.<br /><br />
+So element ID
+
+equals the req
+
+dot params, okay?
+
+So it'll basically loop through the array,
+
+and in each of the iterations,
+
+we will have access to the current element,
+
+and we will return either true or false
+
+in each of the iterations, okay?
+
+Now what the find method will then do
+
+is that basically, it will create an array
+
+which only contains the element
+
+where this comparison here turns out to be true, all right?
+
+And in this situation, we want to find the element
+
+where the ID is equal to the one
+
+that we get from the parameters.<br /><br />
+And so by specifying this callback function here
+
+with this comparison, we will ensure
+
+that only the element where the ID is actually equal
+
+to the specified ID in the parameters
+
+will get returned from the find method
+
+and stored into tour, all right?
+
+Now actually, this is not going to work like this,
+
+because as you see down here,
+
+these values here, they are actually strings, okay?
+
+So we need to convert that to a number,
+
+but that's very easy.<br /><br />
+All we have to do is to say,
+
+the ID is equal to req dot params
+
+dot ID times one.<br /><br />
+So this is a nice trick where JavaScript,
+
+when we multiply a string that looks like a number,
+
+when we multiply that with another number,
+
+it will then automatically convert that string to a number.<br /><br />
+So that's a very small, nice trick that we can use here.<br /><br />
+And so, now, we already have our tour ready to send.<br /><br />
+And so the data that we want to send
+
+is tours equal
+
+to tour.<br /><br />
+Or actually, it's just tour,
+
+so tour should be equal to tour, all right?
+
+Make sense?
+
+So maybe the most complicated part here is just this one,
+
+but, yeah, that is again just a normal JavaScript.<br /><br />
+And so I believe, or at least I hope,
+
+that you're already familiar with using
+
+this kind of array methods, all right?
+
+So, we only want tour number five.<br /><br />
+And so let's take a look if it actually works.<br /><br />
+And well, it didn't, so let's take a look at that.<br /><br />
+Oh yeah, indeed, here we need to use the ID, of course.<br /><br />
+So not req.params.<br /><br />
+ID.<br /><br />
+Okay, so, try that again.<br /><br />
+And now, indeed, we have the tour with ID of five,
+
+okay, and only that single tour.<br /><br />
+Let's try number two, for example,
+
+and indeed, ID two.<br /><br />
+But now, let's try another situation.<br /><br />
+Let's do, ID 23,
+
+and so now, we get nothing back, right?
+
+And that's because there is no tour with the ID of 23,
+
+but we still return the 200 OK status code,
+
+and so, that doesn't make much sense, okay?
+
+And so let's actually go ahead and change that.<br /><br />
+And what should we do here?
+
+Well, as a very simplistic solution,
+
+what we can do is to check if the ID
+
+is larger than the length of the tours array,
+
+and if it is longer, well,
+
+then we can send back a 404 error
+
+saying that we could not find any tour for the given ID.<br /><br />
+So let's do that very simple solution,
+
+because, well, this is not the real API
+
+that we're building at this point,
+
+and in this case, it's not a problem
+
+to use an overly simplistic solution like that,
+
+because this is not the real thing that we're building here.<br /><br />
+We are really just trying to get familiar
+
+with the was that Express works.<br /><br />
+And the same thing can actually be said here, for example,
+
+when we...<br /><br />
+So down here, where we post a new tour,
+
+in the real world, we would always, always have to check
+
+if the user input is valid,
+
+so if it doesn't contain any malicious code,
+
+or really, anything that we don't want in our wrap.<br /><br />
+And again, we're gonna do that, of course, later,
+
+but in this small example here,
+
+I really just want to focus on the fundamentals, okay?
+
+So let's quickly implement what we were just saying,
+
+which is that if the ID is greater than tours dot length,
+
+so for example, let's say we have 12 tours in our array,
+
+well, if the ID is then 13, or 15, or whatever,
+
+well, in that case, the ID is not valid.<br /><br />
+So, we say return, and that's because
+
+we want to exit the function right at this point, okay?
+
+And so that's why we say return.<br /><br />
+Then we send a status of 404,
+
+because we couldn't find any tour for that ID,
+
+and then a simple JSON response
+
+with a status of fail.<br /><br />
+So fail is what we send whenever we have a 400 code.<br /><br />
+And then just a message property,
+
+invalid ID.<br /><br />
+All right.<br /><br />
+And so let's test that now.<br /><br />
+So we have our 23.<br /><br />
+And, indeed, 404 not found, invalid ID.<br /><br />
+So that's exactly what we just did, and,
+
+it looks like it's working, okay?
+
+Another solution that we could
+
+of course implement here as well
+
+would be to just do this test
+
+after we do the tour here.<br /><br />
+So we would get the ID,
+
+then we would try to find a tour,
+
+and if there was no tour,
+
+well then we would say that the ID is invalid.<br /><br />
+So let's comment out this one, duplicate,
+
+just so that we actually keep both solutions here.<br /><br />
+And so we can say, if there is no tour, okay?
+
+So basically, the result here,
+
+if there is no tour found,
+
+well then this variable is basically undefined,
+
+and we can then test for that here, like this.<br /><br />
+So if there is no tour, so if tour is basically undefined,
+
+well, then we send back this error message.<br /><br />
+So let's test that as well.<br /><br />
+And so indeed, it gives us the same result.<br /><br />
+Okay, and just like that,
+
+you learned how to specify parameters
+
+in a URL, like this, okay?
+
+Then you learned how to read these parameters
+
+from the URL, by using req dot params.<br /><br />
+Well, and then we used that ID, so that parameter,
+
+in order to find a tour with that exact ID.<br /><br />
+So that's what we did here, in this line, okay?
+
+So that was the goal for this video,
+
+and so let's now move on to the next one.
+</body>
+</html>

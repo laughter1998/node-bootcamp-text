@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In the ;ast couple of lectures,
+
+I hope you started getting the fundamentals
+
+of Express development.<br /><br />
+And so now is the perfect time to dive a bit deeper
+
+into how Express works,
+
+and for that we need to talk about middleware
+
+and the request-response cycle.<br /><br />
+So really the essence of Express development
+
+is to understand
+
+and then use request-response cycle.<br /><br />
+So I wanna make that idea really clear
+
+in a visual way in this video.<br /><br />
+So to start the request-response cycle,
+
+or Express app receives a request when someone hits a server
+
+for which it will then create a request
+
+and response object.<br /><br />
+That data will then be used and processed
+
+in order to generate and send back a meaningful response.<br /><br />
+Now, in order to process that data,
+
+in Express we use something called middleware,
+
+which can manipulate the request or the response object.<br /><br />
+Or really execute any other code that we like.<br /><br />
+So middleware doesn't always have to be just
+
+about the request or the response object,
+
+but it usually is mostly about the request.<br /><br />
+And actually, we already used middleware before.<br /><br />
+We used Express dot JSON to get access to the request body
+
+on the request object.<br /><br />
+Remember that?
+
+Now it's called middleware remember
+
+because it's a function that is executed between,
+
+so in the middle of receiving the request
+
+and sending the response.<br /><br />
+And actually, we can say that in Express,
+
+everything is middleware.<br /><br />
+Even our route definitions.<br /><br />
+So again, even when we defined our routes,
+
+we can think of the route handler functions that we wrote
+
+as middleware functions.<br /><br />
+They are simply middleware functions
+
+that are only executed for certain routes.<br /><br />
+Okay?
+
+Now some examples of middleware are Express dot JSON,
+
+which is also called body-parser,
+
+and that we already used before.<br /><br />
+Or some logging functionality,
+
+or setting some specific http headers.<br /><br />
+The possibilities are really endless with middleware.<br /><br />
+All right, and now in more technical terms,
+
+we say that all the middleware together
+
+that we use in our app,
+
+is called the middleware Stack.<br /><br />
+What's very important to keep in mind here,
+
+is that the order of middleware in the stack,
+
+is actually defined by the order they
+
+are defined in the code.<br /><br />
+So a middleware that appears first in the code,
+
+is executed before one that appears later.<br /><br />
+And so the order of the code matters a lot in Express.<br /><br />
+Okay?
+
+Now, you can think of the whole process like this,
+
+our request and response object
+
+that were created in the beginning
+
+go through each middleware where they are processed,
+
+or where just some other code is executed.<br /><br />
+Then at the end of each middleware function,
+
+a next function is called,
+
+which is a function that we have access to
+
+in each middleware function.<br /><br />
+Just like the request and response objects.<br /><br />
+And we will of course see this in code in the next video.<br /><br />
+So when we call the next function,
+
+the next middleware in the stack will be executed
+
+with the exact same request and response object.<br /><br />
+And that happens with all the middlewares
+
+until we reach the last one.<br /><br />
+And so just like this,
+
+the initial request and response object
+
+go through each middleware step by step.<br /><br />
+And you can think of this whole process
+
+as kind of a pipeline where our data go through,
+
+so just like its been piped from request to final response.<br /><br />
+All right?
+
+Now about that last middleware function,
+
+it's usually a route handler just like we coded before.<br /><br />
+So in this handler we do actually not call the next function
+
+to move to the next middleware.<br /><br />
+Instead, we finally send the response data
+
+back to the client.<br /><br />
+And like this,
+
+we then finish the so-called request-response cycle.<br /><br />
+So the request-response cycle is really everything
+
+that we talked about here together.<br /><br />
+It starts with the incoming request,
+
+then executing all the middleware in the middleware stack
+
+step by step,
+
+and finally sending the response to finish the cycle.<br /><br />
+So you see, it's really not complicated.<br /><br />
+It's actually just a linear process.<br /><br />
+But I wish someone would have shown me something like this
+
+when I was learning how to build Express apps.<br /><br />
+I mean I could build them,
+
+but in the beginning I didn't really understand
+
+this entire request-response cycle like this.<br /><br />
+It was very confusing.<br /><br />
+So that's why I'm showing you this,
+
+because I believe it will be much, much, easier for you
+
+in order to move onto the course now,
+
+after understanding exactly how Express apps work.
+</body>
+</html>

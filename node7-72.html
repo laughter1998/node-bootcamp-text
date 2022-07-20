@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Welcome back.<br /><br />
+    In this lecture, we will install MongoDB on macOS.<br /><br />
+    Now, if you're a Windows user,
+    
+    then please mark this video as completed,
+    
+    and move on right to the next one
+    
+    because the installation process
+    
+    is actually quite different on Windows
+    
+    than it is on Mac.<br /><br />
+    So fire up your browser,
+    
+    and open MongoDB.com.<br /><br />
+    Okay?
+    
+    Then, move to products.<br /><br />
+    And then over here, the MongoDB server.<br /><br />
+    So, open that one up.<br /><br />
+    And so that takes us to the MongoDB download center.<br /><br />
+    So the one that we want is the MongoDB community server,
+    
+    and then of course, the current release.<br /><br />
+    So not the more experimental four point one.<br /><br />
+    Then, your OS should automatically
+    
+    be selected as macOS.<br /><br />
+    And then the package.<br /><br />
+    This is the only option anyway.<br /><br />
+    And so, hit download.<br /><br />
+    And then wait for it to complete.<br /><br />
+    Now while this is downloading,
+    
+    notice how the website here talks about MongoDB Atlas
+    
+    which is Mongo's database as a service.<br /><br />
+    So basically, it's running MongoDB in the Cloud on Atlas
+    
+    instead of running it locally.<br /><br />
+    And actually, later in this section,
+    
+    that is exactly what we're gonna do.<br /><br />
+    So we will create an Atlas account,
+    
+    and run our database in the Cloud.<br /><br />
+    Okay?
+    
+    So in this video, we're downloading and installing
+    
+    the local version of MongoDB,
+    
+    which we will use to get familiar with the database system.<br /><br />
+    But then, by the end of the section,
+    
+    we will actually transition to the hosted version,
+    
+    and that's the one we will then use
+    
+    in our real application until the end of the course.<br /><br />
+    All right.<br /><br />
+    And with the file now downloaded,
+    
+    let's go ahead and extract it,
+    
+    and take a look at the content.<br /><br />
+    And what we need here is basically
+    
+    these executable files here.<br /><br />
+    And what we need to do with them
+    
+    is to copy them into a special binary folder
+    
+    that we have on our system.<br /><br />
+    Okay?
+    
+    So let's move into our terminal and do a copy command,
+    
+    and we're gonna need some permissions forwarded,
+    
+    so I'm starting with sudo here.<br /><br />
+    Then cp for copy.<br /><br />
+    And now, I'm gonna go add and drag
+    
+    all of these files in here so that
+    
+    I don't have to write the path to them out.<br /><br />
+    Okay.<br /><br />
+    So that's all of the files that we're gonna copy.<br /><br />
+    And we will copy them into a folder
+    
+    called slash usr local slash bin.<br /><br />
+    Hit return on that, and just to make sure
+    
+    they're actually there, let's actually go there.<br /><br />
+    Usr local slash bin.<br /><br />
+    Take a look at the files there.<br /><br />
+    And indeed, here they are.<br /><br />
+    So basically these red files are the ones
+    
+    that we just copied there.<br /><br />
+    So these aren't executable.<br /><br />
+    Now since we're in this folder,
+    
+    you might actually see some other interesting stuff here.<br /><br />
+    For example, there's nodemon command here.<br /><br />
+    That is the global nodemon package
+    
+    that we actually installed before.<br /><br />
+    I mean, it's not really the package itself,
+    
+    but it is this what allows us to run
+    
+    the nodemon command globally.<br /><br />
+    Next up, we're gonna create a folder
+    
+    where the database can then actually store the data.<br /><br />
+    And again, we're gonna need permissions for that.<br /><br />
+    So mkdir to make the new directory,
+    
+    and then slash data slash db.<br /><br />
+    Hit return.<br /><br />
+    And in my case, this folder actually already exists.<br /><br />
+    And so, I'm not able to create a new one.<br /><br />
+    But in your case, I'm sure this worked just fine.<br /><br />
+    Next up, we need to give some permissions
+    
+    in order for the database to be able
+    
+    to write in this folder.<br /><br />
+    And so for that, again, we use sudo.<br /><br />
+    Then this weird command here, chown, or whatever.<br /><br />
+    And R for recursive.<br /><br />
+    Then id minus un and slash data slash db.<br /><br />
+    All right.<br /><br />
+    So this looks a bit like black magic here,
+    
+    but again, just follow this recipe
+    
+    in order to just make this work.<br /><br />
+    Anyway, we should now be good to go.<br /><br />
+    And call mongod.<br /><br />
+    So let's try that out.<br /><br />
+    So let's make this window a bit bigger.<br /><br />
+    And so indeed, we now have the Mongo process running here.<br /><br />
+    Okay.<br /><br />
+    So it starts up here.<br /><br />
+    And then gives us all the stuff that we don't really need.<br /><br />
+    And by the end, it tells us that it's waiting
+    
+    for connections on port 27017.<br /><br />
+    Okay?
+    
+    So this here is basically like a Mongo server.<br /><br />
+    Okay?
+    
+    So this means that MongoDB is now running in the background.<br /><br />
+    But we need to now actually connect to it
+    
+    in order to create new databases,
+    
+    and create new collections and all that good stuff.<br /><br />
+    Okay?
+    
+    So in this terminal window,
+    
+    we will leave this process running.<br /><br />
+    So basically this MongoDB server.<br /><br />
+    And we then open another tab,
+    
+    or you could open another window.<br /><br />
+    But I just use command t to open another tab.<br /><br />
+    And now, we run the Mongo shell
+    
+    simply by writing Mongo.<br /><br />
+    All right.<br /><br />
+    And we are now connected to our MongoDB server
+    
+    that is running on local host on the default port
+    
+    that I just mentioned before.<br /><br />
+    So this one.<br /><br />
+    Okay.<br /><br />
+    So we are now connected to that,
+    
+    and so let's now write db here,
+    
+    which should return the task database.<br /><br />
+    And it did.<br /><br />
+    So.<br /><br />
+    We have a test database already on our computer.<br /><br />
+    And so this means that it works.<br /><br />
+    So, great.<br /><br />
+    Now we could have used this Mongo shell here
+    
+    to also connect to a remote database.<br /><br />
+    So, remember how in the beginning,
+    
+    I talked about the MongoDB Atlas
+    
+    which is basically a database running in the Cloud.<br /><br />
+    So a remote database.<br /><br />
+    And so here, we could use this MongoDB shell
+    
+    to also connect to that one.<br /><br />
+    But if we simply run the mongo command like we did here,
+    
+    it will just automatically connect
+    
+    to the local MongoDB database
+    
+    that is running on local host.<br /><br />
+    Okay.<br /><br />
+    So that's it for this video.<br /><br />
+    In the next one, we will then create
+    
+    our first new database, and start
+    
+    to interact a little bit more with this Mongo shell.
+</body>
+</html>

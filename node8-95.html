@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now keep working on our API.<br /><br />
+Over the next videos, we will implement
+
+a couple of common API features
+
+that make an API easier and more pleasant to use
+
+for whomever is gonna use it.<br /><br />
+And in this lecture,
+
+we're gonna start with filtering.<br /><br />
+So again, the first feature that we're gonna implement
+
+is to allow the user to basically filter data
+
+using a query string.<br /><br />
+Let me just tell you what a query string is using Postman.<br /><br />
+So, let's close all these guys.<br /><br />
+Alright.<br /><br />
+Actually where filtering is gonna make sense
+
+is here on this get all tours route.<br /><br />
+Because, this is the one that,
+
+well as the name says, gets all the tours.<br /><br />
+And so here, we want to allow the user to filter the data,
+
+so that instead of getting all the data,
+
+he only gets the data that matches the filter.<br /><br />
+Like this, we can basically allow the user
+
+to query the data in a very easy way.<br /><br />
+Again, using the query string.<br /><br />
+And the query string looks a bit like this.<br /><br />
+And I'm sure you've seen it.<br /><br />
+So we start with a question mark,
+
+and then we can simply specify some field value pairs.<br /><br />
+So let's say we wanted to filter
+
+for a duration equal to five and
+
+at the same time, a difficulty of easy.<br /><br />
+So we can very simply build a query string like this.<br /><br />
+So again, it starts with this question mark,
+
+and then we can specify as many
+
+key value pairs using this format.<br /><br />
+And now our Postman application here
+
+actually recognizes this and basically
+
+parses this string here and puts the key and
+
+the values down here in this Params tab.<br /><br />
+So we could also specify the key and values here.<br /><br />
+So lets say test, set it to twenty three, and
+
+so you see up here that it actually
+
+added it to the query string.<br /><br />
+So that's a very nice way of Postman helping us here.<br /><br />
+Because now we can, for example, while we're
+
+doing testing we can turn these on and off
+
+and you see that the query string
+
+in here reacts accordingly.<br /><br />
+Anyway, we now need a way of accessing this data
+
+that's in a query string, in our Express application.<br /><br />
+But, luckily for us, that's very easy,
+
+because Express already took care of that.<br /><br />
+So that's just one of the many many things
+
+that Express does for us in order to really make
+
+NodeJS development a lot faster.<br /><br />
+So let me show it to you here, actually in the console.<br /><br />
+So this data is on a request, which makes sense,
+
+and then it is in a field called query.<br /><br />
+So request dot query should then give us
+
+an object nicely formatted with the data
+
+from the query string.<br /><br />
+Give it a save.<br /><br />
+And note, how I actually added it to
+
+the get all tours handler function.<br /><br />
+So again, we do this kind of filtering
+
+in the route where we want to get all the tours.<br /><br />
+Let's test it out now with this exact query string.<br /><br />
+Sent the request.<br /><br />
+And coming back, here we got the object.<br /><br />
+Let's actually make this here bigger
+
+so you can see.<br /><br />
+That's not really working.<br /><br />
+So sometimes I know some people cannot see
+
+the bottom of the screen.<br /><br />
+Let me just do it again here.<br /><br />
+And so, here we go.<br /><br />
+We have the object, which has the duration set to five
+
+and the difficulty set to easy.<br /><br />
+And so you see that Express, very nicely,
+
+parsed that string into this, easy to use, object.<br /><br />
+Now one thing that I noticed here is that
+
+we're actually missing the log that we had
+
+easier here in the console.<br /><br />
+Let's take a look at why that's happening.<br /><br />
+So for some reason, we now have the application
+
+before we actually read the environment variable.<br /><br />
+That way, the application does not get access to them.<br /><br />
+I thought that I had fixed this before,
+
+but for some reason it's back now.<br /><br />
+Give it another save here.<br /><br />
+And I will try that again.<br /><br />
+Now we get our logging back.<br /><br />
+A get request to this URL and then with
+
+this rest of the data here.<br /><br />
+Anyway, let's now actually use that data
+
+in order to implement our filtering.<br /><br />
+But before we can do that, I need to tell you that
+
+in Mongoose, there are actually two ways of
+
+writing database queries.<br /><br />
+The first one is to just use filter object
+
+just like we did in the MongoDB introduction section.<br /><br />
+Right? Remember that?
+
+The second way is to use some special Mongoose methods.<br /><br />
+Let me just, very quickly, show that to you.<br /><br />
+With the filter object, we would do it like this.<br /><br />
+We start with the find here, and then in there
+
+we can pass a filter object.<br /><br />
+And I already mentioned that before.<br /><br />
+Again, it works the exact same way as
+
+with a normal MongoDB query.<br /><br />
+We could now say, duration
+
+set it to five.<br /><br />
+And then,
+
+difficulty, set it to easy.<br /><br />
+That's exactly the query string we had before,
+
+and now I'm hard coding it here just to
+
+show you the two different ways of
+
+writing queries in Mongoose.<br /><br />
+Let's test this one out.<br /><br />
+You see that now, we only get two results.<br /><br />
+Let's give ourselves some space here.<br /><br />
+Alright.<br /><br />
+We see the two results and indeed
+
+they both have a duration of five,
+
+so here and here, and they both are easy.<br /><br />
+Easy and easy.<br /><br />
+So our filter worked just fine.<br /><br />
+That is the first way of writing a query.<br /><br />
+Just the normal way that we're already used to,
+
+but there is another way.<br /><br />
+Let me show that to you as well.<br /><br />
+Again, we start in the exact same way,
+
+but then the difference is that we start
+
+chaining some special Mongoose method to
+
+basically build the query similar to this one that we have.<br /><br />
+So we say,
+
+where
+
+the duration
+
+equals five.<br /><br />
+Then also, where
+
+the difficulty,
+
+that needs to be in quotes,
+
+equals
+
+easy.<br /><br />
+This query here is gonna be exactly
+
+the same as this one, but again, written using
+
+special Mongoose methods.<br /><br />
+And there are of course tons of other methods.<br /><br />
+For example, instead of equals, we can have less than,
+
+or equal, or just less than, or you can also
+
+sort the results or limit the number of results,
+
+and really all kinds of stuff.<br /><br />
+For sure, we're gonna use some of them
+
+over the next couple of videos.<br /><br />
+This might look a bit weird here to you,
+
+but its actually very, very useful in some cases.<br /><br />
+Just to test, give it a try again to this one.<br /><br />
+And indeed we get our same two results.<br /><br />
+Now, let me comment this one here out.<br /><br />
+I'm gonna leave it here just as a reference,
+
+because right now, we're gonna use this method here.<br /><br />
+And we're gonna use it, because in fact,
+
+we actually already have an object that
+
+looks a lot like this.<br /><br />
+And that is request dot query.<br /><br />
+If you compare it, this object,
+
+to this object that you see down here,
+
+looks exactly the same as this one.<br /><br />
+To implement a very simple filter,
+
+all we have to do in this case is to say, req dot query.<br /><br />
+Let's try that one more time.<br /><br />
+Get rid of this here.<br /><br />
+And indeed we get the exact same two results.<br /><br />
+Now let's just try only with difficulty set to easy.<br /><br />
+Now we get four results.<br /><br />
+All of them of course will have
+
+the difficulty set to easy.<br /><br />
+Our filter, our very basic filter,
+
+is now actually working.<br /><br />
+Now, the problem with this implementation,
+
+is that its actually way too simple.<br /><br />
+That's because, later on, we will have
+
+other query parameters.<br /><br />
+For example, sort, for sorting functionality,
+
+or page, for pagination.<br /><br />
+We need to make sure that we are
+
+not querying for these in our database.<br /><br />
+For example, if we added here,
+
+page, equal to two,
+
+then we would, of course, not get any result.<br /><br />
+Let me show that to you.<br /><br />
+And indeed we do not get any result,
+
+because there is no document in this collection
+
+where page is set to two.<br /><br />
+We only want to use this parameter here,
+
+or this field, page, to implement pagination
+
+and not to actually query in the database.<br /><br />
+So what we will have to do is,
+
+to basically exclude these special field names
+
+from our query string before we actually do the filtering.<br /><br />
+Let's now go ahead and implement that.<br /><br />
+What we will do is, to first, create a
+
+shallow copy of the request dot query object.<br /><br />
+Let's call it query object.<br /><br />
+Here we need, really, a hard copy.<br /><br />
+We can't just do, request dot query,
+
+because then, if you would delete something
+
+from this object, we would also delete it
+
+from the req dot query object.<br /><br />
+And that's because in JavaScript,
+
+when we set a variable to another object,
+
+that new variable will basically just be
+
+a reference to that original object.<br /><br />
+So we really need a hard copy here.<br /><br />
+In JavaScript, there's not really a built-in way
+
+of doing this, but a very nice trick that we can use,
+
+since ES6, is to use, first, the structuring
+
+which we use by using dot dot dot.<br /><br />
+And then we can simply create a
+
+new object out of that.<br /><br />
+Just like this.<br /><br />
+This structuring here, these three dots,
+
+will basically take all the fields out of the object.<br /><br />
+Here with the curly braces, well,
+
+we simply create a new object.<br /><br />
+So we have a new object that is basically
+
+going to contain all the key value pairs
+
+that were in our req dot query object.<br /><br />
+So that's a copy.<br /><br />
+Now let's create an array of
+
+all the fields that we want to exclude.<br /><br />
+I'm calling that one excluded fields.<br /><br />
+And then we want to exclude page,
+
+so that's the one that I just
+
+told you before in Postman.<br /><br />
+Then, we also want to exclude
+
+sort,
+
+we want to exclude limit,
+
+and we want to exclude fields.<br /><br />
+We will implement all of the functionality
+
+of paging, sorting, limiting, and selecting
+
+only some specific fields, later
+
+over the next couple of videos.<br /><br />
+Next, what we need to do is to
+
+basically remove all of these fields
+
+from our query object.<br /><br />
+And in order to do that, we will
+
+loop over these fields.<br /><br />
+So, excluded fields
+
+for each.<br /><br />
+And we're using for each because
+
+we don't want to save a new array.<br /><br />
+Then each of these of elements,
+
+we can use the delete operator.<br /><br />
+And then from the query object,
+
+we want to delete the field with
+
+the name of element, so the current
+
+element in the array.<br /><br />
+Like this, we will first delete the field of page,
+
+then the sort, then the limit, then the fields.<br /><br />
+Of course, only in case if its there.<br /><br />
+If there is, for example, no limit field,
+
+then, of course, that will not be deleted,
+
+because its not there.<br /><br />
+Let's now take a look if this actually works.<br /><br />
+I'm gonna log req dot query and
+
+at the same time our query object.<br /><br />
+Giving this a save.<br /><br />
+Don't worry about our results now.<br /><br />
+All I want to take a look at is
+
+our query object, just to make sure
+
+that this logic that we have here actually works.<br /><br />
+Let's add a sort here of one and a limit of 10.<br /><br />
+These will make more sense later.<br /><br />
+For now, I am just adding them,
+
+so that I can later exclude them.<br /><br />
+Results don't matter, all that matters,
+
+is that our original query is this one here,
+
+and then our query object, which is
+
+the one that we're going to use,
+
+only has difficulty set to easy.<br /><br />
+That's because we excluded, page, sort, and limit.<br /><br />
+This now works, so instead of using
+
+req dot query, we're gonna use our query object.<br /><br />
+Let's get rid of that and try it again.<br /><br />
+Now we should be back to querying for
+
+all the documents that have a difficulty
+
+set to easy and ignoring all of these other fields.<br /><br />
+Send that.<br /><br />
+And indeed, we are back to our four
+
+results that we had before.<br /><br />
+We can also turn on the duration,
+
+and indeed, we will now have two results.<br /><br />
+Remember that?
+
+And if we turn these off,
+
+well, then off course its gonna work the same.<br /><br />
+Let's just delete this empty line here.<br /><br />
+And so, indeed, with our original query string,
+
+things obviously also still worked the same.<br /><br />
+We prepared our filter feature so that it
+
+ignores page, sort, and limit fields.<br /><br />
+But there is actually something more we need
+
+to do in our code, in order to basically
+
+be able to implement these features in future videos.<br /><br />
+Let's go back here to our code.<br /><br />
+So let's now learn a little bit
+
+about how queries actually work in Mongoose.<br /><br />
+I think I mentioned this before,
+
+but its very important to talk about this again.<br /><br />
+This find method here is going to return a query.<br /><br />
+All of this here will return a query.<br /><br />
+And that is the reason why we can then
+
+chain other methods like this.<br /><br />
+Like where, equals, and all these other methods
+
+that I talked to you about before.<br /><br />
+Let me actually show that to you in the documentation again.<br /><br />
+Here we have the query object,
+
+and again, when we use the find method,
+
+it will return an object which is a query.<br /><br />
+So in query dot prototype,
+
+we then have all of these methods.<br /><br />
+For example, down here we have where,
+
+which I just mentioned.<br /><br />
+We have sort which is the one
+
+that were gonna use later to sort.<br /><br />
+We have, let's see, we have less than
+
+or less than equal, we have greater.<br /><br />
+We have...<br /><br />
+What else did we use?
+
+We used equals.<br /><br />
+All of these are part of query dot prototype.<br /><br />
+Which, again, refers to objects that
+
+we're creating using the query class.<br /><br />
+Again, this is the reason why
+
+we can do this sort of chaining.<br /><br />
+Now comes the important part.<br /><br />
+As soon as we actually await the
+
+result of the query, so as soon as
+
+we use await here or here, for example.<br /><br />
+As soon as we use this await,
+
+the query will then execute and
+
+come back with the documents that
+
+actually match our query.<br /><br />
+If we do it like this, such as we have here,
+
+then there is now way of, later,
+
+implementing sorting, or pagination,
+
+or all of these other features.<br /><br />
+Instead, what we will have to do,
+
+is to save this part here into a query,
+
+then in the end, as soon as we change all the methods
+
+to the query that we need to, only then
+
+by the end, we can await that query.<br /><br />
+For example, we're going to use the sort method.<br /><br />
+We're going to use the predict method,
+
+we're going to use the limit method,
+
+and we're going to use, really, a bunch of methods,
+
+and chain them to this query.<br /><br />
+That would be impossible to do,
+
+again, if we await the result of
+
+this initial query here, right away.<br /><br />
+I hope that made sense.<br /><br />
+The way that we will do it
+
+is that we
+
+will have our tours down here.<br /><br />
+And this will await the query.<br /><br />
+The query is, well, simply the
+
+query without any await.<br /><br />
+Just to make it consistent with
+
+this part here,
+
+let's do it like this.<br /><br />
+Let's say that,
+
+first, we build the query
+
+and then we execute the query.<br /><br />
+That's not correct.<br /><br />
+Since we're doing comments here,
+
+let's also say send
+
+response.<br /><br />
+Just to make our code a bit more easy to scan.<br /><br />
+I hope that all of this made sense,
+
+this turned out to be quite a long video,
+
+but it was important to finish
+
+this part here by explaining you
+
+this logic here, so that in the next videos,
+
+we will then be able to implement
+
+the rest of the features.<br /><br />
+Because, again, without having it
+
+like this, it would not work.
+</body>
+</html>

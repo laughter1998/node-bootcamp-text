@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    And now as the final one
+
+of the four CRUD operations,
+
+we have deleting documents.<br /><br />
+And so by now this should already be pretty familiar.<br /><br />
+And that's why I want to leave this one to you
+
+as a challenge, all right?
+
+So again, this one is gonna be pretty similar
+
+to update tour only with a small number
+
+of differences, but I think you can figure out
+
+how it works, for example, using the documentation
+
+and of course the other handle functions as an example.<br /><br />
+Okay, so keep in mind that here for example
+
+we used find by ID and update
+
+and so you probably can already guess
+
+how this method is gonna be called in delete tour.<br /><br />
+All right.<br /><br />
+And again, if you're not sure,
+
+you can take a look at the documentation
+
+and what kind of data it expects
+
+and then based on all that, try to implement it.<br /><br />
+Okay.<br /><br />
+So please pause the video here and take a minute
+
+to really try to do it on your own.<br /><br />
+Okay, hope you got that one to work
+
+and anyway, here goes my quick solution.<br /><br />
+So again, defining this one as an async function
+
+then try catch.<br /><br />
+Here is the error and then let's move this one up.<br /><br />
+Get this error response from over here.<br /><br />
+And now we are gonna use
+
+tour.findByIdAndDelete
+
+and now all this method here actually needs
+
+is the tour ID.<br /><br />
+So req.params.id and I hope you figured
+
+this one out from the documentation.<br /><br />
+Then of course we need to await in order
+
+for the deletion actually to happen
+
+and that's actually alt.<br /><br />
+So in this case, we actually don't save anything
+
+to any variable because remember,
+
+we actually don't send anything back
+
+to the client, okay.<br /><br />
+So in a RESTful API, it is a common practice not
+
+to send back any data to the client
+
+when there was a delete operation, okay.<br /><br />
+And also the 204 is kind of a standard as well.<br /><br />
+So give us a save now and it should actually already work
+
+like this.<br /><br />
+And so to start, let's just create some stupid tour here.<br /><br />
+So let's create a Jonas tour here.<br /><br />
+Give it a save and so,
+
+when we get all tours, indeed it's gonna be here
+
+and so let's go ahead, copy the ID,
+
+then open or delete tour route here
+
+and then all we need is to really send this delete request
+
+to this route, hit send.<br /><br />
+And so again, we get back the 204 status code
+
+and Postman in that case actually doesn't display anything.<br /><br />
+All right.<br /><br />
+And just to make sure, let's confirm it very quick.<br /><br />
+And yeah, it's gone from here.<br /><br />
+And so our tour was effectively deleted.<br /><br />
+Okay, now if you didn't manage
+
+to complete the challenge on your own,
+
+then of course that's no problem at all.<br /><br />
+I just wanted you to think about it
+
+and most of all take a look at the documentation
+
+on your own because it really makes
+
+all the difference for you to start practice
+
+this kind of stuff as soon as possible.<br /><br />
+Anyway, with this we implemented
+
+the basic CRUD operations.<br /><br />
+The next video we will then finally really start
+
+to model or tour a bit better.<br /><br />
+So right now we only have names,
+
+prices, and ratings, and that's not really enough
+
+to describe a tour and so yeah,
+
+in the next video we will kind of create
+
+a better, a bigger, more complete model.<br /><br />
+So I hope to see you there soon.
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    After get and post, let's all learn
+
+how to handle patch requests
+
+to actually update data.<br /><br />
+And I'm pretty sure that at this point,
+
+you already have a good idea
+
+of how we're going to do that.<br /><br />
+So let's do that after post,
+
+so down here,
+
+and remember that we actually have two http methods
+
+to update data.<br /><br />
+We have put and we have patch.<br /><br />
+And with put, we expect that our application
+
+receives the entire new updated object,
+
+and with patch, we only expect the properties
+
+that should actually be updated on the object, all right?
+
+So usually, I like to use patch,
+
+because I find it easier to simply update the properties
+
+that were updated.<br /><br />
+At least, when we start using MongoDB and Mongoose,
+
+it will be much easier to just do it like that, all right?
+
+And it's alsp easier for the user
+
+to simply send the data that is changing,
+
+instead of having to send the entire new object.<br /><br />
+So again, we are going to make our app work
+
+for patch and not for put.<br /><br />
+So we expect a patch request to come in on the URL
+
+just like before, "api/v1/tours,"
+
+and now we actually also need the ID
+
+of the tour that should be updated.<br /><br />
+And so that is slash and then "id."
+
+Okay, so that's what we learned in the last lecture.<br /><br />
+So, what do we want to do when there is a patch request,
+
+so when we want to update the data?
+
+Well, actually, I'm not really gonna implement
+
+this operation here, because that's just a matter
+
+of writing some more JavaScript
+
+that is not really important,
+
+because, again, this is just testing API-using files.<br /><br />
+In the real world, we're never gonna use files for that
+
+anyway, okay.<br /><br />
+So, I'm really just implementing all of these verbs here
+
+so that you get a good idea of the different verbs
+
+that we use with http,
+
+the kind of status codes that we send back,
+
+for example, here we sent 201,
+
+while here we sent 200 and 400,
+
+and also for example, here,
+
+when we had multiple tours, we sent the results,
+
+and when we created a new tour, we sent that data back
+
+immediately, with this newTour that was created,
+
+and so that's the kind of stuff that I want you to learn
+
+for now, in this section.<br /><br />
+So the basics of working with the Express, of course,
+
+and also, the correct way of sending back API responses,
+
+okay, and so, again, I'm not going to implement the updating
+
+of tour here, because that would be a lot of work,
+
+you would have to get tour from the JSON file,
+
+than change that tour and then save it again to the file.<br /><br />
+And that's a bit too much work here,
+
+and so let's simply go out
+
+and send back a standard response.<br /><br />
+So "response.status,"
+
+and we will still use 200 here,
+
+so when we update an object or a resource,
+
+we send back 200, okay,
+
+and then the usual JSON
+
+with the status of success.<br /><br />
+And then we send back the data, and in this case,
+
+the updated tour.<br /><br />
+So we say "tour," and then here, in this position,
+
+we would send back the updated tour, okay.<br /><br />
+Right now, I'm going to send back a string which says like,
+
+"updated tour here...," something like this.<br /><br />
+So basically, just a placeholder here.<br /><br />
+And we can also kind of implement this code here,
+
+so in order to only send this when the ID is actually valid,
+
+so let's get that from here,
+
+and so this way, we can also actually use this ID here.<br /><br />
+Right.<br /><br />
+So we're not gonna do this one
+
+because we don't have any tour, but we will use this one.<br /><br />
+So this will be "req.params.id,"
+
+and I'm converting it to a number here as well, times 1,
+
+and if it is greater than the tour's length,
+
+well then just like before, it is an invalid ID,
+
+and we send a 404, for not found.<br /><br />
+And so like this, we should now be ready to test it.<br /><br />
+So, let's first of all save the request
+
+that we did in the previous lecture.<br /><br />
+So, just "Get Tour."
+
+And I'm just going to go ahead and copy this one here.<br /><br />
+And let's specify the patch method.<br /><br />
+So this one's patch, and I will save it here right away as
+
+"Update Tour."
+
+Okay, and you see this one here gets this gray text,
+
+so they're very easy to distinguish here
+
+in this side column.<br /><br />
+So we actually should specify some body here,
+
+so let's just go ahead and copy it from here,
+
+so remember, body, raw, and then JSON,
+
+just like this,
+
+and so, let's say that all that I want to do
+
+is to change the tour number three, let's say,
+
+so let's take a look at that one, so, one, two, three,
+
+and I want to change the duration to fifteen.<br /><br />
+Okay. Saving it again.<br /><br />
+I'm going to save this one as well,
+
+because then it will actually save this text here in a body,
+
+and if I close it and open it up again later,
+
+then all this text here is back,
+
+and that will make my life a lot easier then.<br /><br />
+Okay, but anyway, back to this one.<br /><br />
+We set the duration to fifteen.<br /><br />
+Now, keep in mind, that this will of course
+
+not change anything in the data
+
+because we did not implement that.<br /><br />
+Okay, so I'm sending the response now.<br /><br />
+And so, here we see "updated_tour_here...,"
+
+just in the place where in the real world
+
+we would then get the updated data back.<br /><br />
+Right, just to test it with a wrong ID,
+
+we get this "fail," and this "Invalid ID."
+
+Okay, so give it a save and close it up,
+
+and I'm going to close up this one as well.<br /><br />
+Okay, so almost done with the CRUD operations,
+
+so create, read, update, and delete, and as you can hear,
+
+the last one that's missing is delete,
+
+and so let's take care of that in the next video.
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In this lecture, things will start
+
+to get a bit more advanced.<br /><br />
+And that is because we'll now create multiple routers
+
+and use a process called mounting.<br /><br />
+So let's see how all that works.<br /><br />
+Now, before doing any of that, let's keep in mind
+
+that the ultimate goal will be to separate all the code
+
+that we have in this file into multiple files.<br /><br />
+So what I want, is to have one file
+
+that only contains all of these routes
+
+then I want to have another file,
+
+which has the routes for the users.<br /><br />
+I will also want to have a file which contains the handlers
+
+only for the users and then also one file
+
+that will contain all the handlers for the tours, okay?
+
+And so that's actually what we're gonna do
+
+in the next lecture.<br /><br />
+But in order to be able to do that,
+
+we actually need to now create one separate router
+
+for each of our resources.<br /><br />
+So, let's go back to our routes here and so right now,
+
+we can say that all our routes, so these four routes here,
+
+we can say that they're all kind of
+
+on a same router, okay?
+
+And the router, is this app object.<br /><br />
+But if we want to separate these routes
+
+into different files, so again,
+
+one file for these two routes
+
+and one file for these two routes,
+
+then the best thing to do, is to create one router
+
+for each of the resources, okay?
+
+And so, this is how we're gonna do.<br /><br />
+It's actually not that complicated,
+
+but you will have to wrap your head
+
+around a couple of concepts, okay?
+
+So, let's start by saying,
+
+const tourRouter is equal to express.Router.<br /><br />
+Okay, so just like this,
+
+we create a new router and save it into this variable.<br /><br />
+Alright, and so now let's use that router
+
+for these two routes.<br /><br />
+So here we use it instead of app.<br /><br />
+Alright, so now we have two router and then route
+
+and then of course, the get and the post routes
+
+on that router.<br /><br />
+Now, how do we actually connect this new router
+
+with our application?
+
+Well, we'll use it as middleware, alright?
+
+And so that is because, this new modular tool router here,
+
+is actually a real middleware, alright?
+
+And so we can say, (keyboard typing),
+
+app.use, and then the route but let's keep that for later.<br /><br />
+So we can use, the tourRouter on our application
+
+and where do we want to use the tourRouter?
+
+Well, we want to use it on,
+
+/api/v1/tours, okay?
+
+So again, this tourRouter here, is a real middleware.<br /><br />
+And we want to use that middleware for this specific route.<br /><br />
+Okay, and so we use app.use
+
+and specify the middleware function, which is this router,
+
+then we specify the the route so the URL,
+
+for which, we actually want to use that middleware, okay?
+
+And so just like this,
+
+we created basically a sub application, okay?
+
+Now, there's just one thing
+
+that we really need to change here,
+
+which is these routes in here, okay?
+
+So let me change this here, and then explain
+
+why it has to be this way.<br /><br />
+So here, we only want the route,
+
+and in here, we only want the id, okay?
+
+Now, why is that?
+
+Well, it's because this tourRouter middleware,
+
+only runs on this route here anyway, okay?
+
+And so once we are in the router,
+
+then we already are at this route.<br /><br />
+So at our tourRoute, and so this first route
+
+that we had to before, we only want to run it as,
+
+api/version one/tours
+
+and so that is what this route here now means, okay?
+
+So it's basically the route of this URL, okay?
+
+So is this small mini application, alright?
+
+So, actually, when we create a router system like this,
+
+we actually say that we kind of create a small sub app
+
+for each of these resources, okay?
+
+So this is the route of or mini application,
+
+which is again, at /tours, Okay?
+
+And then the second route, is at /id, right?
+
+And that's because, before,
+
+it was at tours /id, so it was all of this.<br /><br />
+So like this, but now, this URL here
+
+is already in our kind of parent route up here, right?
+
+So let's say that we have an incoming request now
+
+for /api/version one /tours/version id.<br /><br />
+So the request goes into the middleware stack
+
+and when it hits this line of code here,
+
+it will match this URL here, right?
+
+So it will match this route and therefore
+
+or two router middleware function will run.<br /><br />
+So or two router is this sub application that we created,
+
+which in turn has its own routes, okay?
+
+And if the request was for /id, well,
+
+then it will inside our mini app,
+
+hit this route here, right?
+
+And finally, of course,
+
+it will run one of these handles here,
+
+depending on the method that was used.<br /><br />
+So I hope that made sense.<br /><br />
+And so let's now actually go ahead and do the same
+
+for all users, alright?
+
+So, I will go ahead and create another router here,
+
+(keyboard typing) called, the userRouter,
+
+and then just like before, it's express.Router
+
+not like that, yeah.<br /><br />
+Okay, so use a router,
+
+and then we need to do the same process as here.<br /><br />
+And by the way, this is called mounting the router, okay?
+
+So mounting a new router on a route, basically, okay?
+
+So we have now users and here user.<br /><br />
+And actually, mounting the routers,
+
+has to come after all of these definitions
+
+or at least after we declared a variable, right?
+
+So we cannot use the routers
+
+before we actually declare them.<br /><br />
+Okay, now all we need to do is to go ahead
+
+and also change the routes in here.<br /><br />
+And so just like before, if there is now a request
+
+for /api/version one/users/id,
+
+the request will enter the middleware stack
+
+and when it hits this middleware here,
+
+it will run the user router,
+
+because this route here is matched, okay?
+
+And so then it enters the user router
+
+and again, just like before,
+
+this error is the route basically in our sub application,
+
+and this here, is the entire URL/id, okay?
+
+Does that make sense?
+
+So before moving on,
+
+let's actually test if this still works.<br /><br />
+So, let's get all the tours here and indeed, it does.<br /><br />
+So everything still works to the same with the users
+
+and also that still works.<br /><br />
+So we did all these changes and decode the works,
+
+meaning that our two new routers are correctly mounted.<br /><br />
+Alright, and with that, we are ready to actually separate
+
+or different routers now into different files.<br /><br />
+And that we will do right in the next lecture.
+</body>
+</html>

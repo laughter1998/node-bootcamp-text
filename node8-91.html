@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In this video, let's implement document updating.<br /><br />
+And so, here, in our update tour handler, let's start by
+
+making it an async function.<br /><br />
+Then, or try catch block, and so I'm doing this
+
+very quickly now, because we're already used to this
+
+at this point.<br /><br />
+Right?
+
+So this goes into the try block and then
+
+I simply get this one, here, from the catch block
+
+of this other function.<br /><br />
+All right, so.<br /><br />
+Here we go.<br /><br />
+And so now, what we need to do here
+
+at the beginning of this try block
+
+is to basically query for the document that
+
+we want to update and then update it, all right?
+
+And we can actually do that
+
+all in one command with mongoose.<br /><br />
+And, remember, again, that we're gonna update the tour
+
+based on an ID, okay?
+
+So, it's a similar situation like this one here,
+
+where we find by ID.<br /><br />
+And now, we can actually do something very similar,
+
+which is find by ID and update.<br /><br />
+So again, everything in one query.<br /><br />
+So, let's do tour.findByID
+
+and update.<br /><br />
+Okay, so, what do we need to pass in here?
+
+Well, of course, the ID, so that we can first find
+
+the document that is to be updated.<br /><br />
+So, just like before, that is req.params.ID,
+
+and then the data that we actually want to change.<br /><br />
+And that data will be in the body,
+
+just like in the post request.<br /><br />
+So req.body, okay?
+
+And then, actually as a third argument,
+
+we can also patch in some options, and we will do that.<br /><br />
+And the first option that I want to specify is new
+
+and set it to true.<br /><br />
+Because this way, then the new updated document
+
+is the one that will be returned.<br /><br />
+And since we want to send back that updated document
+
+to the client, we always want this method
+
+to actually return that new document, okay?
+
+So this way, it actually then makes sense to
+
+await this query and then save it to a new variable.<br /><br />
+So then simply call it tour here,
+
+and then again, await the result of this query.<br /><br />
+So all of these methods that we've been using on the tour
+
+so far, so find by ID and update, or,
+
+well, not really create, but find by ID or find,
+
+all of these will return queries, so they are query methods
+
+and let me actually show that to you
+
+in the mongoose documentation.<br /><br />
+So, up until this point, we didn't have a look at
+
+the documentation so far.<br /><br />
+And so, let's quickly do that.<br /><br />
+So, on the model, which in our case is tour,
+
+we have all these query methods, right?
+
+So you see find, you see find one, you see find by ID,
+
+which is just a shorthand for find one.<br /><br />
+Then you see find by ID and update,
+
+which is the one that we're currently using,
+
+and which, in fact, is just a shorthand for
+
+find one and update, where we're querying for an ID,
+
+so similar to what we had in the last lecture, okay?
+
+And actually we can click on any one of these,
+
+so let's do the one that we're using currently,
+
+and that will then really take us to the API documentation
+
+which shows us how to really use a certain method.<br /><br />
+So you see that we passed the ID, so the value,
+
+off the ID to query by, we passed the object with
+
+the data to be updated, and we passed an options object.<br /><br />
+And down here we can actually see
+
+the options that we can set, so remember,
+
+we just set new to true, and so as it says here
+
+that will then return the modified document
+
+rather than the original.<br /><br />
+Now, another one that we actually want to set to true
+
+is this run validators, so that each time that we update
+
+a certain document, then the validators that we specified
+
+in the schema will run again, okay?
+
+And we will talk a lot about validators and validation
+
+a bit later in the section,
+
+but I'm gonna leave it here for now so that we, basically,
+
+don't forget it.<br /><br />
+Okay?
+
+Give it a save now, and actually I wanna go back here
+
+just to show you how many methods
+
+we actually have in mongoose.<br /><br />
+So, on the model, we have all of these methods here
+
+that you see in this list.<br /><br />
+So for example we used create before,
+
+we also used find.<br /><br />
+Okay?
+
+And so the ones that you see here in the top,
+
+they are available right on the model,
+
+and that, in our case, is the tour.<br /><br />
+Now, down here you, for example also see
+
+model.prototype.safe for example.<br /><br />
+And this one, we actually also already used
+
+right when we first started to work with mongoose.<br /><br />
+So I'm not sure if you are familiar with this,
+
+but in java script model.prototype always means
+
+an object created from a class, or in this case,
+
+created from a model.<br /><br />
+And so, the save method here, refers to a save method
+
+called on a document and not on a tour.<br /><br />
+And remember that that's exactly what we did.<br /><br />
+And I think I still have it here as a comment.<br /><br />
+Yeah, right here.<br /><br />
+So, we had a tour, this new tour variable here
+
+which was created from the tour model,
+
+and so this new tour here got access to the save method
+
+because that is part of the prototype object of this class.<br /><br />
+All right, now I don't want to bore you with the
+
+fundamentals of java script, but it is important
+
+in order to understand the documentation, okay?
+
+Because at some point you will need to use documentation,
+
+because mongoose is yute.<br /><br />
+And I will actually teach you a lot of the stuff
+
+that's important in there through all of this course,
+
+but sometimes you will still need something that
+
+I didn't show you in this course.<br /><br />
+And so it's important that you really understand
+
+the documentation as well, okay?
+
+And so, again, when you see model.prototype here,
+
+you know that the save method here
+
+is going to be available on all of the instances
+
+created through a model, okay?
+
+And so, not the model itself.<br /><br />
+So, for example, if you tried tour.save
+
+you wouldn't be able to use it.<br /><br />
+It would give you an error, but instead, if you tried save
+
+on a document created through the tour,
+
+then it would, of course, work, okay?
+
+I hope that makes sense.<br /><br />
+And, anyway, you see that we have a lot of other stuff,
+
+so we have to query, which we already talked about,
+
+because, for example, find by ID and update, or find,
+
+or find by ID, all of these will return query objects.<br /><br />
+And so, later on, when we're gonna implement stuff like
+
+sorting or filtering we will then use this query object.<br /><br />
+Okay?
+
+So, let's go back, we kind of got off the track here
+
+by looking at the documentation,
+
+but, again, I think it's really important
+
+to start looking at the documentation,
+
+because a course like this can only take you so far,
+
+and I hope you already know that at this point, okay?
+
+It's really important that you're also able to
+
+find information on your own, and I wanna show you how
+
+to do that also in this course.<br /><br />
+Anyways, let's now actually also send
+
+this newly updated tour back to the client,
+
+which, right now, we're not doing, because we have
+
+simply this updated tour here string.<br /><br />
+So let's get rid of that and simply send to tour.<br /><br />
+And remember that this, in fact, is actually this.<br /><br />
+So, the tour property is set to the tour object,
+
+but, thanks to ES6, we no longer have to do that
+
+when the property name has the same name of the value.<br /><br />
+Okay, so let's get rid of that.<br /><br />
+That makes our code look a bit better.<br /><br />
+Okay, and let's now test it.<br /><br />
+Back to postman, here we have the updated tour route.<br /><br />
+And so, let's actually do it
+
+on this same ID that we used before.<br /><br />
+So, this one.<br /><br />
+Then we come to the body, here, and let's change--
+
+Well, what are we gonna change here?
+
+Well, let's change the price to, like, 500.<br /><br />
+So, price, 500,
+
+send it, and indeed this gives us
+
+the newly updated object with the price
+
+already set to 500.<br /><br />
+And if we now get all tours, then that, of course,
+
+should be reflected here.<br /><br />
+And here it is.<br /><br />
+But now, let's say that we set it to a string.<br /><br />
+Let's take a look at what happens, then.<br /><br />
+Well, then we actually get an error.<br /><br />
+And that's because we ran the validators again.<br /><br />
+So, remember that we have--
+
+Where is that?
+
+Oh yeah, here.<br /><br />
+So here we specify that the validators should be run again.<br /><br />
+And so, right now the price is no longer a number
+
+as it is expected, right?
+
+So in a schema we say that the price should be a number,
+
+but, of course, java script, or mongoose, actually,
+
+cannot, basically, convert this string here to a number.<br /><br />
+But that is what we expect.<br /><br />
+So here it says kind should be number.<br /><br />
+And so, therefor, it gives us an error,
+
+simply because we're running the validators again.<br /><br />
+So, let's put it back to 500 and then, of course,
+
+it's gonna be back.<br /><br />
+All right, now, keep in mind that we're actually
+
+doing a patch request here.<br /><br />
+Now, if we were doing a put request, remember,
+
+then you would expect that the original object
+
+would be completely replaced
+
+with the new one that is sent in, okay?
+
+So, in that case it would no longer work
+
+the way we implemented here
+
+because this one simply really updated the fields
+
+that are different here in the body, okay?
+
+But anyways, I think that the patch method
+
+is actually way more useful, and so,
+
+that's gonna be the only one that implementing here.<br /><br />
+Cool, so we have three of our four correct operations
+
+implemented, only one more left to go,
+
+which is gonna be delete.
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So the filter feature that we have
+
+implemented right now already works great,
+
+but in this video we wanna take it to the next level
+
+by allowing some even more complex queries.<br /><br />
+So right now a user can only filter the documents
+
+by setting one key equal to a value, right?
+
+But now, we actually want to also implement
+
+the greater than, the greater or equal than,
+
+the less than, and the less or equal than operators.<br /><br />
+So instead of just having equal,
+
+we want to actually be able to, for example,
+
+say duration greater or equal than five,
+
+and not just equal, all right?
+
+And so that makes everything a bit more complex.<br /><br />
+Now, before writing any code, I will actually
+
+do the exercise of writing out the query
+
+how it should look like in MongoDB.<br /><br />
+So what would the filter object actually look like?
+
+And let's write it here as a comment,
+
+and again, just as an exercise.<br /><br />
+So the object would look a bit like this,
+
+so difficulty, start with that one, set to easy,
+
+and then duration; and now remember that when
+
+we want to use an operator, we need to start another object.<br /><br />
+And then for the greater or equal than operator
+
+we use it like this, to five, right, remember that?
+
+So this is how we would manually write
+
+the filter object for the query that we just specified.<br /><br />
+Now let's actually go back to Postman
+
+so that I can show you a very kind of standard way
+
+of writing a query string including these operators.<br /><br />
+And we do it like this, so before the equals sign
+
+we open up the brackets and then in here
+
+we write the operator, so in this case
+
+greater than or equal, and that's it.<br /><br />
+And so basically like this, we add a third part
+
+to the key value pair, so we have the key,
+
+the value, and now also the operator.<br /><br />
+And we use again these brackets
+
+in order to specify the operator.<br /><br />
+So again, that is a standard way
+
+and so let's now actually go ahead
+
+and take a look at the query string that Express gives us
+
+and so just like before, let's actually
+
+log a reg dot query to the console,
+
+log reg dot query, all right.<br /><br />
+And so let's take a look what our query object
+
+is gonna look like when we specify
+
+the query string like this.<br /><br />
+All right, now the first thing that you notice
+
+is that we get an error here,
+
+but don't worry about that for now.<br /><br />
+So what I'm interested here, is this object,
+
+and so let me actually go ahead and copy it here.<br /><br />
+All right, so what do you notice here?
+
+Well, what we see here is that the query object
+
+looks almost identical to the filter object
+
+that we wrote manually, the only difference
+
+is that in this one we have the MongoDB operator sign here.<br /><br />
+So that's really the only thing that's missing here
+
+in front of this operator name.<br /><br />
+Okay, and so the solution for this
+
+is to basically replace all the operators like this
+
+with their correspondent MongoDB operators,
+
+so basically adding this dollar sign here, okay.<br /><br />
+So let's now implement that,
+
+and in fact we do it somewhere up here,
+
+let's actually add some more comments here.<br /><br />
+So filtering that we did in the last lecture,
+
+now here let's add some advanced filtering,
+
+and so that's the code that we're gonna write now.<br /><br />
+Now let's put this code here right at the top, all right.<br /><br />
+Then this code here we don't really need
+
+but I still want to keep it here
+
+so let's put it just here at the end.<br /><br />
+And then just this code here as a reference
+
+just to make sure that we know what we're doing here.<br /><br />
+All right, and so now that we know
+
+what we need to do here, it is actually
+
+just a simple Javascript problem.<br /><br />
+And the way I'm solving it is this,
+
+so first I'm gonna convert the object to a string
+
+so query string equals JSON dot stringify of query object,
+
+and so now I can use that query string
+
+to use the replace function on it.<br /><br />
+All right, and so what I want to replace now
+
+is the gte with dollar sign gte,
+
+and then also some other operator.<br /><br />
+So the ones we want to replace are
+
+greater than or equal, greater than,
+
+less than or equal, and less than,
+
+and there are a couple ways in which we can do it,
+
+but I'm gonna use a regular expression.<br /><br />
+And for me personally, regular expressions
+
+are one of the most difficult concepts in Javascript
+
+and actually in general in programming.<br /><br />
+So usually when I need to do something like this,
+
+I simply go on Stack Overflow or just Google around
+
+to find the right solution for the problem
+
+that I'm trying to solve, all right.<br /><br />
+And so what we want to do now here
+
+is to basically match one of these four words
+
+and then replace it with the same words
+
+but with the dollar sign in front.<br /><br />
+And so the regular expression to
+
+find one of these four words goes like this;
+
+so we open up these parenthesis and then we write
+
+the operators, so gte or gt or lte or lt.<br /><br />
+And then we also need to add this \b before and after,
+
+and that's because we only want to match these exact words.<br /><br />
+So imagine there's a word which has lt in it,
+
+then we of course do not want to match that
+
+we only want to match if it is this exact word,
+
+without any other string around it.<br /><br />
+And so this regular expression that I have here
+
+will take care of that, and actually there is
+
+one piece missing and that is this g flag here
+
+which means that it will actually happen multiple times.<br /><br />
+So if we have like two or three operators
+
+or even all of them, then it will replace all of them.<br /><br />
+And without this g here, it would only
+
+replace the first occurrence, so this one is very important.<br /><br />
+Now, what do we actually want to replace it with?
+
+Well, the replace method actually
+
+accepts a callback which is very powerful,
+
+and this callback has as the first argument,
+
+the matched word, or the matched string.<br /><br />
+So we can pass match into that callback function
+
+and what we return from this callback is the new string
+
+that will replace the old one, okay?
+
+So let's do a template string here,
+
+and so we want to replace the match
+
+with dollar sign match, okay, so this is here
+
+the part of the template string syntax.<br /><br />
+So this here is this match, and then
+
+we want to put the dollar sign in front of that.<br /><br />
+And now just to make sure, let's actually log it
+
+to the console and actually want the object back,
+
+so JSON dot parse the query string.<br /><br />
+All right, let me just go ahead and clear this here
+
+so that you can see the results a bit better.<br /><br />
+So again, we get this error here
+
+and that's of course because MongoDB
+
+cannot really use the query string or
+
+the query object as we have it right now.<br /><br />
+And here we have the two results
+
+and you actually see that our result
+
+is the exact same as before and so
+
+something here is clearly not working.<br /><br />
+So let's try to figure out what that is.<br /><br />
+And here the regular expression looks just fine,
+
+everything looks fine here, ah, but okay,
+
+the problem is that I'm replacing it in the string
+
+but then I'm not saving it anywhere.<br /><br />
+And so actually we want to save it back to the query string.<br /><br />
+So let's change this here to a let,
+
+so that it can then mutate the data
+
+and so let's say, query string, oh sorry.<br /><br />
+So, query string equals the query string replaced,
+
+just like before, so what I was forgetting is simply to
+
+actually save the result here back into the variable.<br /><br />
+Let's try that again, and now it's working.<br /><br />
+So now we have the dollar sign
+
+in front of the operator, great.<br /><br />
+Okay, so it works, let's get rid of these comments here
+
+and now finally, all we have to do is to actually here
+
+not use the query object but just use this.<br /><br />
+So JSON.parse query string, and of course
+
+if you do not have any operator in the query string
+
+then everything will work just fine.<br /><br />
+It will simply not find any of these four operators there
+
+but that's no problem, it will then
+
+simply not replace anything.<br /><br />
+And also let's go ahead and try this out
+
+and it's taking a bit of time but indeed
+
+it came back with three results,
+
+and so let's now check if they're actually correct.<br /><br />
+So the duration should be greater or equal than five,
+
+and this one here is duration of five,
+
+this has a duration of nine, which is
+
+greater than or equal than five,
+
+and so it's actually working, the difficulty is still easy
+
+and so what it means is that the code
+
+that we just implemented works just fine.<br /><br />
+Perfect, now let's just for the fun of it
+
+add another parameter up there,
+
+so let's filter for the price now as well.<br /><br />
+So this one has almost 2000, then 1100, this one has 300.<br /><br />
+So let's now filter for prices less than a thousand,
+
+or less than a thousand five hundred.<br /><br />
+And price, and now again our brackets,
+
+and we use less than 1500, and all right, send that.<br /><br />
+And what do we get here, oh, now we only have two results.<br /><br />
+And indeed, the prices here, 397, and here 1197,
+
+and so the one before that was 2000 is now gone.<br /><br />
+So we filtered that one out as well
+
+using again the operator that we just implemented.<br /><br />
+And we could now filter for all kinds of stuff here
+
+but you get the point, and so yeah,
+
+we implemented our kind of advanced filtering here
+
+at this point, which now even accepts these four operators.<br /><br />
+Now in the real world, we would then have to
+
+write some documentation, basically in order to allow
+
+the user to know which kinds of operation
+
+they can do on our API, right?
+
+So again, ideally we would completely document our API,
+
+specifying which requests can be made
+
+using which htp methods, and then also
+
+what kind of filtering or sorting,
+
+or all these features, which of them are available
+
+and how they can use it, right?
+
+Now, in our case we of course will not do that
+
+but again, don't forget that if you're really implementing
+
+an API that is gonna be used by someone else,
+
+then you must really do this kind of documentation.<br /><br />
+But anyway, let's now move on to our next video
+
+and implement a sorting functionality.
+</body>
+</html>

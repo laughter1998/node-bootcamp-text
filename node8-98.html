@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    As the next feature in our API,
+
+we have field limiting,
+
+so, basically, in order to allow clients
+
+to choose which fields they want
+
+to get back in the response.<br /><br />
+So, for a client, it's always ideal
+
+to receive as little data as possible,
+
+in order to reduce the bandwidth
+
+that is consumed with each request.<br /><br />
+And that's, of course, especially true
+
+when we have really data-heavy data sets, right?
+
+And so it's a very nice feature
+
+to allow the API user to only request some of the fields.<br /><br />
+So, as the third feature, we will have field limiting.<br /><br />
+And, just like before, let me start by showing you
+
+how it's gonna work here in Postman.<br /><br />
+So, we're gonna specify a field called fields,
+
+and then the name of the fields
+
+that we actually want to receive.<br /><br />
+So let's say we only want the name,
+
+the duration,
+
+the difficulty, and the price, all right.<br /><br />
+And so, the implementation will actually be very similar
+
+to what we did before with sorting.<br /><br />
+So, if req.query.fields,
+
+then let's actually, again, create a variable
+
+for these fields here because just like before,
+
+Mongodbs, actually requests a string
+
+with the field name separated by spaces, all right?
+
+Now let me actually start by writing out
+
+that part, okay, so, the query itself.<br /><br />
+So query is equal to query.select, okay?
+
+And here, for example, it expects a string like,
+
+name then space, duration and a price for example, okay.<br /><br />
+And so this way, it will only select
+
+these three field names and send back
+
+the result only containing that, okay?
+
+And actually, this operation of selecting
+
+only certain field names is called projecting okay?
+
+So, let's now go ahead and create basically,
+
+the string, just like we did up there okay.<br /><br />
+So we start with req.query.fields,
+
+then we split it by a comma,
+
+and join it with an empty string.<br /><br />
+With a space actually, sorry.<br /><br />
+So with the space and so that's, then,
+
+gonna produce this exact string with this exact format.<br /><br />
+Then here, all we have to do is to use these fields.<br /><br />
+Then, just like before, I also want to add a default
+
+so in case the user does not specify the fields field,
+
+okay, so, in that case, we will just
+
+actually remove something, okay?
+
+And let me show that to you first, so down here,
+
+we always have this underscore underscore V,
+
+which is set to zero, and Mongodbs just creates these fields
+
+because it uses them internally.<br /><br />
+And we could disable them, but that's not a good practice.<br /><br />
+Again, because Mongodbs actually uses them, alright,
+
+but what we can do is to basically
+
+never send them to the client, so we can exclude them.<br /><br />
+And the way we do that is to, instead of doing
+
+underscore underscore V like before,
+
+so like we did up here, basically,
+
+we just prefix it with a minus, okay?
+
+And minus is then not including, but excluding.<br /><br />
+So what we had before here again,
+
+with the name and duration and price,
+
+that was to include these fields in the response.<br /><br />
+But this way, with the minus,
+
+we have everything except the V field here okay?
+
+So we're excluding only this field, alright?
+
+So let's go ahead and test that.<br /><br />
+Send it, and let's wait for it and yeah, indeed so,
+
+the ID is by default, always including okay?
+
+So we cannot remove that, but besides that,
+
+we have just the name, duration, difficulty, and price,
+
+okay, and we could, of course, also use that minus
+
+so that exclusion here as well.<br /><br />
+So we could have everything, minus the name
+
+and minus the duration, for example.<br /><br />
+So let's test that as well.<br /><br />
+And so, if you now check it, you will not see the name,
+
+and not see the duration anywhere here.<br /><br />
+Right, and now just as a final test,
+
+let's see if our default works as well.<br /><br />
+Sending the response and so, now we no longer have
+
+that V variable here set to zero in all the documents.<br /><br />
+All right, great, now there's one last thing
+
+that I want to show you which is that
+
+we can also exclude fields right from the schema.<br /><br />
+Alright, and that can be very useful,
+
+for example, when we have sensitive data
+
+that should only be used internally.<br /><br />
+For example, stuff like passwords
+
+should never be exposed to the client
+
+and so therefore, we can exclude
+
+some fields right in the schema.<br /><br />
+So for example, we might not want the user
+
+to see when exactly each tour was created.<br /><br />
+For example, tour might already be
+
+kind of old or something and so,
+
+let's say we want to always hide this createdAt field,
+
+alright, so we can go into our schema,
+
+which is in the tour model of course,
+
+and then at createdAt, we simply set
+
+the select property here to false.<br /><br />
+And now when we try to get our results,
+
+you see that it's actually no longer there okay?
+
+And so like this, we can basically,
+
+permanently hide this from the output.<br /><br />
+Perfect, so one more feature that is actually working now
+
+and so let's now move on right to the next one.
+</body>
+</html>

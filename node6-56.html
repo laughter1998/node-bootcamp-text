@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Finally, let's now handle the lead requests,
+
+as well.<br /><br />
+And just like in the previous lecture,
+
+I will not actually implement the deleting
+
+of a resource in our route handle.<br /><br />
+Okay?
+
+So, that is not necessary because, again,
+
+we are only dealing with files,
+
+which is not a real world scenario, okay?
+
+So I simply went ahead and copied the handler
+
+that we created in the last lecture.<br /><br />
+And so let's just do some quick changes here
+
+to handle the delete request, as well.<br /><br />
+So, the first thing is of course,
+
+this method here which is now not patch, but delete.<br /><br />
+Okay?
+
+Then we still need to pass in an ID
+
+for the tour that we actually want to delete.<br /><br />
+And then let's also change our response.<br /><br />
+So when we have a delete request,
+
+the response is usually a 204.<br /><br />
+And 204 means no content.<br /><br />
+And so that's because, as a result,
+
+we usually don't sent any data back.<br /><br />
+Instead, we just sent null, okay?
+
+So the status is still a success, but the data is null,
+
+simply to show that the resource that we deleted
+
+now no longer exists.<br /><br />
+So that is what null means.<br /><br />
+Okay?
+
+So pretty similar to patch,
+
+the difference here, in this case here,
+
+is that we change the delete method,
+
+we change the status code to no content, which is 204,
+
+and the data that we send back is null.<br /><br />
+Okay, and so even in the real world,
+
+that is exactly the response that we're gonna send back.<br /><br />
+Okay, so now all we have to do go, ahead and test it out.<br /><br />
+And using of course, delete.<br /><br />
+Let me also save it here as delete tour.<br /><br />
+And so let's pretend that we want to delete
+
+tour number seven.<br /><br />
+Again, that's not gonna do anything.<br /><br />
+And so here we have our tool for no content.<br /><br />
+And actually, Postman then indeed shows us here
+
+no content at all.<br /><br />
+So it doesn't even show us the adjacent that we sent back.<br /><br />
+It simply gives us 204 no content.<br /><br />
+Okay?
+
+So let's just save it here.<br /><br />
+We have it here on the left side now, as well.<br /><br />
+And you'll see that our collection here is steadily growing,
+
+so that's really cool.<br /><br />
+Now, in the next video
+
+we will actually make our code look a bit nicer.<br /><br />
+So organize it and follow some best practices
+
+to make our code a bit less messy.
+</body>
+</html>

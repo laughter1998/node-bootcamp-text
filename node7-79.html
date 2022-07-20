@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Now instead of using the terminal
+
+to work with MongoDB, we can also use an app
+
+with a graphical user interface that MongoDB
+
+provides us which is called Compass.<br /><br />
+So let's now go ahead and download the Compass application.<br /><br />
+So if you still have the page open where we downloaded
+
+MongoDB in one of the first lectures,
+
+you can download the Compass app right from here.<br /><br />
+Okay, so it's then tools and Compass.<br /><br />
+All right, and if you just opened up the MongoDB website
+
+for the first time, then just come to products
+
+and down here, you have MongoDB Compass.<br /><br />
+Okay, now just download the stable version
+
+at your time of recording then choose your platform
+
+which in my case is Mac OS and then just download.<br /><br />
+Now in order to download Compass,
+
+you will need to give MongoDB some
+
+information about you but it's really worth it,
+
+and so I see no problem in doing that.<br /><br />
+I'm not gonna do it here right now
+
+because I already have Compass on my computer.<br /><br />
+Okay, so just pause the video at this point,
+
+fill this form then download the installator
+
+and install it on your computer.<br /><br />
+Then after that, come back to this video
+
+to get started with Compass.<br /><br />
+So when you open up the Compass application,
+
+it should look something like this.<br /><br />
+So right away, you should be on the screen
+
+for creating a new connection, okay?
+
+And if you're not then just head over here
+
+to the left side and click new connection.<br /><br />
+You might also have some window with some tips
+
+that opens up the first time when you open Compass
+
+but you can just close that away.<br /><br />
+Okay, so that you get to this screen.<br /><br />
+Now in order to create a connection to your local database,
+
+make sure you have the Mongo server
+
+running in the background, so just to make sure,
+
+open up this process here and then here make sure
+
+that it's still working so that it's still
+
+on the default port of 27017.<br /><br />
+Okay and so if you get back here, you actually already
+
+have that automatically fill in for you.<br /><br />
+So the Hostname is by default Localhost
+
+and the port is 27017 just like we saw in our Mongo server.<br /><br />
+Right, and so you actually do not have to fill anything,
+
+all we have to do is to click connect.<br /><br />
+All right, and so right away, here you see
+
+all the databases that we locally have on our computer.<br /><br />
+So here in this nice list and also here on the left side.<br /><br />
+So, just to make sure that this is correct,
+
+let's go to our terminal here and write,
+
+well after deleting this here of course,
+
+let's write show dbs and indeed these are the exact
+
+same for databases that I have in Compass.<br /><br />
+And again, don't worry if yours
+
+are not exactly the same, as long as
+
+you have the natours test databased in there, you're fine.<br /><br />
+Okay, so we open that up
+
+and so we have our tours collection.<br /><br />
+And you can also see it here on the left side.<br /><br />
+So if we open that up now, then in there
+
+we have the two documents that we created before
+
+in the Mongo shell right, so let's create a new one,
+
+let's give it a name, and let's use again
+
+The Forest Hiker, which is the one that we deleted
+
+in the previous lecture, all right hit return,
+
+which will then open a new line.<br /><br />
+Let's set the price to 297, all right?
+
+And when I was here I just hit tab
+
+to then define the value, okay,
+
+and then again return, rating, tab
+
+and 4.7.<br /><br />
+Okay, so let's insert it, or actually we should change
+
+this here from string to a number,
+
+so let's say an integer
+
+and let's say here a double, insert and here we go.<br /><br />
+So just like this we created a new document.<br /><br />
+And of course here in the terminal,
+
+we can just quickly confirm that, so db.tours.find,
+
+and here we go that's our newly created
+
+document that we just created using Compass.<br /><br />
+So Compass is really just a graphical user interface
+
+for doing the exact same stuff that we can do here, okay.<br /><br />
+But of course it was very important for us to do it in code,
+
+because that's actually how were gonna do it later
+
+in our express application, okay?
+
+But of course it was still very important
+
+to also do it in code before because then it's actually
+
+how we will do it later in our express application.<br /><br />
+Anyway, let's now go back here
+
+and for example, edit some stuff here.<br /><br />
+So we have here on the right side these buttons to edit,
+
+and so we can simply, let's say change the price here to 997
+
+for example, and then hit update down here and here we go.<br /><br />
+We can also delete documents,
+
+so let's get rid of the one we just did before.<br /><br />
+Okay and of course we can also query for documents
+
+and we do that up here.<br /><br />
+And here we actually need to write
+
+the kind of code that we wrote before.<br /><br />
+So for example, let's search for tours
+
+with a price less than 700.<br /><br />
+And so, again that works just like
+
+we did it before in the terminal.<br /><br />
+Okay so, in the Mongo shell.<br /><br />
+So, we want the price to be less than,
+
+700.<br /><br />
+And you see here that Compass actually
+
+did a lot of auto suggestions here,
+
+so let's see that again.<br /><br />
+So it gives us right away lt and lte here.<br /><br />
+And in this case, doesn't really matter.<br /><br />
+So close that guy and close this one.<br /><br />
+And you see that before it was red,
+
+so meaning that the query was not valid,
+
+and also the button was not clickable.<br /><br />
+But now, when it's correct, we just need to hit return
+
+and then it gives us all the documents that match our query.<br /><br />
+In this case, it's just this one, but of course
+
+if there were multiple, then all of them would get matched.<br /><br />
+And here we could also do the project, and remember
+
+that project means to just select some of the fields.<br /><br />
+And so let's say,
+
+name set to one, and so we only get the name now.<br /><br />
+Right, remember doing that in one
+
+of the Mongo shell lectures, okay.<br /><br />
+Finally, we can then reset all of this
+
+and get rid of our queries
+
+and get back to our initial state.<br /><br />
+And here in Compass we can really do all kinds of stuff.<br /><br />
+Aggregations, define some schemas or analyze schemas,
+
+take look at indexes and all that good stuff
+
+that we're gonna do throughout the course.<br /><br />
+Okay, so we're gonna do aggregations,
+
+we're gonna analyze our schema, we're gonna create indexes,
+
+we're gonna create validation and so really
+
+as you can see there's a lot of content ahead of us.
+</body>
+</html>

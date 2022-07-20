@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So now that you know the basics
+
+of Mongoose by implementing
+
+all the four correct operations,
+
+it's now to finally matter our tour data a bit better
+
+in order to make the tours more complete.<br /><br />
+So at this point, our tour documents can only have a name,
+
+a rating, and a price.<br /><br />
+But of course, we need so much more data here,
+
+because the goal is to have a very data-rich API,
+
+like this one.<br /><br />
+So let's take a look at the final version
+
+actually here as a reference.<br /><br />
+And so that's this one here.<br /><br />
+And so we get all tours,
+
+and it's gonna look a bit like this.<br /><br />
+Okay, so you see that on each tour,
+
+we have a start location, we have ratings average,
+
+ratings quantity, images, start dates.<br /><br />
+Guides, name, duration, maximum group size,
+
+difficulty, price, summary,
+
+description, image cover, locations.<br /><br />
+Even a slug, reviews, duration in weeks, and the ID.<br /><br />
+So you see a lot of data,
+
+and we're not gonna add all of the data
+
+in this lecture here.<br /><br />
+There are some pieces that we cannot add as of yet,
+
+but we can of course make it a bit more complete, okay?
+
+And let's actually save this here, like as a reference,
+
+and get all tours, and I'm gonna put it outside
+
+of any folder.<br /><br />
+So let's put it just here at the top.<br /><br />
+And that doesn't work for some reason.<br /><br />
+Okay, let's just put it here, then.<br /><br />
+Okay, let's get,
+
+that's correct.<br /><br />
+And so again, I'm leaving it here,
+
+in order to keep comparing what we have
+
+with what we're aiming for.<br /><br />
+So anyway, let's go back,
+
+and start with what we have already,
+
+and we have the name.<br /><br />
+And so that's already good enough,
+
+so for now I'm gonna leave it like this.<br /><br />
+So the name, then we also want a duration.<br /><br />
+And that duration is a number, and it is required.<br /><br />
+So set it to true, and then the message is,
+
+a tour must have a duration.<br /><br />
+So these required validators here basically
+
+are the only validators that I'm gonna add
+
+to each of these fields here for now.<br /><br />
+Later on, when we're going to talk more in detail
+
+about validators, we're gonna add a lot more.<br /><br />
+But again, for now, I just want to make
+
+some of these fields, not all of them, required.<br /><br />
+Next up, we have the group size.<br /><br />
+So basically, how many people can at most
+
+take part of one tour.<br /><br />
+And so I call that one the maxGroupSize.<br /><br />
+And so that again should be a number,
+
+and it is again required.<br /><br />
+Tour must have a group size.<br /><br />
+Don't forget the comma here.<br /><br />
+Next up, we also need a difficulty.<br /><br />
+And this one is a string, and later on,
+
+we will define that it should be either medium,
+
+easy, or difficult, but again,
+
+that is actually a validator,
+
+and I'm gonna leave that for a later time.<br /><br />
+Okay, for now, I'm just saying
+
+that it should have a difficulty.<br /><br />
+Next up, let's talk about the ratings.<br /><br />
+So right now we have a field called Rating,
+
+but in fact we want to have one field
+
+for the rating average,
+
+and one field for the ratings quantity.<br /><br />
+So basically the amount of ratings that there are.<br /><br />
+So later, there will be another resource called reviews,
+
+where users will be able to write reviews
+
+about tours and give ratings.<br /><br />
+And that's gonna be a completely different resource,
+
+and a completely different model.<br /><br />
+But still, we want to have basically a summary
+
+of these ratings and of these reviews here in the tours.<br /><br />
+Alright, and the reasons for that you will learn a bit later
+
+once we start how and why we model data in NoSQL databases,
+
+and specifically in MongoDB.<br /><br />
+Okay, for now, let's just add the ratings average,
+
+and the ratings quantity.<br /><br />
+Okay, so we leave this here as number,
+
+and with this default,
+
+and the ratings quantity, ratingsQuantity.<br /><br />
+That should of course also be a number,
+
+and the default will be zero.<br /><br />
+Because of course, in the beginning,
+
+there will be absolutely no reviews, when the tour is new.<br /><br />
+Now I didn't give these two properties here
+
+a required value, because it's not the user
+
+who creates these tours
+
+who will actually specify these values, right?
+
+So when we create a new tour,
+
+we will never specify the ratingsAverage,
+
+neither the ratingsQuantity,
+
+because that will later on be calculated
+
+from the real reviews, okay?
+
+Next up, we have the price here,
+
+so that's fine like this,
+
+and we might also have a discount.<br /><br />
+So let's say that this company,
+
+so Natours, wants to give a discount to one of the tours
+
+at some point, and so they can specify
+
+a discount price here as well.<br /><br />
+So priceDiscount, and so let's just put it here at number.<br /><br />
+We don't need any schema type options here.<br /><br />
+For example, it's not required,
+
+and so for now, let's just leave it like this.<br /><br />
+Next up, we can specify a summary of the tour.<br /><br />
+So the summary is of type String.<br /><br />
+But I will not actually make it required.<br /><br />
+Okay, and that's simply because it's not
+
+on the front page of our website.<br /><br />
+Okay, so basically it's not on the overview.<br /><br />
+And I'm gonna show you that in a second,
+
+but for now let me just add here
+
+another schema type option that I didn't show you yet,
+
+which is called trim.<br /><br />
+And trim only works for strings.<br /><br />
+And I will set it to true.<br /><br />
+So remember how I said that there are different schema types
+
+for different types here,
+
+and so for string, we have a schema type which is trim
+
+which will remove all the white space
+
+in the beginning and in the end of the string.<br /><br />
+Okay, and so if someone enters, for example,
+
+this tour, blah blah blah, doesn't matter.<br /><br />
+So if someone enters this,
+
+then all this whitespace in the end
+
+and in the beginning here will get cut.<br /><br />
+And actually, we can put the same thing on the name,
+
+for example, here.<br /><br />
+Okay, why not?
+
+So let's leave it like this.<br /><br />
+Here I see that it's actually called duration,
+
+not durations.<br /><br />
+Alright, so that's the summary, which is also misspelled.<br /><br />
+So summary like this.<br /><br />
+Oh, and yeah, now I wanted to show you
+
+the Natours website, actually.<br /><br />
+So that's back to our Mongoose documentation.<br /><br />
+But this is what I want to show you.<br /><br />
+So Natours.dev, which is the original of this application,
+
+and so this is the data that we have in our API,
+
+and that we also of course need in the database.<br /><br />
+So we have all this data.<br /><br />
+So this tour name, we have the difficulty,
+
+we have the duration, we have,
+
+this is a summary, then we have a start location,
+
+we have the amount of locations,
+
+we have a start date,
+
+we have the maximum group size in here,
+
+and we have to price, the rating average,
+
+the rating quantity.<br /><br />
+We also have an image here.<br /><br />
+And then here on the details page is where we have,
+
+we have the summary down here.<br /><br />
+We have the guides that I just showed you in Postman before.<br /><br />
+We have some more images.<br /><br />
+We have here all the locations,
+
+and we have all the reviews.<br /><br />
+Okay, so as I was telling you,
+
+not all the data is on the Overview page,
+
+and so not all the data is also required.<br /><br />
+Okay, so let's move back here.<br /><br />
+Next up, I want to add a description.<br /><br />
+And this is a type of String,
+
+and let's set trim to true again.<br /><br />
+And I just remembered that the summary
+
+is actually on the Overview page.<br /><br />
+And so let's make this one required.<br /><br />
+So you add here at the end,
+
+true,
+
+a tour must have a description.<br /><br />
+Okay, next up, we will specify the imageCover.<br /><br />
+And so that's the images that you see on the overview page
+
+and so let's set this one actually to require this role.<br /><br />
+So the type should be string,
+
+because basically this will simply be the name
+
+of the image here, which then later,
+
+we will be able to read from the file system.<br /><br />
+Okay, so really just the name of the image.<br /><br />
+So basically a reference will be stored in the database.<br /><br />
+And that's a very common practice, okay?
+
+So we could store the entire image as well in a database,
+
+but that's usually not a good idea.<br /><br />
+We simply leave the images somewhere in the file system
+
+and then put the name of the image itself
+
+in the database as a field.<br /><br />
+So set it to required, true,
+
+a tour must have a cover image.<br /><br />
+Nice, next one is the rest of the images.<br /><br />
+And now here, we have something new, okay?
+
+Because we have multiple images,
+
+and I want to save those images as an array.<br /><br />
+And actually, as an array of strings.<br /><br />
+And so the way to do it is to simplify specify here
+
+an array of strings, just like this.<br /><br />
+So I want it still to be of type string,
+
+but I want it to be an array.<br /><br />
+So an array in which we have a number of strings.<br /><br />
+And so that's how I can define this, okay?
+
+And we will use this later for something else again.<br /><br />
+And so we will then actually pass in
+
+more schema type options than just a type,
+
+and so by then we will use that again, alright?
+
+For now, though, let's move on,
+
+and the next field that I wanted to add here
+
+is the createdAt.<br /><br />
+And the createdAt field should basically be a timestamp
+
+that is set by the time that the user gets a new tour.<br /><br />
+So this here should of course be added automatically.<br /><br />
+Again, at the time the tour is created.<br /><br />
+So how do we do that?
+
+Well first of all, we set the type to Date.<br /><br />
+So Data is yet another JavaScript built-in datatype,
+
+and so we can use that here.<br /><br />
+Okay, so the type is Date,
+
+and then we simply need to set a default,
+
+and the default is the JavaScript
+
+built-in function Date.now.<br /><br />
+And I'm sure you are familiar with this one.<br /><br />
+So this will simply give us a timestamp in milliseconds,
+
+which basically represents the current millisecond.<br /><br />
+Alright, now in Mongo,
+
+this is now immediately converted to today's date
+
+in order to make more sense of this data, okay?
+
+So yeah, that's the automatically created timestamp.<br /><br />
+And now finally, we need to also pass in an array of dates.<br /><br />
+And now finally, to finish for now,
+
+we also want to able to define an array of start dates.<br /><br />
+So startDates, and again, we simply define an array,
+
+and then say that in there we want dates.<br /><br />
+Alright, so these startDates are basically different dates
+
+at which a tour starts.<br /><br />
+For example, we can have a tour starting
+
+in December this year,
+
+and then in February, the next year,
+
+and then another one in the summer,
+
+and so different dates for the same tour
+
+are simply different, let's say,
+
+instances of the tour starting on different dates.<br /><br />
+Alright, I hope that makes sense.<br /><br />
+Anyway, this one here will not be automatically created
+
+by MongoDB, and MongoDB will then automatically
+
+try to parse the string that we passed in as the date
+
+into a real JavaScript date.<br /><br />
+For example, we could pass in something like
+
+let's say 2021, March 21st,
+
+and again Mongo would then automatically parse
+
+this as a date.<br /><br />
+You can also specify the date.<br /><br />
+For example, saying 11 and 32 minutes, alright.<br /><br />
+Or we could also simply input a Unix timestamp,
+
+so a timestamp like in this format here.<br /><br />
+Okay, and so all of these formats,
+
+basically, Mongo will try to parse them into a date.<br /><br />
+And only if it can't, it will then throw an error.<br /><br />
+(exhales) So this was a lot of work.<br /><br />
+Let's give it a save here.<br /><br />
+And the way that we can then try this out
+
+is to go here to our dev-data,
+
+where we have this tour-simple.json file,
+
+which is the one we've been using in a previous section.<br /><br />
+All right.<br /><br />
+And so all I'm gonna do here
+
+is to just grab all this data here,
+
+and then use that one to create a new request, okay?
+
+So we want to create a new POST request here,
+
+and with all that data,
+
+instead of having to write it out manually.<br /><br />
+Okay, so pasting all of this here.<br /><br />
+And now indeed, we do not need the ID.<br /><br />
+So we needed it before,
+
+when we were doing our file-based API,
+
+but that's over now, so let's get rid of that.<br /><br />
+And so all the rest of the data
+
+that we marked that's required is now actually here,
+
+and even some more.<br /><br />
+So let's try to see what happens when we submit this.<br /><br />
+And now we get invalid data sent.<br /><br />
+So let's actually go to our tour controller,
+
+and in here, where we create a tour,
+
+instead of this message let's actually go back
+
+like we had it before and send the entire error
+
+just so we see what is actually going wrong.<br /><br />
+So send it here, okay, and the problem was
+
+that we have The Snow Adventure already defined.<br /><br />
+So let's first get rid of that.<br /><br />
+Yeah, so here we have The Snow Adventure,
+
+so we should delete this, and for that,
+
+I'm using our own API,
+
+so we can already put it to some use here.<br /><br />
+So that one should now be gone,
+
+and so now we should be able to add this as a new tour.<br /><br />
+And indeed, it's now here.<br /><br />
+So here is all the data that we just specified
+
+in this nice format.<br /><br />
+So what is interesting now is to actually see
+
+the createdAt timestamp.<br /><br />
+So that's the exact time at which I'm recording this video.<br /><br />
+And so this one was of course automatically created
+
+by this piece of code that we have somewhere here.<br /><br />
+Yeah, this.<br /><br />
+So that date is coming from this Date.now timestamp
+
+that JavaScript then automatically parses
+
+to this nice and readable date.<br /><br />
+Then here we have these arrays.<br /><br />
+Okay, so this array and another array,
+
+and of course, the automatically generated ID, alright?
+
+So if we come here now,
+
+we then have of course three tours.<br /><br />
+First, the other ones which are not so complete,
+
+and then all of these.<br /><br />
+Now what's interesting to see here is that Mongo
+
+also actually updated kind of the tours that we already had.<br /><br />
+So for example, we had rating here,
+
+but now that our schema completely changed,
+
+it then added this ratings average,
+
+and also this ratings quantity, both to their defaults,
+
+and the same actually here.<br /><br />
+It also created this timestamp.<br /><br />
+It created, yeah, it created images and start dates,
+
+with these empty arrays.<br /><br />
+And so it kind of changed all this data here.<br /><br />
+Alright, and so before we start moving on in a project,
+
+we should probably go ahead
+
+and delete all of this data here.<br /><br />
+And actually, what we're gonna do in the next video,
+
+now that our model is finally completed,
+
+at least for this section,
+
+we will go ahead and write a small script
+
+which will automatically import all of the tours
+
+from this JSON data.<br /><br />
+Okay, so from this JSON file, actually.<br /><br />
+So it will basically read the file,
+
+get all the tours, and import them into the database.<br /><br />
+Alright, so that's what we're gonna do next,
+
+because that will be hugely useful
+
+in this section and also in the future.
+</body>
+</html>

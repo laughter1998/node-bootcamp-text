@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    So no matter if you installed MongoDB
+
+on Windows or on Mac OS, we will now create
+
+our first local database, using the Mongo Shell.<br /><br />
+So this terminal application which is the Mongo Shell
+
+works exactly the same on Windows and Mac,
+
+so from now on it doesn't matter anymore which
+
+platform you're using.<br /><br />
+So here in this terminal tab I still have
+
+my Mongo server basically running in the background
+
+on this port, and so let's go ahead and open up
+
+the Mongo Shell.<br /><br />
+So remember, that is just typing Mongo here
+
+in the command line and that will then open up
+
+the Mongo Shell, then Command K to clear the terminal,
+
+and so now let's actually create our first database.<br /><br />
+And we do that by using "use".<br /><br />
+So we use the "use" command inside the Mongo Shell,
+
+and then the name of the database that we want to create.<br /><br />
+Now this command here is also used to switch to
+
+a already existing database, but if we try
+
+to basically switch to a database that doesn't
+
+yet exist, it will then create a new one.<br /><br />
+So let's say, "use
+
+natours-
+
+test",
+
+okay.<br /><br />
+And so it created that database, and it also switched to it.<br /><br />
+Okay, and now this blank database
+
+is ready to receive some data.<br /><br />
+Now remember that inside a database we have collections,
+
+and then each collection has documents in it.<br /><br />
+And the data that we create in the Mongo Shell
+
+is always documents.<br /><br />
+And so of course we have to create the document
+
+inside of a collection, and so we specify that
+
+collection before we insert a document.<br /><br />
+And this works like this, so db, which stands
+
+for the current database, which is in this case
+
+natours-test, and then we specify the name of the collection
+
+which is tours, and then on that
+
+we use the insertMany function.<br /><br />
+So insertMany just like that, so just to recap here,
+
+Database is the currently used database that is
+
+right now active, and when we want to insert a
+
+document into it we need to specify the collection
+
+where that document is gonna live.<br /><br />
+And we do that by using dot, and then
+
+the name of the collection, which is in this case "tours".<br /><br />
+Now right now this collection hasn't been created,
+
+and so it will create it once we run this command, okay.<br /><br />
+And later on we will then have a collection for users,
+
+or for reviews, so basically for all the resources
+
+that we created in the last section, right.<br /><br />
+So, using tours here because that is one of our
+
+resources in our application, okay.<br /><br />
+But don't worry too much about that for now,
+
+we will talk about data modeling a bit later in the course.<br /><br />
+Okay, anyway, let's now actually insert a document
+
+into this database collection.<br /><br />
+And it's actually very simple.<br /><br />
+So, remember that MongoDb uses BSON,
+
+which is quite similar to JSON,
+
+so we can actually simply pass a JavaScript object
+
+into this insertMany function, and it will
+
+then convert it into JSON and BSON, okay.<br /><br />
+So a regular JavaScript object like this,
+
+and then just like before, let's define
+
+the name of the tour.<br /><br />
+And I'm calling it The Forest Hiker, which is
+
+one of the tours that we actually have in our JSON
+
+document at this point, so The Forest Hiker,
+
+let's set a price
+
+to
+
+297,
+
+and then also a rating, like an average rating,
+
+which can be 4.7
+
+okay.<br /><br />
+So this here looks like just a regular JavaScript object,
+
+now we could also use quotes on the property names,
+
+but that is actually optional, okay.<br /><br />
+Now here on these,
+
+and here we probably need the double quotes,
+
+okay so JSON does not recognize the single quotes,
+
+and so to be on the safe side
+
+let's just use the double quotes here, even though
+
+I usually like to use the single ones.<br /><br />
+And now just before we hit return, we actually need to
+
+also correct this function here, because it's not
+
+insertMany, because we're actually only inserting
+
+one document here,
+
+so it's called insertOne, okay.<br /><br />
+So we use insertMany to create multiple documents,
+
+and we use insertOne when we just wanna create one.<br /><br />
+Okay, so let's now hit return, and just like this
+
+we created our first document in our database.<br /><br />
+Okay, and now just to check that, let's use DB,
+
+which again is the current database, then .tours
+
+.find
+
+all right and here indeed is the document
+
+that we just created.<br /><br />
+And notice how it also automatically created
+
+this object ID here which is the unique identifier
+
+of this document.<br /><br />
+So remember how I said that MongoDB would automatically
+
+create these unique identifiers behind the scenes,
+
+and so that's exactly what you see here.<br /><br />
+And besides that, well, you see that this really
+
+is just a regular JSON object.<br /><br />
+And so this makes it great and really easy to work with
+
+JavaScript, and so as you can guess, this is going to
+
+make it really easy to work with MongoDB data in JavaScript.<br /><br />
+Because we're already using kind of the same format
+
+that we're already used to in JavaScript.<br /><br />
+And so that is one of the main reasons why MongoDB
+
+is so popular for Node JS applications.<br /><br />
+Okay, now another very useful command is show dbs,
+
+which will basically show us all the databases that we have
+
+in MongoDB, and so here you see our natours-test database.<br /><br />
+But we also have some other ones,
+
+which MongoDB automatically creates for us.<br /><br />
+And yours might not be the same as these three,
+
+but if not, don't worry, and just like before
+
+we could use the "use" command to switch to one of these.<br /><br />
+So let's say we now wanted to use admin, and so now
+
+we switched to DB admin, all right.<br /><br />
+So again, "use" is to switch to an existing database
+
+or to create a new one, if the name that
+
+we pass into it does not yet exist.<br /><br />
+So we want to go back to natours-test
+
+because now I want to show you
+
+just another quick command here,
+
+so "show collections".<br /><br />
+And so here you see the tours collection
+
+that we just created before.<br /><br />
+So remember how I said that back here when we created
+
+the document we also created the tours collection,
+
+because every document always has to be inside of
+
+a collection.<br /><br />
+Okay, so these are the very basic commands
+
+in the Mongo Shell, and over the next couple of lectures
+
+we will then create documents, query them, update them,
+
+and also delete them.<br /><br />
+So basically all the craft's operation.<br /><br />
+For now let me just show how we can actually quit
+
+the Mongo Shell.<br /><br />
+So, very easy, you just type quit like this
+
+and it will then exit it.<br /><br />
+Just to quickly show you that our database was
+
+actually persisted, let's simply run the Shell again,
+
+then clear it quickly again, "show dbs",
+
+and you see that natours is still here,
+
+and we can also use it.<br /><br />
+Okay, so everything is still there, meaning
+
+that we're now ready to move on to the next video.
+</body>
+</html>

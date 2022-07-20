@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now learn
+
+how to serve static files with Express.<br /><br />
+Now what do I actually mean with static files?
+
+Well, it's the files that are sitting in our file system
+
+that we currently cannot access using all routes.<br /><br />
+So, for example, we have this overview.html file
+
+here in our public folder.<br /><br />
+But right now there's no way that we can access this
+
+using a browser, right?
+
+And the same for these image files that we have here,
+
+or the CSS or the Javascript files.<br /><br />
+So let me show that to you,
+
+and let me actually use the browser this time.<br /><br />
+For now I'm copying this URL here
+
+just to show you that it's gonna work,
+
+obviously also in the browser.<br /><br />
+Okay, so this is our unformatted result here,
+
+from the same route.<br /><br />
+But let's say that we actually want to access that HTML file
+
+that I was just talking about.<br /><br />
+So we can, of course, not just write
+
+public and then, for example,
+
+overview.html, right?
+
+There's no way we can access this right now.<br /><br />
+And that's simply because we didn't define any route
+
+for this URL, right?
+
+We do not have any handler that is associated to this route.<br /><br />
+And so, if we actually want to access something
+
+from our file system,
+
+we need to use a built-in Express middleware.<br /><br />
+So let me now show you how we can do that.<br /><br />
+For example, after this one.<br /><br />
+Now in this section we're actually just talking about an API
+
+so we don't actually need to serve static files
+
+like images or HTML, so what I just showed you.<br /><br />
+But since this section is an introduction
+
+to Express in general,
+
+I also wanted to quickly show this content to you anyway.<br /><br />
+So, as I was saying, all we have to do is
+
+to use a simple built-in middleware
+
+that goes like this.<br /><br />
+Express dot static, because we wanna serve static files,
+
+so this is an obvious name for that.<br /><br />
+And so in here we pass the directory
+
+from which we want to serve static files.<br /><br />
+And in this case, I'm gonna use the public directory.<br /><br />
+So this folder here where we have these HTML files, okay?
+
+And actually let's use a template string here
+
+so that I can go ahead and use the dirname variable,
+
+then slash and public.<br /><br />
+Give it a save and go back to the browser.<br /><br />
+Then we will be able to open this overview.html.<br /><br />
+Now it's not going to work in this URL here.<br /><br />
+It actually has to be like this.<br /><br />
+So without the public, just /overview.html.<br /><br />
+So let's see, and it actually works.<br /><br />
+Okay.<br /><br />
+Now, why is that?
+
+Why don't we need the public folder here in the URL?
+
+Well, simply because when we open up a URL
+
+that it can't find in any of our routes,
+
+it will then look in that public folder that we defined.<br /><br />
+And it sets that folder to the root.<br /><br />
+Okay, so let's pretend that the root
+
+is now our public folder.<br /><br />
+So this here, and then the overview is in there.<br /><br />
+And so that's why we have done access to it.<br /><br />
+So in there we also have images, for example.<br /><br />
+Let's say we wanna open image and then this pin here.<br /><br />
+And we can do that.<br /><br />
+So image,
+
+pin png, and so here we go.<br /><br />
+Here is the image.<br /><br />
+Now what we can't do is this, because this is not a file.<br /><br />
+This looks like a regular route,
+
+and so Express actually tries to find a route handler
+
+for this one, which it can't
+
+because you didn't define anything.<br /><br />
+All right?
+
+So really it just works for static files.<br /><br />
+In which case it will, again, not go into a new route,
+
+but simply serve that file that we specified
+
+from the public folder,
+
+or in the folder that we specified here in this middleware.<br /><br />
+Now take a look at the console here and see all the requests
+
+that were actually done when we open up that page.<br /><br />
+Let's now clear this here just so we see all the requests
+
+that actually just come from that overview page.<br /><br />
+So let's write again overview.html here.<br /><br />
+And these images here are broken
+
+and that's because this html is not supposed
+
+to be served like this, all right?
+
+I'm just using it now here
+
+so that we get some visual feedback.<br /><br />
+I'm not interested at all in the content here.<br /><br />
+Now just take a look at all the requests
+
+that were done for all of the assets.<br /><br />
+So as I said right in the beginning,
+
+for each piece that is part of the website
+
+our server actually gets a separate request.<br /><br />
+And you see here that most of them get this 404.<br /><br />
+So that's why the links are then broken on the web page,
+
+well simply because Express cannot find them in this folder.<br /><br />
+But again, that's not the point here.<br /><br />
+What I just wanted to show you
+
+is how we can serve static files
+
+from a folder and not from a route.<br /><br />
+All right.<br /><br />
+And so that wraps up the basic introduction to Express.<br /><br />
+In the next two videos we will talk
+
+about something called environment variables
+
+and we will also set up ESlint in oral VS code.
+</body>
+</html>

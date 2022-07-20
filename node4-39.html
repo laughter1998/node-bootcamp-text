@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    In this lecture I want to show you
+
+a couple of different things involving modules.<br /><br />
+
+And I want to start by basically proving to you
+
+that Node does in fact wrap the code in our modules
+
+into a wrapper function,
+
+like I showed you in the last lecture.<br /><br />
+
+So let's create a new file again, module.js,
+
+and that's modules, like this.<br /><br />
+
+Okay, and what I'm gonna do here
+
+is to log to the console the arguments, okay?
+
+So arguments is an array in JavaScript,
+
+and this array contains all the values
+
+that were passed into a function.<br /><br />
+
+So when I log this arguments array to the console,
+
+if we actually see some values there, well,
+
+then it means that we're really in a function, okay?
+
+So let's run modules.<br /><br />
+
+And indeed, here we have the code in our arguments.<br /><br />
+
+And so let's remember the five arguments
+
+of the wrapper function.<br /><br />
+
+The first one is the export, so this one,
+
+which is currently empty
+
+because we're not exporting anything.<br /><br />
+
+The second one is the require function,
+
+so we can see that here,
+
+we have the require function indeed.<br /><br />
+
+Then the third one is called module, okay.<br /><br />
+
+And in module we have then module exports,
+
+which again we talked about in the last lecture.<br /><br />
+
+And what do we have here is not that important, again,
+
+I just wanted to show you
+
+that we're actually in a function right now,
+
+so that all this code that we have in this module
+
+is indeed wrapped into this wrapper function, okay?
+
+Then number three and number four are the filename
+
+and the directory name.<br /><br />
+
+And indeed, this is the name of the module
+
+that we're currently in, so modules.js.<br /><br />
+
+And then here we have the directory name.<br /><br />
+
+So I'm on my desktop,
+
+and then in this now Node works folder.<br /><br />
+
+So similar to this one here,
+
+but then this one has slash the module name, okay?
+
+So that proves us that, indeed,
+
+all the code inside a module is wrapped,
+
+and that we have access to all these variables,
+
+so these arguments, okay?
+
+So I just find this an interesting experiment
+
+that we can do.<br /><br />
+
+And we can actually do another cool thing.<br /><br />
+
+So to actually show you the wrapper function,
+
+we can require the module module, okay.<br /><br />
+
+So there's a module called module,
+
+which we actually never used but internally Node uses it.<br /><br />
+
+And in there we have the wrapper.<br /><br />
+
+And so that is actually this property
+
+is actually the wrapper function.<br /><br />
+
+So we can now take a look at that.<br /><br />
+
+And where is that, ah, yeah.<br /><br />
+
+So here, here it is actually.<br /><br />
+
+So this is the wrapper function.<br /><br />
+
+And so indeed you see export, require,
+
+module, filename and directory name,
+
+and then the function body.<br /><br />
+
+And so this is what Node internally use,
+
+so basically this template here, it uses it,
+
+and then fills up the body of this function with our code.<br /><br />
+
+Okay, so again, just an interesting experiment here.<br /><br />
+
+Now the most important thing that I wanna show you here
+
+is how we can export and import data
+
+from one module into the other.<br /><br />
+
+And so let's start by creating a new module here,
+
+in which I'm gonna create a calculator,
+
+a bit like I mentioned in the last video.<br /><br />
+
+So let's just call this test-module-1,
+
+because we're gonna have a couple of them.<br /><br />
+
+And here I'm gonna create a calculator class.<br /><br />
+
+So again, this is the ES6 syntax
+
+of writing classes in JavaScript.<br /><br />
+
+So let's add a couple of methods here, so add a and b,
+
+will of course return a plus b,
+
+so very simple stuff, multiply a, b,
+
+will return a times b, and then just,
+
+let's just do divide as well,
+
+just for the sake of completeness here, a, b, like this.<br /><br />
+
+Give it a save, it nicely formats it,
+
+and now we can do module.exports,
+
+just like we learned in the last video,
+
+and we're exporting our calculator, okay?
+
+So again, we use module.exports
+
+when we want to export one single value.<br /><br />
+
+And in this case our single value here
+
+is the calculator class.<br /><br />
+
+So module.exports is exactly what is returned
+
+from one module, so whatever we put there, well,
+
+then gets exported automatically, right?
+
+We can then save the exported value
+
+to a variable when importing it, so let's do that now.<br /><br />
+
+And now here we can actually give it any name that we want.<br /><br />
+
+So the name that we are exporting on the other side,
+
+so in this other module, doesn't matter.<br /><br />
+
+We can call it anything we want here.<br /><br />
+
+So in that sense it's just like a normal function return,
+
+right, so we can always return any variable,
+
+but then call it something else
+
+when we basically save the result of a function
+
+to a variable, right?
+
+So since it's our own module,
+
+we have to use the dot slash, so what I did just here,
+
+and then test-module-1.<br /><br />
+
+And the JS, remember, we can just drop that,
+
+it's not necessary, okay?
+
+And so this C variable here, which is uppercase
+
+because for class we usually always use uppercase names.<br /><br />
+
+And remember, we are actually exporting a class here.<br /><br />
+
+Okay, so we can now use that class to do some calculations.<br /><br />
+
+So first of all let's create a new calculator,
+
+calculator one, because later on
+
+we're gonna have another one, okay?
+
+And so now we create a new instance
+
+of a calculator like this,
+
+and this should be nothing new for you at this point.<br /><br />
+
+And then let's log through console
+
+the result of actually using this.<br /><br />
+
+So calc1.<br /><br />add, and let's say two and five.<br /><br />
+
+Give it a save, and actually let's comment out these two.<br /><br />
+
+Save it again, and then Node modules,
+
+and here we have the result, seven.<br /><br />
+
+So that's two plus five, so it works, right?
+
+And here in our test module,
+
+we could actually do it in a more elegant way.<br /><br />
+
+So we could assign this class here directly
+
+to module.exports, right?
+
+So right now we have a class declaration,
+
+so that's a little bit like a function declaration,
+
+where we say function calculator, and then this,
+
+and here we say class, okay?
+
+But we could do it with a class expression as well.<br /><br />
+
+And so like this we simply don't use
+
+the calculator name anyway.<br /><br />
+
+So copy it, comment it out.<br /><br />
+
+Okay, so just like this.<br /><br />
+
+So we just say that this is a class,
+
+and then assign it to a variable.<br /><br />
+
+And so that's now an expression.<br /><br />
+
+So let's run this again,
+
+and we see of course our seven again, okay?
+
+So again, this is just to actually immediately assign
+
+the value that we want to module.exports,
+
+and that's gonna save us then some lines of code,
+
+and probably make our code look a bit better.<br /><br />
+
+Okay, so that's how we export stuff with module.exports,
+
+and now let's see how and when we can use
+
+the exports shorthand that I also mentioned
+
+in the previous video.<br /><br />
+
+So let's just create a simple comment here, module.exports.<br /><br />
+
+Then here just exports.<br /><br />
+
+So a new module test, and again, module-2.<br /><br />js.<br /><br />
+
+And so the alternative for doing module.exports
+
+is to add properties to the exports object itself.<br /><br />
+
+So we could do it like this,
+
+and using again the calculator example from before,
+
+we could do it like this.<br /><br />
+
+So we can simply add properties to the exports object.<br /><br />
+
+So a and b will return a plus b,
+
+exports.<br /><br />multiply a, b will return a times b,
+
+and now let's just duplicate
+
+just for the sake of completeness again, and okay.<br /><br />
+
+So we created basically three anonymous functions here,
+
+these three, and assigned them
+
+to three properties of exports.<br /><br />
+
+And so now when we export this module on the other side,
+
+so in modules.<br /><br />js, we will get basically access
+
+to this exports object.<br /><br />
+
+So let me show that to you.<br /><br />
+
+So let's say const calc2 is require.<br /><br />
+
+Again, don't forget the dot and slash,
+
+because it is our own module.<br /><br />
+
+Okay, and so now this calc2 here is the exports object.<br /><br />
+
+Okay, so let me show that to you.<br /><br />
+
+Console.<br /><br />log, calc2.<br /><br />add, two and five.<br /><br />
+
+So that should give us the exact same result as before.<br /><br />
+
+And indeed, here is our seven, just like before.<br /><br />
+
+And if we did multiply,
+
+well then that should be of course 10.<br /><br />
+
+And so yeah, we have seven here from the addition here,
+
+and then this multiply gives us 10.<br /><br />
+
+So I hope that this really makes a difference
+
+between module.exports and exports clear.<br /><br />
+
+And so again, when we're using simply exports,
+
+we can add stuff to this object, so basically properties,
+
+and then when we import that,
+
+so when we require this module,
+
+the result that we're gonna get
+
+is an object containing all these properties.<br /><br />
+
+And since we're getting an object,
+
+we can use the power of ES6 destructuring
+
+to do some cool magic here, basically.<br /><br />
+
+So let me get rid of this one, or actually duplicate it,
+
+comment out this one, and so we can use destructuring
+
+to destructure the object that we get, okay?
+
+And it works like this, so we use the curly braces,
+
+and then we simply create variable names
+
+for the properties in that object.<br /><br />
+
+So again, let's use add, multiply and divide.<br /><br />
+
+So that are the names that we actually have
+
+on this exports object.<br /><br />
+
+So add, multiply and divide,
+
+and these actually have to be the exact same name
+
+as in the original object, okay?
+
+Now the thing that this will do
+
+is that basically it will create a variable
+
+called simply multiply.<br /><br />
+
+And so indeed, here is our result.<br /><br />
+
+And we can actually only import the ones that we want.<br /><br />
+
+So let's say we only want add and multiply, okay?
+
+And so we will only get access to these two,
+
+instead of importing everything from the module.<br /><br />
+
+And this is quite a common pattern
+
+that you will see used in Node,
+
+and we will do that throughout the project as well.<br /><br />
+
+Okay, so in this video we talked
+
+about the wrapper function here,
+
+then we talked about exporting and importing
+
+using module.exports and the exports shorthand.<br /><br />
+
+And now finally, just to finish,
+
+let's talk about caching very quickly.<br /><br />
+
+Okay, so let's create test-module-3 here.<br /><br />
+
+And what I'm gonna do here is to create a console.<br /><br />log,
+
+so basically some top-level code inside this module.<br /><br />
+
+Hello from the module, okay,
+
+and then I also want to export a function.<br /><br />
+
+Just one single function, and so I'm saying module.exports
+
+equals function without any arguments,
+
+one that will simply log to the console:
+
+log this beautiful text.<br /><br />
+
+Just some small emoji here to make it pop a little bit.<br /><br />
+
+Okay, so let's now require this test module.<br /><br />
+
+Test-module-3, and I'm not saving it to any variable.<br /><br />
+
+Instead I'm going to call the function right away
+
+without saving it to a variable.<br /><br />
+
+So we could of course do that,
+
+then we would have the function in a variable,
+
+and we could then call it.<br /><br />
+
+But this is the exact same thing,
+
+because this will return this function that we defined,
+
+so this one here, right?
+
+It will return this because we are using module.exports,
+
+and then right away we call this function here, okay?
+
+And so actually let's do that three time.<br /><br />
+
+And keeping in mind that we have caching in Node.<br /><br />js modules,
+
+what do you think will happen when we run this code?
+
+Okay, so let's run this and see what's gonna happen.<br /><br />
+
+Here we have the result, hello from the module,
+
+and then three times log this beautiful text.<br /><br />
+
+So we have this logging here three times, well,
+
+because we called the same function three times.<br /><br />
+
+But we have hello from the module only once, okay?
+
+And that is because of caching.<br /><br />
+
+So technically this module was only loaded once,
+
+and so the code inside of it was also executed once only.<br /><br />
+
+And so that's why this line of code here,
+
+this logging was only run once, okay?
+
+And so these other two loggings here, well,
+
+they came from cache, so they were stored somewhere
+
+in the Node's processes cache.<br /><br />
+
+And once we called the function here for the second time,
+
+it was simply retrieved from there,
+
+instead of loading the module again, okay?
+
+So I'm sure that makes a lot of sense to you.<br /><br />
+
+And so that was our lecture, actually.<br /><br />
+
+If you have any questions, you can of course, as always,
+
+post them to the Q&A and you will get help there.<br /><br />
+
+So that finishes this entire section.<br /><br />
+
+I know it was quite of a ride until we got to this point,
+
+so a lot of stuff to take in.<br /><br />
+
+And if you did correct everything 100%,
+
+don't worry all too much about it,
+
+because throughout the course,
+
+most of the stuff will become clear eventually, okay?
+
+So don't worry, just keep moving on in the course,
+
+and I'll see you in the next section.<br /><br />
+</body>
+</html>

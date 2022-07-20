@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Welcome back.<br /><br />
+In this video and the next one
+
+I want to introduce you to the MongoDB
+
+aggregation pipeline which is an extremely powerful
+
+and extremely useful MongoDB framework
+
+for data aggregation.<br /><br />
+And the idea is that we basically
+
+define a pipeline that all documents
+
+from a certain collection go through
+
+where they are processed step by step
+
+in order to transform them into aggregated results.<br /><br />
+For example, we can use the aggregation pipeline
+
+in order to calculate averages
+
+or calculating minimum and maximum values
+
+or we can calculate distances even,
+
+and we can really do all kinds of stuff.<br /><br />
+It's really amazing how powerful
+
+this aggregation pipeline is.<br /><br />
+All right, but enough talk.<br /><br />
+Let's now actually start using the aggregation pipeline
+
+and I'm gonna create a new header function here
+
+because later on we will then define a new route
+
+and then use that function for that.<br /><br />
+But that new route, I'm gonna create it later.<br /><br />
+So I want to create a function here that's gonna
+
+calculate a couple of statistics about our tours.<br /><br />
+So I'm gonna call this one getTourStats.<br /><br />
+Okay, so Stats for statistics,
+
+and it's gonna be an async function
+
+and so a vs code now automatically prefilled off this.<br /><br />
+All right, let's create or try catch block here.<br /><br />
+Actually, I'm gonna copy this from right up here,
+
+and now in here I will create
+
+a variable called stats.<br /><br />
+Now the aggregation pipeline really is a MongoDB feature.<br /><br />
+But Mongoose, of course, gives us access to it,
+
+so that we can use it in the Mongoose driver, right?
+
+So using our tour model in order to access
+
+the tour collection, we say
+
+tour.aggregate.<br /><br />
+And so the aggregation pipeline is a bit
+
+like a regular query and so using the aggregation pipeline
+
+it's a just a bit like doing a regular query.<br /><br />
+The difference here is that in aggregations,
+
+as I already mentioned, we can manipulate the data
+
+in a couple of different steps
+
+and so let's now actually define these steps.<br /><br />
+And for that, we pass in an array of so-called stages.<br /><br />
+So we pass in an array, and then here we will
+
+then have a lot of stages.<br /><br />
+And again the documents then pass through these stages
+
+one by one, step by step in the define sequence
+
+as we define it here.<br /><br />
+So each of the elements in this array
+
+will be one of the stages.<br /><br />
+And there are a ton of different stages
+
+that we can choose from, but I will just tell you
+
+the most common ones in this lecture
+
+and also in the next one.<br /><br />
+But anyway, I now want to take a minute
+
+and take a quick look at the MongoDB documentation
+
+because I think we didn't do that yet.<br /><br />
+So MongoDB and we already know this website.<br /><br />
+So on our MongoDB website we go here to learn,
+
+then documentation and then in here we select
+
+the MongoDB Manual and this documentation is huge.<br /><br />
+It really, it has a lot of stuff in here
+
+and if you were gonna go through it all,
+
+well, then you'd become really a MongoDB master.<br /><br />
+So it gives you a nice introduction to MongoDB,
+
+you have the installation here.<br /><br />
+You have the CRUD Operations, so a nice overview
+
+about a lot of the stuff
+
+that we already learned before, right?
+
+Then you have stuff about the aggregation
+
+and in particular, the aggregation pipeline
+
+which we're gonna talk about now,
+
+but what I want to really show you here
+
+is actually this reference that we have at the bottom
+
+because in the reference we have here for example
+
+the operators and that's where we have
+
+a lot of important stuff that we've been using all the time.<br /><br />
+So let's take a look here at the query operators,
+
+for example and here you see, we actually have
+
+these operators that we already used.<br /><br />
+So for example, greater than or equal,
+
+or less than and equal, but if someday
+
+in your own applications you need some other operator,
+
+well, now you know where you can find them.<br /><br />
+Now of course, it's also always very helpful
+
+to just do a quick Google search, probably find
+
+some stack overflow post about it,
+
+but believe me, many times it's easier
+
+and faster to just quickly jump into the documentation
+
+and quickly search for whatever you're needing.<br /><br />
+You just need to know how the documentation works
+
+and once you know that, it's then gonna be quite easy
+
+for you to find what you're looking for, all right?
+
+Here you also have some logical operators
+
+for example, the OR operator we already used.<br /><br />
+Again, really a lot of stuff, geospatial operators
+
+and we're gonna use some actually, later,
+
+and yeah, really a lot of stuff.<br /><br />
+Then what I wanted to show you after this lecture actually,
+
+are the aggregation pipeline stages.<br /><br />
+So here you have a lot of them
+
+and what we're gonna use in this lecture here is match,
+
+for example and group,
+
+where is that?
+
+Yeah group, that is a very important one,
+
+and so as I mentioned, I'm gonna show you
+
+the most important ones in this lecture and the next one.<br /><br />
+But again, if you in some case need something else,
+
+then just go ahead, come here to this documentation
+
+and you will find what you're looking for.<br /><br />
+All right?
+
+Anyway, let's now learn how we can actually define
+
+one of these stages, all right?
+
+And I'm gonna start with match.<br /><br />
+And match is basically to select
+
+or to filter certain documents.<br /><br />
+And so it's very simple.<br /><br />
+It's really just like a filter object in MongoDB,
+
+such like we've been using so many times.<br /><br />
+So each of the stages is an object
+
+and then here comes the name of the stage.<br /><br />
+So this one is the match stage, all right?
+
+And as I mentioned, it's really just a query.<br /><br />
+And so let's say that for starters,
+
+we only want to select documents
+
+which have a ratings average greater or equal than 4.5.<br /><br />
+So can you do that?
+
+I'm just gonna give you a second to do that here.<br /><br />
+So I hope you did it.<br /><br />
+So ratings average, should be
+
+greater or equal than 4.5.<br /><br />
+And so that's it, that's the first stage.<br /><br />
+And usually this match stage is just a preliminary stage
+
+to then prepare for the next stages which come ahead.<br /><br />
+So the next one is now the group stage.<br /><br />
+So group and then in there
+
+we need to always pass just another object.<br /><br />
+So it looks kinda weird with all these objects,
+
+but, yeah, you've seen that before
+
+and MongoDB just works this way.<br /><br />
+It's always objects, inside of objects, inside of objects.<br /><br />
+And this group here is where the real magic happens
+
+because as the name says,
+
+it allows us to group documents together,
+
+basically using accumulators.<br /><br />
+And an accumulator is for example,
+
+even calculating an average.<br /><br />
+So if we have five tours, each of them has a rating,
+
+we can then calculate the average rating using group.<br /><br />
+And so let's do exactly that right here.<br /><br />
+Now the first thing, is we always need to specify
+
+is the id because this is where we're gonna specify
+
+what we want to group by.<br /><br />
+For now, we say null here because we want
+
+to have everything in one group so that we can calculate
+
+the statistics for all of the tours together
+
+and not separate it by groups.<br /><br />
+We will, a bit later then also group by different stuff,
+
+for example we can group by the difficulty
+
+and we can then, for example calculate the average
+
+for the easy tours, the average for the medium tours
+
+and the average for the difficult tours.<br /><br />
+So again, we can group by one of our fields
+
+and that field, we are gonna specify in here,
+
+but for now, as I said, we want to calculate these averages
+
+for all the tours together in one big group.<br /><br />
+So in that case we say _id and set it to null.<br /><br />
+Now let's actually calculate the average rating.<br /><br />
+In order to do that, we simply specify a new field,
+
+so let's simply call it the average rating,
+
+so like this, and this will be
+
+well, the average,
+
+which is yet another MongoDB operator, so this one here.<br /><br />
+You will find it in the reference if you look it up.<br /><br />
+So this is a mathematical operator calculating
+
+the average and now the name of the field.<br /><br />
+And again, I know that this is gonna look very weird,
+
+but in order to specify the field which we want
+
+to calculate the average from, we need to use
+
+the dollar sign, but in quotes here
+
+and then the name of the field.<br /><br />
+So ratings average in this case.<br /><br />
+And let's also calculate the average price.<br /><br />
+So average price, and again, did it wrong here,
+
+and so
+
+the average and then again,
+
+the name of the field and in quotes
+
+and with this dollar sign.<br /><br />
+Right, so it looks kind of weird again,
+
+but this is just the way
+
+that the aggregation pipeline works.<br /><br />
+So we have the average price.<br /><br />
+Let's actually also calculate the minimum price,
+
+so the smallest price, and the largest price.<br /><br />
+So minPrice
+
+and from now on, it's gonna all look kind of similar,
+
+so now we use the min operator
+
+and then again the field name like this.<br /><br />
+And a comma here and let's now just duplicate this one
+
+in order to calculate the maximum price.<br /><br />
+And now, let's actually take a look
+
+at what we already got at this point.<br /><br />
+So we now need to actually send out this response,
+
+and so again, I'm just gonna go head
+
+and grab some of these already done responses here.<br /><br />
+So the data that we want to send out is called stats.<br /><br />
+And now all we need to do is actually add a new route
+
+here in our tour routes and again,
+
+I'm gonna edit here, right at the top.<br /><br />
+So router.route
+
+/gettour, or actually just tour-stats, just like this
+
+because the get is already defined in the HTTP method.<br /><br />
+So no need to repeat it in the name.<br /><br />
+So tourController.getTourStats.<br /><br />
+Give it a safe and let's actually test it out now.<br /><br />
+So I'm really exciting to test it out now, actually
+
+to see if it works because again it's really an amazing
+
+and really powerful tool
+
+which allows you to do so much stuff.<br /><br />
+So tour-stats, send it
+
+and that's not really the result
+
+that we were waiting for, so that's just the pipeline
+
+that we defined, but I already know why that is.<br /><br />
+So we did not await the result.<br /><br />
+So this, basically, just like a normal query
+
+is gonna return an aggregate object.<br /><br />
+So .find is gonna return a query, and .aggregate
+
+is gonna return an aggregate object.<br /><br />
+And then only when we await it,
+
+it actually comes back with the result.<br /><br />
+So that's also why we defined this function here
+
+as an async function, so that we can then use await
+
+in there and so this is the right place.<br /><br />
+Let's try it again.<br /><br />
+And here we go!
+
+So great!
+
+We have the average rating of all our tours,
+
+we have the average price which you see is
+
+1563 and then the minimum and the maximum, right?
+
+And from our data, we can actually confirm
+
+that this is true.<br /><br />
+So great!
+
+Really, really great.<br /><br />
+Now, one more thing that I want to do here
+
+is to actually calculate the total number
+
+of ratings that we have and also the total number of tours.<br /><br />
+So we have the average rating here
+
+and let's actually do it before,
+
+so numRatings,
+
+like this
+
+and you can probably guess
+
+that this one is called sum and then the ratingsAverage,
+
+or actually not ratingsAverage, but ratingsQuantity, right?
+
+So that's where the number of ratings is stored
+
+and so the number of ratings, the total,
+
+will be the sum of all of these together.<br /><br />
+And now, the last one, is the number of tours
+
+and that one is a bit trickier,
+
+and so that's a nice one to show you here.<br /><br />
+So we still want to sum, so to add everything together,
+
+basically, so we still use sum,
+
+but what are we gonna add together?
+
+Well, we basically add one for each document,
+
+and so we say 1, and that's it.<br /><br />
+So basically for each of the document
+
+that's gonna go through this pipeline,
+
+one will be added to this num counter.<br /><br />
+Let's call it numTours.<br /><br />
+And so, yeah, let's test it out now, again.<br /><br />
+And indeed we get our nine tours
+
+and we already know that we have nine.<br /><br />
+So these are all the statistics for all the tours together,
+
+but let's now take it to the next level.<br /><br />
+As I said before, we can now group our results
+
+for different fields.<br /><br />
+And let's actually start out with the difficulty.<br /><br />
+And so that's quite similar to specifying the fields
+
+down there which is simply the dollar sign,
+
+and then the name of the field.<br /><br />
+So $difficulty, give it a safe and that's it.<br /><br />
+Send it here, and now we have the statistics
+
+all defined for each of these three difficulties.<br /><br />
+So that's really, really amazing.<br /><br />
+So this is the part that blows my mind.<br /><br />
+It's absolutely fantastic.<br /><br />
+I mean, you can start to see all the kinds of stuff,
+
+all the kinds of data manipulation
+
+that you can do using this pipeline, right?
+
+So we really can now start to analyze stuff,
+
+for example, we see that the easiest tours
+
+are the ones who get the poorest ratings
+
+with a 4.6, while the medium tours
+
+are the ones who get the highest ratings.<br /><br />
+We can also see that the difficult tours
+
+are the most expensive ones with an average price
+
+of 1997, while the easiest ones are also the cheapest ones
+
+with a price of 1272, right?
+
+We also see that the easiest tours
+
+are the ones which we have the most,
+
+so four easy ones and only two difficult ones, right?
+
+So we can use this, of course,
+
+to get all kinds of insights into our data.<br /><br />
+Let's comment this one out here
+
+and let's just try another one,
+
+for example, by ratings, why not,
+
+let's just try out, see what we get.<br /><br />
+So for example, we have two tours,
+
+so basically with a rating of 4.5,
+
+we have two tours with 4.7, one tour with 4.8,
+
+and three tours with 4.9.<br /><br />
+Oh, and also down here, one tour with 4.6,
+
+and so for example, one insight that we can get here
+
+is that the very expensive tours with this average price
+
+of 1997 get extremely good ratings.<br /><br />
+So all kinds of stuff, really that we can do here.<br /><br />
+Let's get rid of this one, let's add this one back,
+
+and we can now actually even,
+
+do some operations with this one.<br /><br />
+So just for fun, let's put this difficulty to uppercase.<br /><br />
+So this of course, is gonna be another object here
+
+and then here in front is the operator.<br /><br />
+And so the operator in this case, is called $toUpper.<br /><br />
+So just, yet another MongoDB operator.<br /><br />
+So check it out, and now it's spelled uppercase.<br /><br />
+Great!
+
+So we have the group stage here which is quite complete.<br /><br />
+So let's try another one which is a sort stage.<br /><br />
+So another object in our array for yet another stage
+
+and this one is called sort.<br /><br />
+So sort and then in there, we need yet another object,
+
+and it kind of auto-completed this one, I don't know why,
+
+and so here we can now specify which field we want
+
+to sort this by and let's actually use the average price.<br /><br />
+And now here in the sorting we actually need to use
+
+the field names that we specified up here in the group.<br /><br />
+We can no longer use the old names because at this point
+
+they are already gone.<br /><br />
+They no longer exist.<br /><br />
+So at this point, in the aggregation pipeline,
+
+we really already have these results.<br /><br />
+So these are now our documents basically.<br /><br />
+So if you want to sort by the average price,
+
+then this is the field name we gotta use.<br /><br />
+So we can say, the average price
+
+and then we can say 1 for ascending.<br /><br />
+So let's try that out.<br /><br />
+And yeah, indeed.<br /><br />
+That's the lowest one and that's the highest one.<br /><br />
+Great!
+
+So we did a lot of stuff.<br /><br />
+Let me just show you that we can also repeat stages.<br /><br />
+So let's actually do another match here
+
+and this one is really just to show you
+
+that we actually can repeat stages
+
+and I also want to show you another operator.<br /><br />
+So let's now select by id and remember that id
+
+is now the difficulty, right?
+
+So we just specified that up here.<br /><br />
+So we want the id and now a new operator
+
+that we didn't use yet.<br /><br />
+We want it to be not equal to, and let's say easy.<br /><br />
+And so, just like this we're gonna select
+
+all the documents that are not easy.<br /><br />
+So in this case, the one that says
+
+medium and difficult, right?
+
+So basically, excluding the one that says easy, right?
+
+So again, it's not really useful here
+
+because that will take away a lot of our meaningful data,
+
+but just to show you that we can of course,
+
+match multiple times.<br /><br />
+So in this case, we matched once before we actually
+
+did the group and then we matched once we were ready,
+
+doing the grouping.<br /><br />
+Now, let's actually keep this here,
+
+out of our aggregation pipeline,
+
+but I'm gonna leave it here,
+
+just so that you keep it as a reference.<br /><br />
+Give it another save, give it another try,
+
+and so these are our results
+
+for getting our tour statistics.<br /><br />
+So, really nice, really great.<br /><br />
+I hope you enjoyed this video
+
+and in the next one, we're actually gonna keep using
+
+the aggregation pipeline to do some more calculations.<br /><br />
+And to show you some more different stages.<br /><br />
+So keep tuned for that one.
+</body>
+</html>

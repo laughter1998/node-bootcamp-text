@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now implement a route handler
+
+for post requests so that we can actually add a Natour
+
+to our data set.<br /><br />
+So just like with the doGET() request handler,
+
+let's start by adding a new route.<br /><br />
+So app.post this time, and remember
+
+now we use post so the post method here,
+
+because that's the kind of request that we want to handle.<br /><br />
+So requests that are made with the http post verb right?
+
+V1
+
+and tours.<br /><br />
+Just as we talked about in the REST API lecture,
+
+the URL is actually exactly the same.<br /><br />
+No matter if we want to get all the tours,
+
+or if we want to create a new tour,
+
+the URL is exactly the same.<br /><br />
+Then only thing that changes is the http method
+
+that we used for doing these requests.<br /><br />
+To get all the tours and post to create a new tour,
+
+then in here, our typical call-back function
+
+where we get access to the request
+
+and to the respond object so that we can get some data
+
+from the request and send back an appropriate response.<br /><br />
+Now remember that with a post request,
+
+we can send data from the client to the server, right?
+
+This data is then ideally available on the request.<br /><br />
+The request object again is what holds all the data,
+
+all the information, about the request that was done.<br /><br />
+If that request contains some data that was sent,
+
+that data should be on the request, right?
+
+Now out of the box, Express does not put that body data
+
+on the request, and in order to have that data available,
+
+we have to use something called middleware.<br /><br />
+We are gonna talk in great detail about middleware
+
+in a couple of lectures, but for now,
+
+in order to make this work, we need to include
+
+a simple middleware here at the top of the file.<br /><br />
+So actually, right here.<br /><br />
+What we need to do, is to say app.use
+
+then express
+
+.json
+
+Okay, and that's it.<br /><br />
+So again, this [express.json] here is middleware.<br /><br />
+And middleware is basically a function that can modify
+
+the incoming request data.<br /><br />
+It's called middleware because it stands between,
+
+so in the middle of the request and the response.<br /><br />
+It's just a step that the request goes through
+
+while it's being processed.<br /><br />
+And the step the requests go through, in this example
+
+is simply that the data from the body is added to it.<br /><br />
+So it's added to the request object
+
+by using this middleware.<br /><br />
+We use app.use in order to use middleware like this.<br /><br />
+And again, we will talk a lot more about middleware
+
+a bit later in this section.<br /><br />
+For now, just know that this is how we use middleware.<br /><br />
+All the details will then follow later.<br /><br />
+So for now, just to start, I want to actually show you
+
+the data from the body in the console,
+
+just to verify that it actually works, so req.body.<br /><br />
+Again, body is the property that is gonna be available
+
+on the request, because we used that middleware
+
+a couple of moments ago.<br /><br />
+So we want to log[req.body] to the console
+
+and then we also need to send back a response.<br /><br />
+So res.send and for now just some place holder here.<br /><br />
+Just 'Done' okay.<br /><br />
+So we always need to send back something
+
+in order to finish the so-called request/response cycle,
+
+which again we're gonna learn a bit more about later
+
+in this section.<br /><br />
+So let's now test this out, and create a new request
+
+for the post.<br /><br />
+Now here in postman, we can do something really nice
+
+which is to save all of these requests.<br /><br />
+I'm gonna start by creating a new collection,
+
+which I will call Natours.<br /><br />
+New collection.<br /><br />
+Now I will save this request inside that collection.<br /><br />
+So this one is Get all the Tours.<br /><br />
+Put it into Natours, and save.<br /><br />
+So now we have our Get requests right here.<br /><br />
+Well let's now copy this one right here,
+
+create a new one.<br /><br />
+So this one is a post request.<br /><br />
+Before doing it, I will actually also save it right
+
+to this collection.<br /><br />
+So Create New Tour.<br /><br />
+Here on the left side, we now have both of our requests.<br /><br />
+Let's now actually specify our body here,
+
+so the data that we basically want to send to the server.<br /><br />
+We come here to Body, and there are different ways
+
+of doing it now, but the easiest one is to simply say,
+
+Raw, and then Application JSON.<br /><br />
+All we have to do here is to basically specify some JSON,
+
+and that will then get transmitted to the server.<br /><br />
+So the first thing we want to specify
+
+is the name of the Tour, and you remember that in JSON,
+
+everything has to be in quotes and actually double quotes,
+
+not just any quotes.<br /><br />
+Let me just call this one a Test Tour, and let's take a look
+
+at what else we have in the tour data.<br /><br />
+So we have the name, we have the duration,
+
+and let's just put also the difficulty.<br /><br />
+So I'm not going to specify all of these
+
+because that takes way too much time.<br /><br />
+Let's just say the duration is 10 days,
+
+and the difficulty
+
+is easy.<br /><br />
+That as our body will be transmitted to the server.<br /><br />
+So that's tested out now, hitting send
+
+and here we get back our response, which is done, remember.<br /><br />
+Here is the response that we sent, so done.<br /><br />
+And you see that down here in our console,
+
+we now have an object which is basically the JSON
+
+that we sent in our body, right?
+
+So perfect, it works!
+
+It is no longer JSON, as you can see.<br /><br />
+It is truly a JavaScript object.<br /><br />
+Just to show you that we really needed middleware,
+
+let's comment this one out.<br /><br />
+Send it again.<br /><br />
+Now no longer have the request.body, right?
+
+That's why it's undefined now, 'cause it no longer exists.<br /><br />
+Give it a save, send our request again,
+
+and so now it's back.<br /><br />
+We have our post route all set up, it's working now
+
+and we also get access to the body,
+
+and so what we want to do now is to actually persist
+
+that data into this tour simple JSON file.<br /><br />
+We're actually gonna modify this file, so that the data
+
+is saved to our fictional database here.<br /><br />
+This JSON file right now kind of works
+
+as our fictional database.<br /><br />
+So let's now take care of that.<br /><br />
+I'm gonna go ahead and comment this one out.<br /><br />
+So let's get started.<br /><br />
+The first thing we need to do is to figure out the id
+
+of the new object.<br /><br />
+Remember, again in the lecture about REST API's,
+
+is that when we create a new object,
+
+we never specify the id of the object.<br /><br />
+The database usually takes care of that.<br /><br />
+A new object usually automatically gets it's new id.<br /><br />
+Well in this case, we do not have any database,
+
+and so what we're gonna do is to simply take the id
+
+of the last object and then add +1 to that.<br /><br />
+Let's do that very quickly,
+
+and that's just basic JavaScript.<br /><br />
+So newId it is tours, right?
+
+Remember that tours, we already have the data
+
+in this tours variable.<br /><br />
+So that's an array of all the tour objects,
+
+and so we want to get the last one,
+
+which is tours.length - 1,
+
+then the id property of that and we add + 1.<br /><br />
+So that is the new id.<br /><br />
+Next up, we create a new tour,
+
+and that tour will basically be the body that we send
+
+plus the new id that we just created.<br /><br />
+So we can use object.assign, which basically allows us
+
+to create a new object by merging two existing objects
+
+together.<br /><br />
+So the first object is gonna be
+
+id=newId,
+
+and then we want
+
+request.body.<br /><br />
+We could also had done req.body.id=newId,
+
+but I did not want to mutate the original body object.<br /><br />
+I just left it like this.<br /><br />
+That is the new tour, and now what we want to do
+
+is to push this tour into the tour array, right?
+
+So tours, is the array of the nine tours that we have
+
+at this point.<br /><br />
+We say push and push the new tour in there.<br /><br />
+That is the array which now has the new tour in it,
+
+but of course now we have to persist that into the file.<br /><br />
+That again is quite easy for you at this point,
+
+so use fs.write file.<br /><br />
+So which one should we use?
+
+writeFile or writeFileSync?
+
+The answer for that is very simple.<br /><br />
+We are inside of a call-back function,
+
+that is gonna run in the event loop.<br /><br />
+We can never, ever block the event loop.<br /><br />
+What we're gonna do is to use writeFile
+
+and not to Sync in this one.<br /><br />
+We want to pass in a call-back function
+
+that is gonna be processed in the background
+
+and as soon as it's ready,
+
+it's gonna put its event in one of the event loop queue,
+
+which is then gonna be handled
+
+as soon as the event loop passes that phase.<br /><br />
+Remember that from the Event Loop lecture?
+
+Anyway, let's get the file name from up here,
+
+because we will really override this file
+
+so that when we restart this server,
+
+it's then gonna be there.<br /><br />
+So where-
+
+right here.<br /><br />
+So that is the file that where we want to write to.<br /><br />
+The data that we want to write, which is tours,
+
+and then our call-back function,
+
+which in this case only has the error.<br /><br />
+Here I just noticed that we need to also stringify
+
+this object, right?
+
+We want json in this JSON file,
+
+and this right now is just a plain, normal JavaScript object
+
+and so we need to convert that.<br /><br />
+But that's again simple, already did that.<br /><br />
+JSON.stringify
+
+of the object.<br /><br />
+What do we want to do as soon as the file is written?
+
+Well, what we usually do is
+
+to send the newly created object as the response.<br /><br />
+Let's do that.<br /><br />
+So response, and then as always, we start by
+
+specifying the status code.<br /><br />
+In this case, it's not gonna be a 200, but a 201.<br /><br />
+So 201 which means created.<br /><br />
+200 stands for okay, 201 stands for created,
+
+which is exactly what happened here.<br /><br />
+We created a new resource on a server.<br /><br />
+So JSON, and it keeps adding this message here.<br /><br />
+Status is again, success.<br /><br />
+I'm not using the results property here, that we had before,
+
+because now I'm only sending back one result.<br /><br />
+Data is our envelope here.<br /><br />
+Tour is new tour.<br /><br />
+That's it!
+
+Give it a save here, and so that format it,
+
+or code a little bit.<br /><br />
+Let's add some more space here.<br /><br />
+I think we're ready to now give it a try.<br /><br />
+We can actually create a new tour, using this data here.<br /><br />
+So adjust this Test Tour,
+
+and with this data, and let's wait for it.<br /><br />
+What happened here?
+
+Let's see, ah okay.<br /><br />
+We have a problem that we sent a response twice basically.<br /><br />
+So we sent a response with JSON,
+
+and then again with .send.<br /><br />
+That's not allowed.<br /><br />
+That's actually why we get this error here.<br /><br />
+So it's actually nice that it happened here,
+
+so that you know what this standard error here means.<br /><br />
+HTTP_HEADERS_SENT cannot set headers after they are sent
+
+to the client.<br /><br />
+That happens when you try to send two responses.<br /><br />
+We need to get rid of that.<br /><br />
+Yeah, that was the only error that we had.<br /><br />
+That should now fix it.<br /><br />
+Give it a try.<br /><br />
+And indeed, here we go.<br /><br />
+So we have our id of 10, which our code created for us,
+
+and then the entire tour which is exactly the data
+
+that we sent as a body in our request.<br /><br />
+Now the thing is, that when we do get all tours here,
+
+it will not yet show up.<br /><br />
+If we go down here,
+
+actually it is already here.<br /><br />
+We have the one from before, so when we had that error,
+
+it actually also created this tour here.<br /><br />
+Then of course, the tour that we created with the id of 10.<br /><br />
+So this tour here is exactly this one
+
+that was created right now.<br /><br />
+If we do now, Test Tour 2, with the duration of just 5.<br /><br />
+Let's give this one a try,
+
+and if I do get all tours, then that shows up here as well.<br /><br />
+I said in the beginning that it wouldn't work,
+
+so that it wouldn't show up right away,
+
+because this only works if we restart the server.<br /><br />
+This file,
+
+the tour-simple.json file
+
+where our tours are coming from,
+
+is only read at the beginning when we start the server.<br /><br />
+Now the thing is that each time we save something
+
+to this JSON file, it will also reload the server.<br /><br />
+Let me prove that to you, so if I hit now save,
+
+then look what happens down here.<br /><br />
+So I save it, and so you see that down here
+
+it restarted the server.<br /><br />
+It also formatted the code, because of prettier.<br /><br />
+But what matters here, is that this code updated.<br /><br />
+That's why each time we save something here
+
+with our API, it will then immediately reload the server
+
+and will reload the content from the file into the tours,
+
+and we can then read that right away.<br /><br />
+That's why we have access immediately
+
+to all the newly created tours.<br /><br />
+Make sense?
+
+Well if not, please feel free to just ask your questions,
+
+and of course Q&A section, right?
+</body>
+</html>

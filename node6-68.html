@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Before moving on to the next section
+
+and mongoDB, I want to show you how to setup
+
+eslint together with prettier in vs code
+
+in order to improve our code quality.<br /><br />
+Now if you're not using vs code,
+
+or if you already have some kind of linter
+
+in your workflow, then please mark this lecture as completed
+
+and move on right to the next section.<br /><br />
+But if you're new to es Lint,
+
+and want to improve your code quality,
+
+then let's get started with this video.<br /><br />
+So es Lint is basically a program
+
+that constantly scans our code
+
+and finds potential coding errors
+
+or simply bad coding practices that it thinks are wrong.<br /><br />
+It's very, very configurable so that
+
+we can really fine tune it to our needs,
+
+and coding habits.<br /><br />
+Now we can also use es Lint for code formatting,
+
+but we will continue using prettier
+
+that we already setup earlier for that.<br /><br />
+So we will set up this entire thing
+
+so that prettier is still the main code formatter
+
+but based on some es Lint rules
+
+that we will define.<br /><br />
+And so all that es Lint will do for us
+
+is to highlight the errors.<br /><br />
+But I know that all this probably
+
+sounds more confusing than anything else.<br /><br />
+And so let's actually set this up now.<br /><br />
+So the first thing that I want you to do
+
+is to install the es Lint extension for vs Code.<br /><br />
+So come over here, and search for es Lint.<br /><br />
+Okay?
+
+And I already have it installed,
+
+but it looks like this.<br /><br />
+And so all you need to do is to go ahead
+
+and install it, and then probably reload this window.<br /><br />
+And if you don't have Prettier set up yet
+
+then go ahead and do that one as well.<br /><br />
+So with this extension here,
+
+but this one we actually already did
+
+in the first section if you followed that with me.<br /><br />
+Next up, we need to install a bunch of dev dependencies
+
+so let's actually make this here a lot bigger
+
+and go to our other terminal here.<br /><br />
+And so let's say, npm install and we need to
+
+also install es Lint in prettier as npm packages.<br /><br />
+Okay?
+
+So es Lint and prettier,
+
+and probably this is now the first time
+
+where we are actually installing
+
+multiple packages at the same time.<br /><br />
+And so that's very easy, we simply write
+
+all these packages all in the same command.<br /><br />
+Okay?
+
+But with these two we are actually far from ready.<br /><br />
+So the next one is es Lint config prettier
+
+and this one will disable formatting for es Lint,
+
+because remember, we want prettier to format our code.<br /><br />
+Next up we have es Lint plugin prettier
+
+and this one will allow es Lint
+
+to show formatting errors as we type,
+
+again, using prettier.<br /><br />
+Okay?
+
+And all of this is of course, very confusing
+
+and I needed a lot of time to figure this out.<br /><br />
+And so this really is just a recipe
+
+that you need to follow here.<br /><br />
+Okay?
+
+So it's not about understanding
+
+what I'm doing here, all you need to do is
+
+to follow this recipe, and it will
+
+then work for this project, and in future projects
+
+all you have to do is to go to your
+
+package dot json file and copy that configuration
+
+and install it in your next project.<br /><br />
+Because actually, all of these packages
+
+they have to be installed locally.<br /><br />
+It would not work if we tried
+
+to do this globally.<br /><br />
+Alright?
+
+Anyway, we need now some jobs good style guide
+
+that we can follow.<br /><br />
+And there are many style guides out there,
+
+but the most popular one
+
+is probably the airbnb style guide.<br /><br />
+And so actually, there is an es Lint configuration
+
+that we can use for that, which is on npm,
+
+and it's called eslint config airbnb.<br /><br />
+Okay, next up, we have eslint plugin node,
+
+and this will add a couple of specific eslint rules
+
+only for nodejs, okay?
+
+So basically to find some errors
+
+that we might be doing when writing nodejs code.<br /><br />
+And now finally, we need three other eslint plugins
+
+which are only necessary in order to make the airbnb
+
+style guide actually work.<br /><br />
+So that style guide, kind of depends on these.<br /><br />
+So eslint plugin,
+
+import,
+
+eslint,
+
+plugin,
+
+jsx,
+
+a11y,
+
+and I see that I have a mistake here.<br /><br />
+And finally eslint,
+
+plugin, react.<br /><br />
+Even though we're not writing in the react code here
+
+we still need this one because the airbnb
+
+style guide depends on it.<br /><br />
+So these are all the packages,
+
+I hope that I wrote them correctly.<br /><br />
+And now we need to save these as dev dependencies,
+
+so save dev and now hit return,
+
+and cross your fingers that everything's gonna work here.<br /><br />
+So, it seems like it did.<br /><br />
+Let's take a look at our package dot json
+
+and, indeed, here we have all of these packages.<br /><br />
+Great.<br /><br />
+Now the next step is that we need config
+
+files for both prettier and es lint, right?
+
+And we already created the one for prettier before
+
+and it's already in our project here.<br /><br />
+So is this one, and all I did here
+
+was to say that I always want the single quote.<br /><br />
+Okay?
+
+And the other one is the config file for es lint,
+
+and again it's already in the startup files
+
+because we don't really need to waste any time
+
+simply just to write this terrible
+
+configuration file, right?
+
+So the file is already written
+
+let's just go very quickly through it.<br /><br />
+So here we stated we want to use
+
+the airbnb style guide,
+
+and also prettier, and also
+
+the node plugin, okay?
+
+Now esl int is all about coding rules
+
+and there are many many rules that es lint
+
+tries to enforce on us.<br /><br />
+But we can actually change the ones
+
+that we want to use, one by one.<br /><br />
+And we can either turn them off completely
+
+or just showing a warning instead of showing an error.<br /><br />
+For example, one rule is that eslint
+
+does not want us to use console dot logs
+
+in our code, and so each time by default
+
+it will give us an error when we
+
+use console dot log.<br /><br />
+But instead of showing me an error,
+
+I configure it so that it only shows me a warning,
+
+so that's why we have warn.<br /><br />
+I could also completely turn it off
+
+by writing off, such as I did with
+
+many of these other rules.<br /><br />
+So, for example, here in this next one
+
+which says that each and every function
+
+should always return something, okay?
+
+And sometimes, we simply have a function which doesn't,
+
+and so I needed to turn this rule completely off.<br /><br />
+Or finally, we also have, for example,
+
+this rule here, which says that there should
+
+never be a variable that we declare but do not use.<br /><br />
+This actually catches a lot of bugs,
+
+and so I leave it as an error here,
+
+but I also created some exceptions.<br /><br />
+So, these four exceptions here
+
+which are the typical variables
+
+that we have in express,
+
+so in our handlers in express, but that we don't always use.<br /><br />
+Right?
+
+And so I don't want these to be marked as errors
+
+each time that I have, for example,
+
+a req variable in a function, but I don't use it.<br /><br />
+Okay?
+
+So you can take a look at these other rules here
+
+and decide which one you like,
+
+and which one you don't.<br /><br />
+So these ones are the rules that make sense to me,
+
+but of course it might be different for you.<br /><br />
+Let's just quickly go to the eslint website
+
+to take a look at all the stuff
+
+that you can configure.<br /><br />
+So es lint, then here you have some documentation
+
+and some instructions on how you can configure it,
+
+but all I really wanna show you
+
+is all these different rules.<br /><br />
+So you have all of them in here
+
+and so you see, there's a ton, a ton really, of them
+
+that you can configure, okay?
+
+So take a look at this, but actually
+
+it's easier to simply configure this es lint
+
+whenever you get a new error in your code.<br /><br />
+Okay?
+
+So let me show that to you,
+
+so that we can now see it in practice.<br /><br />
+So let's go to our server file here,
+
+and simply create some code here
+
+that goes against some es rules.<br /><br />
+So for example defining a variable here, like this,
+
+and then assigning something else to it.<br /><br />
+All right, and so we know that x is a constant
+
+and so it should not be reassigned.<br /><br />
+So if we give this now assigned,
+
+we should actually see an error.<br /><br />
+And well we did not, so I'm gonna go ahead
+
+and close the window, and then open it again.<br /><br />
+So do that as well
+
+and hopefully it will be working by then.<br /><br />
+Okay, and so actually we see our errors here
+
+now marked in red.<br /><br />
+So, we now come to this problems tab.<br /><br />
+Let me move it up a bit,
+
+and so here we see all the errors that we have.<br /><br />
+So, starting with the first one,
+
+expected one empty line after the required
+
+statement not followed by another require.<br /><br />
+So basically what it's telling me
+
+is that it wants these requires here at the top
+
+and then, an empty line and then like this.<br /><br />
+And so, the error disappears.<br /><br />
+Okay?
+
+And so this kind of enforces a nicer coding standard.<br /><br />
+Next up we have x is assigned and a value never used.<br /><br />
+And so that is that no unused variables
+
+that I mentioned before.<br /><br />
+So, this one here.<br /><br />
+Okay?
+
+And so this is an error, but I could also turn it off
+
+just to show you how that would then change.<br /><br />
+So I've saved it, and so now that error is gone.<br /><br />
+So you see it's no longer marked red.<br /><br />
+But actually I want this to be an error,
+
+so I write error, give it a save, and our error is back.<br /><br />
+You see, it is declared but it's never used.<br /><br />
+And then, here x is constant.<br /><br />
+So we really did an error here,
+
+which was to reassign a constant,
+
+and that is not allowed, so let's get rid of this
+
+and then the error disappears.<br /><br />
+We still have this one because the value
+
+has never been used.<br /><br />
+Let's quickly write x plus two and now it's gone.<br /><br />
+But we have the next error, basically simply
+
+because we just have this code sitting
+
+around here not assigned to anything.<br /><br />
+So, let's just say const y equals this one
+
+but then of course y is assigned but never used,
+
+and so we're entering this loop here.<br /><br />
+But, anyway, this was just to demonstrate it to you.<br /><br />
+And so let's see now the final warning.<br /><br />
+And so that is the no console, right?
+
+So remember I actually talked about this one before
+
+and it is green because it's a warning.<br /><br />
+So again, I could turn it off, and then
+
+my problem would disappear, so the code
+
+would look normal now.<br /><br />
+But actually I want eslint to warn me about that,
+
+because it's not a good practice to have
+
+all too many console logs later in production.<br /><br />
+All right, so it's back now.<br /><br />
+And actually vs code also warns me
+
+that there is a green warning
+
+here in this file.<br /><br />
+So maybe you noticed that before,
+
+but if we put an error here,
+
+then actually it will turn red.<br /><br />
+Okay?
+
+So now it's red, and we have two problems in there.<br /><br />
+And that's actually really helpful to identify
+
+problems in all these files.<br /><br />
+All right, let's get rid of it.<br /><br />
+And so actually, that's it.<br /><br />
+So I hope that it worked for you as well
+
+if you got some error then please try to simply
+
+install the same packages that I did.<br /><br />
+So all of these here, and remember that
+
+this is how you do it.<br /><br />
+So for example, if you want eslint five
+
+just say npm I eslint at five.<br /><br />
+For example you can even go five dot 16 dot 0
+
+just to make really sure that everything is the same.<br /><br />
+And in that case, everything should work
+
+just as it did here for me.<br /><br />
+Great, so this was yet another important step
+
+in your journey of becoming a developer.<br /><br />
+Because, believe me, it's really important
+
+to have code linting in place like you have now.<br /><br />
+So again, for your next project
+
+just go ahead, copy these dependencies into
+
+your packet dot json file and then install
+
+them all at the same time.<br /><br />
+And that will then make your life a lot easier.<br /><br />
+So that's how I always do it,
+
+and the same of course, with the prettier rc
+
+and this eslint config file.<br /><br />
+Anyway, enough talking for this video.<br /><br />
+We're now finally ready to move on to the
+
+very important mongodb section.
+</body>
+</html>

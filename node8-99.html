@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Now, another extremely important feature
+
+of a good API is to provide pagination.<br /><br />
+So basically allowing the user
+
+to only select a certain page of our results,
+
+in case we have a lot of results.<br /><br />
+So let's pretend that we have, for example,
+
+1000 documents in a certain collection.<br /><br />
+And we say that on each page we have 100 documents.<br /><br />
+So that would mean that we'd have 10 pages, right?
+
+So 10 times 100 is 1000.<br /><br />
+And so based on that, how are we gonna implement pagination
+
+using or query string?
+
+Well, we will use the page and delimit fields.<br /><br />
+So there will be a page field.<br /><br />
+Let's say we want page two
+
+and there will be a limit field.<br /><br />
+And this limit here basically means the amount
+
+of results that we want per page.<br /><br />
+And that's actually setted here only to 10
+
+and of course we have to correct this one here.<br /><br />
+It's not a comma, but an and.<br /><br />
+So page two and the limit 10.<br /><br />
+Now going back to the example of 1000 results,
+
+if the limit is 10, so only 10 results per page,
+
+well then we're gonna have 100 pages
+
+and in here we are then displaying page number 2
+
+of these 100 pages.<br /><br />
+Okay?
+
+Now, we need now a way of implementing this using Mongoose.<br /><br />
+So let's take a look at how we could do that
+
+by going back to our code.<br /><br />
+So feature number four,
+
+Pagination.<br /><br />
+All right,
+
+And I will start by building an example query here
+
+just like we did before.<br /><br />
+So let's say that the query is equal query.<br /><br />
+And now what kind of methods do we have
+
+in order to implement pagination?
+
+Well, the most useful one is skip
+
+and I'm gonna explain what it does in a second,
+
+so let's just put a random number here.<br /><br />
+So skip and limit,
+
+and let's put 10.<br /><br />
+and so this limit here is actually exactly the same
+
+as the limit that we defined in the query string.<br /><br />
+So basically the amount of results
+
+that we want in the query.<br /><br />
+And then skip, that we have here, is the amount of results
+
+that should be skipped before actually querying data.<br /><br />
+All right, so again, this is just a placeholder here.<br /><br />
+Let's go back to this example that we have here.<br /><br />
+I'm just gonna copy this query string here.<br /><br />
+so let's say that the user wants page number two
+
+with 10 results per page.<br /><br />
+That means that results one to 10 are on page one,
+
+and 11 to 20 are on page 2.<br /><br />
+Okay, and so what that means is that we want to skip
+
+10 results before we actually start querying.<br /><br />
+Okay.<br /><br />
+So again, one to 10
+
+are for page one
+
+and then 11 to 20
+
+are for page two,
+
+and so on and so forth.<br /><br />
+So 21 to 30 will be page three,
+
+And so on and so forth.<br /><br />
+And so we need to skip 10 results
+
+in order to get to result number 11, right?
+
+So to result number 11 which will the first one on page two.<br /><br />
+Okay, and since it is page two that was requested,
+
+well, again we need to skip 10 results
+
+before we actually start page two.<br /><br />
+Okay? Make sense?
+
+And for example, if we requested page number three,
+
+well then of course, 20 results would
+
+first have to be skipped.<br /><br />
+And so we will need some way
+
+of calculating this skip value here.<br /><br />
+So based basically on the page and the limit.<br /><br />
+Now you might ask why I do not directly ask for the
+
+skip value in the query string,
+
+but that's because for the user this value here is
+
+kind of abstract, okay?
+
+It's way easier to simply say, "Well I want page number one,
+
+"or I want page number five
+
+"or I want like page number 10."
+
+Okay, so for the user it's much easier
+
+to not deal with skip values here
+
+and all that stuff, the user wants to have it easy
+
+and to just define a page.<br /><br />
+Now before we can actually get started
+
+calculating the skip value, we need to first get the page
+
+and the limit from the query string
+
+and we should also define some default values.<br /><br />
+Okay, so that's basically
+
+because we still want to have pagination
+
+even if the user does not specify any page
+
+or any limit.<br /><br />
+Because for example let's say that we have a million results
+
+in our database,
+
+and then of course when the user does the request
+
+we would not simply show all of these 10 million results.<br /><br />
+That wouldn't be very user friendly, would it?
+
+And so, I will define by default page number one
+
+and a limit of let's say 100.<br /><br />
+So that by default when a user requests all of the tours
+
+in this example, then he only gets 100,
+
+and not a million, all right?
+
+So the page is of course request.query.page
+
+and I'm now going to multiply it by one
+
+which is just a nice trick to convert
+
+a string to a number.<br /><br />
+Okay, so maybe you noticed before that each time that we
+
+actually put a number in a query string,
+
+it will then be a string or a query object,
+
+and so we need to fix that simply by multiplying by one.<br /><br />
+Okay, and then by default, we want page number one.<br /><br />
+All right?
+
+And so this is a nice way in JavaScript
+
+of basically defining default values.<br /><br />
+And I'm sure you're familiar with that, right?
+
+Anyway, the limit is on req.query.limit
+
+times one again to convert it,
+
+or the default of 100 that we just mentioned.<br /><br />
+So ideally the user will only specify the page number
+
+that he requests
+
+and to not even bother with the page limit.<br /><br />
+That's for more specific use cases.<br /><br />
+Okay, and now all we need to do is to then define
+
+so to calculate basically
+
+that skip value that we just talked about here before.<br /><br />
+And the best way of doing that is to go back to an example.<br /><br />
+So again, let's say we are requesting page number three,
+
+with the limit of 10.<br /><br />
+and we see here for page number three the results are
+
+from 21 to 30.<br /><br />
+So it starts at result number 21, meaning that we need to
+
+skip 20 results.<br /><br />
+And 20 results is basically two times 10,
+
+so two times this limit.<br /><br />
+Okay, and from there we actually start getting a formula.<br /><br />
+So two times ten is basically three minus one times 10.<br /><br />
+And three is the page that we're on.<br /><br />
+So that is our formula.<br /><br />
+So page minus one
+
+and so the previous page, basically,
+
+times
+
+the limit.<br /><br />
+Okay, so I hope that made sense,
+
+let's now replace these values here.<br /><br />
+Skip
+
+and limit of limit.<br /><br />
+Okay?
+
+So basically, this number here is all the results that
+
+come before the page that we're actually requesting now.<br /><br />
+So again, if we are requesting page number three
+
+our results are gonna start at page number 21.<br /><br />
+And so we wanna skip 20 results before that.<br /><br />
+And so 20 results is
+
+because we have 2 pages time 10 results on each,
+
+Yeah, it's gonna be the page that we just requested.<br /><br />
+So page here, minus one,
+
+so the previous page times the number of results
+
+on each page.<br /><br />
+Okay, so that's the amount of documents that
+
+are gonna be skipped.<br /><br />
+Okay, so I hope that made sense.<br /><br />
+Let's now go ahead and actually try this.<br /><br />
+And since we only have so few results here
+
+we need to test it with a really small limit.<br /><br />
+So let's say that we only want three results per page,
+
+and let's actually start on page number one.<br /><br />
+So send it, and indeed now we only get
+
+three results as you can see here.<br /><br />
+So these three, let's see.<br /><br />
+So The Forest Hiker,
+
+The Sea Explorer,
+
+and The City Wanderer.<br /><br />
+Okay?
+
+Let's try page number two,
+
+and for some reason the postman keeps jumping around
+
+each time that I change the URL.<br /><br />
+Anyway, now we have The Park Camper,
+
+The Snow Adventurer,
+
+and The Sports Lover.<br /><br />
+So you start seeing that we actually
+
+now have different tours.<br /><br />
+Okay?
+
+And so we can kind of say that
+
+our pagination here is already working.<br /><br />
+Now the last page,
+
+and we have now The Northern Lights,
+
+The Wine Taster,
+
+and The Star Gazer.<br /><br />
+All right?
+
+Now what if we try to go to page number four?
+
+We already know that we only have nine tours,
+
+and so on page number four there should be nothing.<br /><br />
+Right?
+
+So let's test that.<br /><br />
+And indeed we get zero results.<br /><br />
+But that is of course not ideal.<br /><br />
+Okay, and so let's now go ahead and fix that
+
+and basically kind of throw an error each time
+
+the user selects a page that does not exist.<br /><br />
+Because that's basically the situation here.<br /><br />
+The user requested a page that simply does not exist.<br /><br />
+We don't have enough results to have four pages
+
+with three results.<br /><br />
+Let's now do that,
+
+and this will actually only happen
+
+when there is a page on the query
+
+and so let's actually create this if statement here.<br /><br />
+So if request.query.page,
+
+only in this case we will test if we are skipping more
+
+tours than we actually have.<br /><br />
+So let's get the amount of tours.<br /><br />
+So number of tours is equal to,
+
+and now we're actually going to learn a new method.<br /><br />
+So a new method there is on the Tour model
+
+which is called countDocuments.<br /><br />
+Okay? And as the name says this is going to return
+
+the number of documents, all right?
+
+Actually it's gonna return a promise
+
+but we then await the promise
+
+and so it will then come back
+
+with the result of the amount of tours.<br /><br />
+Okay? And so if the number of documents that we skip
+
+is greater than the number of documents that actually exists
+
+well then that means that the page does not exist, alright?
+
+That make sense?
+
+So if skip is greater
+
+than the number of tours,
+
+and for now what I'm gonna do here is to throw a new error.<br /><br />
+Okay?
+
+So throw new error
+
+this page does not exist.<br /><br />
+Now why am I throwing an error here?
+
+Well, simply because if I throw an error here
+
+in the triblock which we are currently in,
+
+it will then automatically
+
+and immediately move on to the catch block,
+
+and it will then send back this 404 kind of fail message.<br /><br />
+Okay?
+
+And so that's what we want for now.<br /><br />
+Just keep in mind that we will implement much better
+
+error handling a bit later in the course.<br /><br />
+And actually right in the next section, okay?
+
+But for now let's just keep it simple,
+
+throw this error here
+
+in case that we're trying to skip more documents
+
+than we actually have.<br /><br />
+Okay?
+
+So this is the right case, let's send it here
+
+and that's not the result that I expected
+
+so let's go back
+
+so right now our page is four
+
+and the limit is three.<br /><br />
+So the skip here would be three time three, so nine, okay?
+
+And the number of tours is nine as well
+
+and so skip is not greater than the number of tours
+
+and therefore we don't get this error.<br /><br />
+So what we need to do is to set it to greater or equal.<br /><br />
+Okay, and so that should now work.<br /><br />
+And that takes a long time,
+
+and it did.<br /><br />
+Now we get the fail status here
+
+and a 404.<br /><br />
+For some reason
+
+this error is not showing up here
+
+which it actually should.<br /><br />
+But don't worry about that, that's not really important.<br /><br />
+What matters is that it did actually enter our catch block,
+
+and then send back this 404 response.<br /><br />
+Everything else we're gonna implement a bit later.<br /><br />
+Okay, and that's actually it.<br /><br />
+So that's all the methods that we're gonna add to our query,
+
+and so when we finally reach the next line of code here,
+
+our query will then be awaited,
+
+and return with the tours.<br /><br />
+Okay, and at this point our query might actually look
+
+something like
+
+so something like this, something like
+
+well what do we have here
+
+we have sort, select,
+
+so we might have sort,
+
+and then some select there
+
+we have also
+
+skip
+
+we have limit as well,
+
+and so that's really kind of a big query.<br /><br />
+And again, what allows us to that that is
+
+that each of these methods here will always return
+
+a new query that we can then chain on the next method
+
+and the next method,
+
+and the next method until we finally await the query
+
+so that it can actually give us our documents.<br /><br />
+Okay, so let's get rid of all these comments
+
+and yeah, that's it for now.<br /><br />
+For these features we're just gonna add one more
+
+in the next lecture,
+
+but that one is gonna be a bit different than these.<br /><br />
+It's not gonna use one of these query methods, all right?
+
+So I hope that over the last couple of lectures
+
+you really learned the ins and outs
+
+of querying data with Mongoose.<br /><br />
+So of course, all of these methods that we used are not
+
+only useful for these features that we implemented here.<br /><br />
+You can really create all kinds of querys
+
+that you can imagine for all kinds of applications.<br /><br />
+So I showed you all the techniques here in this context
+
+of these different API features,
+
+but of course you're gonna be able to use them
+
+all over your applications in the future, okay?
+
+So I hope that was fun for you
+
+and if it was, then let's move on now right to the next one.<br /><br />
+See you!
+</body>
+</html>

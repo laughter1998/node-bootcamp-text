@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Querying for data in a database is one
+
+of the most important operations that we have in databases.<br /><br />
+And so, let's now take a look at a couple of query operators
+
+in MongoDB, starting with some simple ones
+
+and then moving on to some really complex queries.<br /><br />
+And, to start, let's give ourselves some space here.<br /><br />
+And so, you already know, the easiest way
+
+to basically query for all the documents
+
+in a certain collection is to just use find
+
+without passing anything in there.<br /><br />
+So, that's what we've been doing until this point.<br /><br />
+And so, it gives us simply this result
+
+with all the documents
+
+that are in a certain collection basically
+
+without any searching criteria.<br /><br />
+But, now, let's say that we actually only want one tour
+
+and we already know its name.<br /><br />
+And so, we can search for that tour
+
+using the name that we know.<br /><br />
+And so, we us db.tours
+
+and, again, find.<br /><br />
+But, this time, we're gonna pass in a filter object.<br /><br />
+So, again, we need an object here.<br /><br />
+And so, you start to see now that in MongoDB,
+
+really everything works with objects.<br /><br />
+And, this will be even more prominent a bit later
+
+in this lecture.<br /><br />
+So, inside this object, we pass in the filter.<br /><br />
+So, basically the search criteria
+
+that we want to search for.<br /><br />
+So, we simply set the name to the tour name
+
+that we want to search for.<br /><br />
+So, let's say The Forest Hiker.<br /><br />
+And, that's actually it.<br /><br />
+So, that is our search criteria or the search filter.<br /><br />
+And, if we had returned now,
+
+then we only get this one tour
+
+where the name matches exactly the one that we passed in.<br /><br />
+And, we could do, of course, the same for anything else.<br /><br />
+For example, for the difficulty,
+
+we could search for tours
+
+that have an easy in difficulty.<br /><br />
+So, difficulty and easy.<br /><br />
+Close the object, close the function.<br /><br />
+And so, we get all the tours where the difficulty is easy.<br /><br />
+Right now, there is only one tour,
+
+but if we had multiple tours with difficulty set
+
+to easy, then, of course,
+
+it would return all of these documents.<br /><br />
+So, that is the easiest way
+
+that we can search for documents.<br /><br />
+Now, let's take it to the next level
+
+by using some special query operators.<br /><br />
+And, what I want to do is to search for tours
+
+which have a price below 500.<br /><br />
+And, the way it works is like this.<br /><br />
+So, we always use db. The collection name .find.<br /><br />
+And then, again, or filter object.<br /><br />
+And so, remember, I want to search for prices,
+
+so I say price.<br /><br />
+And now, I want all the tours with a price below 500.<br /><br />
+So, how do I do that?
+
+Well, I need to use the less than operator
+
+and it works like this.<br /><br />
+We need to define yet a new object
+
+where we set the lte property to 500,
+
+then close that object,
+
+and then close that first price object
+
+and then close the function.<br /><br />
+So, that looks very weird, I know,
+
+but this is how we use query operators in MongoDB.<br /><br />
+So, again, lte stands for less than
+
+because that is what we're searching for.<br /><br />
+Where the price is less than 500.<br /><br />
+And, this special sign here is reserved in MongoDB
+
+for its operators.<br /><br />
+So, whenever you see this dollar sign here in MongoDB,
+
+you know that it's a Mongo operator.<br /><br />
+So, the weirdest part here is probably
+
+that we have to do it inside a new object,
+
+but if you think about it, it's actually really the only way
+
+to specify that the price should not simply be 500,
+
+but something else.<br /><br />
+So, we have to set the price to something else than 500.<br /><br />
+And, the best way really is
+
+to just use another object in there.<br /><br />
+So, that's exactly how MongoDB then works.<br /><br />
+So, let's try this out now, hit return.<br /><br />
+And, indeed, we get our two documents
+
+where the price property is below 500.<br /><br />
+Great, next up, let's actually search
+
+for two search criteria at the same time.<br /><br />
+So, what I want to do next is to search for documents
+
+which have the price less or equal than 500,
+
+which is what we had here already,
+
+but also, at the same time, the rating greater
+
+or equal to 4.8.<br /><br />
+And so, that should then give us only this tour here.<br /><br />
+So, only this one
+
+because this is the only one which has the price below 500
+
+and the rating equal or greater to 4.8.<br /><br />
+So, it's 4.8 and so that one is the one
+
+that should match our query.<br /><br />
+So, let's clear it to take away some of the confusion.<br /><br />
+Now, I want this result here
+
+so that we can compare it with the next result.<br /><br />
+And so, let's now write out the query that I just described.<br /><br />
+So, find and, again, this one here is
+
+gonna be just the same.<br /><br />
+So, we want the price to be less or equal than 500.<br /><br />
+Or, we could actually simply say less than 500.<br /><br />
+So, lte is less than or equal and lt is simply less than.<br /><br />
+So, this is the first part, the price less than 500.<br /><br />
+And, at the same time, we want the rating
+
+to be greater or equal to 4.8.<br /><br />
+And, that's easy.<br /><br />
+All we have to do is to specify a second field
+
+in our filter object.<br /><br />
+So, first, the price and now the rating.<br /><br />
+So, we want the rating to be
+
+and you can probably guess it,
+
+greater than or equal 4.8.<br /><br />
+Now, close this filter object and close the function.<br /><br />
+So, let's test it out.<br /><br />
+And, indeed, it gives us the result that we were expecting.<br /><br />
+So, the only document where both the search criteria here
+
+are true at the same time.<br /><br />
+So, just to recap, when we want to search
+
+for two criteria at the same time,
+
+which basically is an and query,
+
+so price less than 500, and rating greater
+
+or equal to 4.8.<br /><br />
+Well, the only thing that we have to do is
+
+to specify two fields in the filter object.<br /><br />
+And, I know this looks quite confusing.<br /><br />
+I felt exactly the same when I was learning this stuff,
+
+but I hope that you can still follow me
+
+so that we can now actually take it even one level further.<br /><br />
+So, here, we did an and query.<br /><br />
+So, querying for documents where these two conditions
+
+are both true, but now let's do an or query.<br /><br />
+So, basically searching for all the documents
+
+where either this part here is true
+
+or this part is true.<br /><br />
+So, db.tours.find
+
+and let's close it here already
+
+because this is gonna be an even more confusing one.<br /><br />
+So, we want to do an or query and the way it works
+
+with MongoDB operators is like this.<br /><br />
+We say or and then here, we specify an array.<br /><br />
+And, in this array, we will then put the two conditions
+
+where we want one of them to be true.<br /><br />
+So, again, I know this looks confusing,
+
+but let's write it out now and I will then explain it again
+
+when we're already doing that.<br /><br />
+So, the first condition is the price should
+
+be less than 500.<br /><br />
+So, basically the same as before.<br /><br />
+So, that is the first object.<br /><br />
+So, all of this, so the first condition,
+
+basically the first filter,
+
+and then the second one.<br /><br />
+So, the rating should be, just like before,
+
+greater or equal than 4.8.<br /><br />
+Close this one and close this one.<br /><br />
+And so, that's actually already it.<br /><br />
+So, again, to recap here, we start with the or operator
+
+and the or operator accepts an array of conditions.<br /><br />
+So, that's why we then create this array here
+
+and this array will then contain one object
+
+for each of our filters basically.<br /><br />
+So, we want either this one to be true
+
+or this one.<br /><br />
+So, let's try to see what our results are gonna be.<br /><br />
+And so, actually we get all of the three tours.<br /><br />
+And so, let's analyze why that is.<br /><br />
+So, the first one has a price less than 500.<br /><br />
+And so, that's why it got included here.<br /><br />
+It doesn't have the rating greater or equal to 4.8,
+
+so it's just 4.7, but since we're doing an or query here,
+
+only one of the conditions needs to be true.<br /><br />
+And so, that's why this document here got selected
+
+and is included in our output.<br /><br />
+Next up, this one also has the price less or equal than 500
+
+and also, at the same time, it has the rating great
+
+or equal than 4.8.<br /><br />
+And so, it got included actually
+
+for both of them being true.<br /><br />
+Then, the last one does not have the price less than 500,
+
+but it does have the rating greater or equal to 4.8.<br /><br />
+And so, again, one of the two conditions is true
+
+and since we're doing an or query,
+
+this tour also got included.<br /><br />
+So, let's clear this and only one more,
+
+which is gonna be kind of the same.<br /><br />
+I'm simply gonna change from less than to greater than.<br /><br />
+And, what I want you to do now is
+
+to guess the output of this one based
+
+on the previous result.<br /><br />
+So, can you guess what the result will be?
+
+So, let's take a look.<br /><br />
+And so, now, indeed, we no longer have all three tours,
+
+but only the second and the third one
+
+because, remember, the first tour
+
+had the price less than 500
+
+and also the rating less than 4.8.<br /><br />
+And so, none of the conditions were applying
+
+and so it's no longer included.<br /><br />
+Only the second and the third one,
+
+which now has the price also not greater than 500,
+
+but it has the rating of 4.8
+
+and so it's still included.<br /><br />
+And, the last one, of course, has everything true
+
+and so, of course, it's also here.<br /><br />
+Just one more thing that I wanted to show you here is
+
+that besides our filter object, so this one,
+
+we can also pass in an object for projection.<br /><br />
+So, what projection means is that we simply want
+
+to select some of the fields in the output.<br /><br />
+So, let me show it to you and it's very simple.<br /><br />
+All we have to do is, for example, say name equals to one.<br /><br />
+So, what this means is that we only want the name
+
+to be in the output and so that's why we set name to one.<br /><br />
+All the others are not gonna appear in this case.<br /><br />
+So, let me show that to you.<br /><br />
+And, indeed, we only have the name
+
+and no longer all these other properties.<br /><br />
+And, this can be very useful in some cases.<br /><br />
+The idea is, of course, also showing up,
+
+but that's always there.<br /><br />
+There's no way of removing that.<br /><br />
+Okay, cool.<br /><br />
+So, I think the main goal of this lecture is now achieved,
+
+which was basically to get you familiar
+
+with the way we query in MongoDB
+
+and also show you these complex MongoDB operators
+
+that we have here.<br /><br />
+For some reason, I cannot select it,
+
+but you know what I mean.<br /><br />
+So, we have greater than,
+
+we have or, and we really have a ton
+
+of other operators still.<br /><br />
+So, this is only the surface,
+
+but throughout the rest of the course, you will, of course,
+
+get to know a couple of other operators.<br /><br />
+So, this is just to get you familiar,
+
+get you started with querying in MongoDB.<br /><br />
+And, I think in this lecture, we did that successfully.
+</body>
+</html>

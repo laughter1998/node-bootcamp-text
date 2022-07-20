@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Let's now refactor our code a little bit.<br /><br />
+So basically, reorganize some of our route
+
+to make the code a lot better.<br /><br />
+So right now, we have all these routes here.<br /><br />
+So the http method plus the url
+
+together with the route handler,
+
+which is this callback function.<br /><br />
+Right?
+
+And we have these routes and route handlers
+
+kind of all over the place.<br /><br />
+So we have this and then this and all after the other,
+
+but it's kind of difficult to see
+
+what route we actually have in our code.<br /><br />
+So all the routes should kind of be together,
+
+and then the handler functions also together.<br /><br />
+So separate from these routes here.<br /><br />
+Okay.<br /><br />
+So what I'm gonna do is to go ahead
+
+and basically export all of these handler functions
+
+into their own function.<br /><br />
+Okay?
+
+First of all, let's also get rid of this
+
+old code that we had here.<br /><br />
+And so, yeah.<br /><br />
+Take this.<br /><br />
+Or actually, not just this.<br /><br />
+So all of this.<br /><br />
+Take this, and create a new function out of it.<br /><br />
+So I'm calling this one getAllTours.<br /><br />
+And then I'm assigning it this function.<br /><br />
+Give it a save, and now here
+
+instead of passing the callback function directly,
+
+well, I just do getAllTours.<br /><br />
+And that's it.<br /><br />
+Okay?
+
+And so right now, if I'm gonna hit this route here.<br /><br />
+So this endpoint.<br /><br />
+It will then simply call this getAllTours function.<br /><br />
+So the functionality didn't change at all,
+
+but I did slightly refactor my code.<br /><br />
+Okay.<br /><br />
+And you will see how nice this is gonna be
+
+when all of the routes are together
+
+and all these route handlers are also together.<br /><br />
+So...<br /><br />
+This one is getTour because this is only to get one tour.<br /><br />
+Right?
+
+Add to here, getTour.<br /><br />
+So.<br /><br />
+And we're starting to see different routes
+
+that we have in our project at one glance.<br /><br />
+So.<br /><br />
+This is the next one, and it's gonna be createTour.<br /><br />
+Const createTour equals all of this.<br /><br />
+And here then createTour.<br /><br />
+Next up we have...<br /><br />
+Not like this.<br /><br />
+We have updateTour.<br /><br />
+All right.<br /><br />
+And so this also actually makes our code
+
+a little more clartive.<br /><br />
+Right?
+
+So we can see very easily what happens here
+
+when we're actually reading the code.<br /><br />
+So when we read this line of code,
+
+we immediately see, oh, this will update to tour
+
+because we actually have the function name here.<br /><br />
+Okay.<br /><br />
+And now finally, we have deleteTour.<br /><br />
+Okay.<br /><br />
+DeleteTour.<br /><br />
+So.<br /><br />
+This looks a lot nicer already,
+
+but it's still not perfect.<br /><br />
+We can do even better.<br /><br />
+Because, let's say, that we want to, for example,
+
+change the version or the resource name.<br /><br />
+We would then have to change it
+
+in all of these five places,
+
+and that is not ideal.<br /><br />
+And so instead of having all of this,
+
+we can do something better.<br /><br />
+So let me actually start it from scratch,
+
+and write app dot route, so that's a new one.<br /><br />
+And so here we specify the route that we want.<br /><br />
+So let's start actually with this one here.<br /><br />
+And then, on there is where we specify
+
+what we want to happen on get.<br /><br />
+Dot get.<br /><br />
+Well, we want getAllTours.<br /><br />
+So.<br /><br />
+What we have here is right now
+
+exactly the same as we have here.<br /><br />
+Okay, so that's coming out this part.<br /><br />
+So it's exactly the same.<br /><br />
+Now, the thing is, that here we can now
+
+actually chain the post method.<br /><br />
+And then we can say createTour just like this.<br /><br />
+Okay?
+
+And so just like this,
+
+we have now actually created an even better way
+
+of writing a route because right now,
+
+this is not repeated for the get and the post.<br /><br />
+Okay.<br /><br />
+Let's give it a save.<br /><br />
+It's nicely formatted, and even easier to read than before.<br /><br />
+Okay.<br /><br />
+So.<br /><br />
+The two route handlers that we use
+
+on this kind of route here.<br /><br />
+So without the id, is only for get and for post.<br /><br />
+So for getting all tours, and for creating a new tour.<br /><br />
+And now, as you can imagine,
+
+let's do the same for the other route.<br /><br />
+So basically at this url here.<br /><br />
+So we add this url, and now,
+
+we will have get, patch, and delete.<br /><br />
+So this one is getTour.<br /><br />
+This one is updateTour, ah it's already there.<br /><br />
+And finally, I have deleteTour.<br /><br />
+So deleteTour.<br /><br />
+Give it a save.<br /><br />
+And we can now go ahead and...<br /><br />
+Well, I'm not gonna delete it.<br /><br />
+So that we can keep the old code here as well.<br /><br />
+But, this is gonna work just the exact same way,
+
+but making the code a lot better,
+
+and also easier to read.<br /><br />
+Right?
+
+So again, just to recap, we separated our handler function
+
+of the route itself so that we can later actually,
+
+even export these into another file.<br /><br />
+Okay, so that will then make the code even better.<br /><br />
+But for now, let's keep it at this.<br /><br />
+So with the handlers nicely separated from the routes.<br /><br />
+And then, we specified all the actions
+
+for each of our two routes.<br /><br />
+Which are simply tours
+
+and then tours slash the id parameter.<br /><br />
+So.<br /><br />
+Just to make sure it still works,
+
+let's use this one here.<br /><br />
+And with a tour that actually is this.<br /><br />
+But you can see already it's not giving us an error
+
+and so it actually still works.<br /><br />
+Same four getAllTours because that's another url.<br /><br />
+And just to make sure it still works as well.<br /><br />
+Indeed, it does.
+</body>
+</html>
